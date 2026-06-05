@@ -1,0 +1,3987 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TCL Dynamis - Sistema de Gestão</title>
+
+  <style>
+    /* ============================================
+   TCL DYNAMIS - SISTEMA DE GESTÃO v3.5
+   Folha de Estilos Principal
+   ============================================ */
+
+:root {
+    /* Cores Base */
+    --bg: #f8fafc;
+    --sb-bg: #0f172a;
+    --card-bg: #ffffff;
+    --tx1: #0f172a;
+    --tx2: #475569;
+    --tx3: #94a3b8;
+    --border: #e2e8f0;
+    
+    /* Cores Semânticas */
+    --bl: #0284c7;
+    --bll: #e0f2fe;
+    --blm: #38bdf8;
+    --gn: #16a34a;
+    --gnl: #dcfce7;
+    --gnm: #4ade80;
+    --amm: #eab308;
+    --rd: #dc2626;
+    --rdl: #fee2e2;
+    --rdm: #f87171;
+    
+    /* Layout */
+    --r: 8px;
+    --sidebar-width: 260px;
+    --topbar-height: 60px;
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+    
+    /* Transições */
+    --transition: 0.2s ease;
+}
+
+/* ============================================
+   RESET E CONFIGURAÇÕES GLOBAIS
+   ============================================ */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--tx1);
+    overflow-x: hidden;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* ============================================
+   LAYOUT PRINCIPAL
+   ============================================ */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+
+.sb {
+    width: var(--sidebar-width);
+    background: var(--sb-bg);
+    color: #fff;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.logo {
+    margin-bottom: 24px;
+}
+
+.logo-n {
+    font-weight: 700;
+    font-size: 13px;
+    color: #f8fafc;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logo-s {
+    font-size: 11px;
+    color: var(--tx3);
+    margin-top: 4px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.ngrp {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+    margin: 16px 0 4px 12px;
+    letter-spacing: 0.5px;
+}
+
+.ni {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all var(--transition);
+    text-decoration: none;
+}
+
+.ni:hover {
+    background: #1e293b;
+    color: #fff;
+}
+
+.ni.on,
+.ni[aria-current="page"] {
+    background: #1e293b;
+    color: #fff;
+}
+
+.ni i {
+    font-size: 18px;
+}
+
+.ni:focus-visible {
+    outline: 2px solid var(--blm);
+    outline-offset: 2px;
+}
+
+/* Badges */
+.badge-dot {
+    background: var(--rd);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    margin-left: auto;
+    font-weight: 700;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Sidebar Footer */
+.sbf {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.apill {
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 8px 12px;
+    border-radius: var(--r);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #e2e8f0;
+    transition: background var(--transition);
+}
+
+.apill:hover {
+    background: #273548;
+}
+
+.apill i {
+    color: var(--amm);
+}
+
+.apill-t {
+    font-size: 12px;
+}
+
+.sv-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--tx3);
+    padding-left: 4px;
+}
+
+.sv-status.ok i {
+    color: var(--gnm);
+}
+
+/* ============================================
+   CONTEÚDO PRINCIPAL
+   ============================================ */
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    min-width: 0;
+    margin-left: var(--sidebar-width);
+}
+
+/* Topbar */
+.topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--topbar-height);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.tb-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--tx1);
+}
+
+.tb-acts {
+    display: flex;
+    gap: 10px;
+}
+
+/* Content */
+.content {
+    padding: 24px;
+    flex: 1;
+}
+
+/* ============================================
+   PÁGINAS
+   ============================================ */
+
+.page {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.page.on {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   CARDS E GRIDS
+   ============================================ */
+
+.g2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.card-h {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-t {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--tx1);
+}
+
+/* ============================================
+   TABELAS
+   ============================================ */
+
+.tw {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+    min-width: 600px;
+}
+
+thead th {
+    background: #f8fafc;
+    padding: 12px 16px;
+    color: var(--tx2);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--tx2);
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.sum-row {
+    padding: 12px 16px;
+    background: #f8fafc;
+    font-size: 13px;
+    font-weight: 600;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ============================================
+   BOTÕES
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--r);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--tx2);
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn:hover {
+    background: #f8fafc;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--blm);
+    outline-offset: 2px;
+}
+
+.btn.bp {
+    background: var(--bl);
+    color: #fff;
+    border-color: var(--bl);
+}
+
+.btn.bp:hover {
+    background: #0274a9;
+}
+
+.btn.bdanger {
+    background: var(--rd);
+    color: #fff;
+    border-color: var(--rd);
+}
+
+.btn.bdanger:hover {
+    background: #b91c1c;
+}
+
+.btn.bic {
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.btn.bsm {
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+/* ============================================
+   FORMULÁRIOS
+   ============================================ */
+
+.fg {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.fg label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--tx2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+input,
+select,
+textarea {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 8px 12px;
+    outline: none;
+    font-size: 13px;
+    color: var(--tx1);
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    transition: border-color var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--blm);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+select {
+    cursor: pointer;
+    appearance: auto;
+}
+
+.fr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.fr3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+/* ============================================
+   FILTROS
+   ============================================ */
+
+.frow {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sbar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 0 12px;
+    gap: 8px;
+}
+
+.sbar input {
+    border: none;
+    padding: 8px 0;
+    width: 100%;
+    outline: none;
+    font-size: 13px;
+    background: transparent;
+}
+
+.sbar input:focus {
+    box-shadow: none;
+}
+
+.chip {
+    background: #e2e8f0;
+    color: var(--tx2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: all var(--transition);
+    display: inline-block;
+}
+
+.chip:hover {
+    background: #cbd5e1;
+}
+
+.chip.on {
+    background: var(--sb-bg);
+    color: #fff;
+}
+
+/* ============================================
+   MODAIS
+   ============================================ */
+
+.ov {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.modal {
+    background: #ffffff;
+    border-radius: var(--r);
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    animation: modalIn 0.2s ease-out;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.mh {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mh h3 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.mb {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.mf {
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* ============================================
+   KANBAN
+   ============================================ */
+
+.kb {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+    min-height: 400px;
+}
+
+.kb-col {
+    background: #f1f5f9;
+    border-radius: var(--r);
+    padding: 12px;
+    min-height: 200px;
+}
+
+.kb-col-h {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--tx2);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.kb-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 150px;
+}
+
+.kb-card {
+    background: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition);
+}
+
+.kb-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--blm);
+    box-shadow: var(--shadow-md);
+}
+
+.kb-card-t {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--tx1);
+}
+
+.kb-card-c {
+    font-size: 11px;
+    color: var(--tx2);
+    margin-bottom: 8px;
+}
+
+.kb-card-f {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+}
+
+/* ============================================
+   STATUS BADGES
+   ============================================ */
+
+.st {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.st.andamento {
+    background: var(--bll);
+    color: #0369a1;
+}
+
+.st.concluido {
+    background: var(--gnl);
+    color: #15803d;
+}
+
+.st.pendente {
+    background: #fef9c3;
+    color: #a16207;
+}
+
+.st.atrasado {
+    background: var(--rdl);
+    color: #b91c1c;
+}
+
+.st.aprovacao {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.st.cancelado {
+    background: var(--rdm);
+    color: #fff;
+}
+
+/* ============================================
+   COMPONENTES AUXILIARES
+   ============================================ */
+
+.stars-row {
+    display: flex;
+    gap: 4px;
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+.star-btn.on {
+    color: var(--amm);
+}
+
+.infonote {
+    background: var(--bll);
+    border: 1px solid var(--blm);
+    color: #0369a1;
+    padding: 10px;
+    border-radius: var(--r);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.sec {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 8px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+}
+
+.abox {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border-radius: var(--r);
+    font-size: 12px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+}
+
+.abox.ok {
+    background: var(--gnl);
+    border-color: var(--gnm);
+    color: #166534;
+}
+
+.rk-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+}
+
+.rk-row:last-child {
+    border: none;
+}
+
+.t-rem {
+    color: var(--rd);
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.ftab {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+}
+
+.ftab.on {
+    background: var(--sb-bg);
+    color: #fff;
+}
+
+.hr {
+    margin: 15px 0;
+    border-top: 1px dashed #cbd5e0;
+}
+
+/* ============================================
+   LISTA DE TERCEIRIZADOS NO MODAL
+   ============================================ */
+
+#lista_terceirizados_projeto .allocated-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .kb {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sb {
+        width: 100%;
+        position: relative;
+        height: auto;
+        padding: 16px;
+    }
+    
+    .main {
+        margin-left: 0;
+    }
+    
+    .g2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .fr {
+        grid-template-columns: 1fr;
+    }
+    
+    .kb {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal {
+        max-width: 95vw;
+        max-height: 90vh;
+    }
+    
+    .topbar {
+        flex-direction: column;
+        height: auto;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .content {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .frow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .sbar {
+        max-width: 100% !important;
+    }
+}
+
+/* ============================================
+   ACESSIBILIDADE - REDUÇÃO DE MOVIMENTO
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   IMPRESSÃO
+   ============================================ */
+
+@media print {
+    .sb,
+    .topbar,
+    .modal,
+    .ov,
+    .btn {
+        display: none !important;
+    }
+    
+    .main {
+        margin-left: 0;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+    
+    .content {
+        padding: 0;
+    }
+}
+
+/* ============================================
+   UTILITÁRIOS
+   ============================================ */
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.mt-2 {
+    margin-top: 8px;
+}
+
+.mb-2 {
+    margin-bottom: 8px;
+}
+
+.grid {
+    display: grid;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Estilo do botão de editar proposta */
+.btn.bedit {
+    background: #f59e0b;
+    color: #fff;
+    border-color: #f59e0b;
+}
+.btn.bedit:hover {
+    background: #d97706;
+}
+
+/* Melhorias para o Kanban */
+.kb-card {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 8px !important;
+    padding: 12px !important;
+}
+
+.kb-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.kb-col-h strong {
+    min-width: 35px;
+    text-align: center;
+}
+
+/* Diferenciação visual entre propostas e projetos */
+.kb-card[style*="border-left: 4px solid #6366f1"] {
+    background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+}
+
+.kb-card[style*="border-left: 4px solid #10b981"] {
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.kb-card[style*="border-left: 4px solid #ef4444"] {
+    background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+}
+
+.kb-card[style*="border-left: 4px solid #f59e0b"] {
+    background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+}
+  </style>
+
+  
+</head>
+<body>
+  <!-- Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+        
+        <!-- Bibliotecas -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+        
+        <!-- Fontes e Ícones -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
+        <div class="app" role="application" aria-label="Sistema de Gestão TCL Dynamis">
+            
+            <!-- ==================== SIDEBAR ==================== -->
+            <aside class="sb" role="navigation" aria-label="Navegação principal">
+                <div class="logo">
+                    <div class="logo-n">TCL DYNAMIS ENGENHARIA LTDA</div>
+                    <div class="logo-s">Sistema Integrado de Gestão v3.5</div>
+                </div>
+                
+                <nav class="nav">
+                    <div class="ngrp" role="group" aria-label="Visão Geral">Visão Geral</div>
+                    <button class="ni on" onclick="nav('dashboard', this)" aria-current="page">
+                        <i class="ti ti-layout-dashboard" aria-hidden="true"></i>Dashboard
+                    </button>
+                    <button class="ni" onclick="nav('kanban', this)">
+                        <i class="ti ti-layout-kanban" aria-hidden="true"></i>Kanban
+                    </button>
+                    
+                    <div class="ngrp" role="group" aria-label="Operações">Operações</div>
+    <button class="ni" onclick="nav('propostas', this)">
+        <i class="ti ti-file-text" aria-hidden="true"></i>Propostas
+    </button>
+    <button class="ni" onclick="nav('projetos', this)">
+        <i class="ti ti-briefcase" aria-hidden="true"></i>Projetos
+    </button>
+                    <button class="ni" onclick="nav('financeiro', this)">
+                        <i class="ti ti-cash" aria-hidden="true"></i>Financeiro
+                    </button>
+                    <button class="ni" onclick="nav('terceirizados', this)">
+                        <i class="ti ti-users" aria-hidden="true"></i>Terceirizados
+                    </button>
+                    
+<button class="ni" onclick="nav('entregas', this)">
+    <i class="ti ti-checklist" aria-hidden="true"></i>Entregas Técnicas
+</button>
+
+                    <div class="ngrp" role="group" aria-label="Sistema">Sistema</div>
+                    <button class="ni" onclick="nav('alertas', this)">
+                        <i class="ti ti-bell" aria-hidden="true"></i>Alertas
+                        <span class="badge-dot" id="bdot" style="display:none">0</span>
+                    </button>
+                    <button class="ni" onclick="nav('backup', this)">
+                        <i class="ti ti-database" aria-hidden="true"></i>Backup & Dados
+                    </button>
+                </nav>
+                
+                <div class="sbf">
+                    <div class="apill" id="apill" onclick="nav('alertas')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')nav('alertas')">
+                        <i class="ti ti-bell-ringing" aria-hidden="true"></i>
+                        <span class="apill-t" id="acount">0 alertas</span>
+                    </div>
+                    <div class="sv-status ok" id="svst" role="status" aria-live="polite">
+                        <i class="ti ti-cloud-check" aria-hidden="true"></i>
+                        <span id="svtxt">Dados salvos</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+            <div class="main">
+                <header class="topbar">
+    <div class="tb-title" id="tbtitle">Dashboard</div>
+    <div class="tb-acts" id="tbacts">
+        <!-- Botão Modo Cliente -->
+        <button id="btn-modo-cliente" class="btn" style="background:#f59e0b;color:#fff;font-weight:600;font-size:12px;margin-right:8px;display:none;" 
+            onclick="toggleModoCliente()">
+            🔓 Ativar Modo Cliente
+        </button>
+    </div>
+</header>
+                
+                <div class="content">
+                    
+                    <!-- ==================== PÁGINA DASHBOARD ==================== -->
+                    <div id="page-dashboard" class="page on">
+                        <!-- Card de Propostas em Negociação -->
+                        <div class="g2" style="margin-bottom: 16px;">
+                            <div class="card" style="margin:0; padding: 16px; background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-left: 5px solid #d97706;">
+                                <div style="font-size: 13px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Propostas em Negociação</div>
+                                <div id="propostas-status" style="font-size: 28px; font-weight: 700; color: #d97706; margin-top: 4px;">0 Propostas</div>
+                                <div id="propostas-total" style="font-size: 13px; color: #475569; font-weight: 500; margin-top: 2px;">Total potencial: R$ 0,00</div>
+                            </div>
+                        </div>
+
+                        <!-- Gráficos -->
+                        <div class="g2">
+                            <div class="card" style="margin:0">
+                                <div class="card-h"><span class="card-t">Fluxo de Caixa Operacional (Histórico Global)</span></div>
+                                <div style="padding:14px 16px;height:220px;position:relative"><canvas id="ch1" role="img" aria-label="Gráfico de fluxo de caixa"></canvas></div>
+                            </div>
+                            <div class="card" style="margin:0">
+                                <div class="card-h"><span class="card-t">Status do Portfólio de Projetos</span></div>
+                                <div style="padding:14px 16px;height:220px;position:relative"><canvas id="ch2" role="img" aria-label="Gráfico de status dos projetos"></canvas></div>
+                            </div>
+                        </div>
+
+                        <div class="g2">
+                            <div class="card" style="margin:0">
+                                <div class="card-h"><span class="card-t">Faturamento Mensal Consolidado</span></div>
+                                <div style="padding:14px 16px;height:180px;position:relative"><canvas id="ch4" role="img" aria-label="Gráfico de faturamento mensal"></canvas></div>
+                            </div>
+                            <div class="card" style="margin:0">
+                                <div class="card-h"><span class="card-t">Margem Operacional Líquida por Cliente</span></div>
+                                <div style="padding:14px 16px;height:180px;position:relative"><canvas id="ch3" role="img" aria-label="Gráfico de margem por cliente"></canvas></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Repasses a Pagar -->
+                        <div class="g2">
+                            <div class="card" style="margin:0">
+                                <div class="card-h">
+                                    <span class="card-t">Repasses a Pagar (Contratos Ativos)</span>
+                                    <span id="pgto-total" style="font-size:13px;font-weight:700;color:var(--rd)"></span>
+                                </div>
+                                <div class="tw">
+                                    <table aria-label="Tabela de repasses a pagar">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome do Projeto</th>
+                                                <th>Cliente Alvo</th>
+                                                <th>Custo de Terceiros</th>
+                                                <th>Terceirizado Alocado</th>
+                                                <th>Status Pagamento</th>
+                                                <th>Fase Física</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tpgto"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card" style="margin:0">
+                                <div class="card-h"><span class="card-t">Performance & Ranking de Terceirizados</span></div>
+                                <div style="padding:12px 16px" id="rk"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Cronograma e Disciplinas -->
+                        <div class="g2">
+                            <div class="card" style="margin:0">
+                                <div class="card-h"><span class="card-t">Cronograma Crítico — Próximos 30 Dias</span></div>
+                                <div class="tw">
+                                    <table aria-label="Cronograma de próximas entregas">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome do Projeto</th>
+                                                <th>Cliente Alvo</th>
+                                                <th>Data de Entrega</th>
+                                                <th>Dias Restantes</th>
+                                                <th>Status Atual</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tprox"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card" style="margin:0">
+                                <div class="card-h"><span class="card-t">Demanda Alocada por Disciplina Técnica</span></div>
+                                <div style="padding:14px 16px;height:200px;position:relative"><canvas id="ch5" role="img" aria-label="Gráfico de demanda por disciplina"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ==================== PÁGINA KANBAN ==================== -->
+                    <div id="page-kanban" class="page">
+                        <div class="frow">
+                            <div class="sbar" style="flex:1;max-width:280px">
+                                <i class="ti ti-search" aria-hidden="true"></i>
+                                <input type="search" placeholder="Buscar projeto..." oninput="renderKanban(this.value)" id="ksearch" aria-label="Buscar projeto no kanban">
+                            </div>
+                            <select onchange="renderKanban()" id="kfterc" aria-label="Filtrar por terceirizado">
+                                <option value="">Todos terceirizados</option>
+                            </select>
+                            <select onchange="renderKanban()" id="kfcli" aria-label="Filtrar por cliente">
+                                <option value="">Todos clientes</option>
+                            </select>
+                            <select onchange="renderKanban()" id="kfpgto" aria-label="Filtrar por status de pagamento">
+                                <option value="">Todos pagamentos</option>
+                                <option>Pendente</option>
+                                <option>Parcial</option>
+                                <option>Pago</option>
+                                <option>Atrasado</option>
+                            </select>
+                        </div>
+                        <div class="kb" id="kanban" role="region" aria-label="Quadro Kanban de projetos"></div>
+                    </div>
+
+                    
+                   <!-- ==================== PÁGINA PROPOSTAS ==================== -->
+<div id="page-propostas" class="page">
+    
+    <!-- SIMULADOR DE PREÇO -->
+    <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f8fafc, #edf2f7); border-left: 5px solid #6366f1;">
+        <div class="card-h" style="padding-bottom: 0;">
+            <span class="card-t" style="color: #4338ca;">
+                <i class="ti ti-calculator" aria-hidden="true"></i> Simulador de Formação de Preço (TCL Pricing)
+            </span>
+        </div>
+        <div style="padding: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; align-items: flex-end;">
+            <div class="fg" style="margin:0">
+                <label style="font-size: 11px; font-weight: 600; color: #4a5568;">Soma dos Terceiros (R$)</label>
+                <input id="calc-custo" type="number" placeholder="Ex: 5000" style="width:100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #cbd5e0;" oninput="calcularPrecoVenda()">
+            </div>
+            <div class="fg" style="margin:0">
+                <label style="font-size: 11px; font-weight: 600; color: #4a5568;">Impostos (%)</label>
+                <input id="calc-imposto" type="number" value="6" style="width:100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #cbd5e0;" oninput="calcularPrecoVenda()">
+            </div>
+            <div class="fg" style="margin:0">
+                <label style="font-size: 11px; font-weight: 600; color: #4a5568;">Custos Fixos (%)</label>
+                <input id="calc-adm" type="number" value="5" style="width:100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #cbd5e0;" oninput="calcularPrecoVenda()">
+            </div>
+            <div class="fg" style="margin:0">
+                <label style="font-size: 11px; font-weight: 600; color: #4a5568;">Margem de Lucro (%)</label>
+                <input id="calc-lucro" type="number" value="25" style="width:100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #cbd5e0;" oninput="calcularPrecoVenda()">
+            </div>
+            <div class="fg" style="margin:0; background: #ffffff; padding: 6px 10px; border-radius: 4px; border: 1px solid #bee3f8;">
+                <span style="font-size: 10px; font-weight: 700; color: #2b6cb0; display:block;">Sugestão de Venda</span>
+                <strong id="calc-resultado" style="font-size: 15px; color: #2b6cb0;">R$ 0,00</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="frow">
+        <div class="sbar" style="flex:1;max-width:300px">
+            <i class="ti ti-search" aria-hidden="true"></i>
+            <input type="search" placeholder="Buscar proposta..." oninput="renderPropostas(this.value)" id="propsearch" aria-label="Buscar proposta">
+        </div>
+        <select onchange="renderPropostas()" id="propst" aria-label="Filtrar por status">
+            <option value="">Todos status</option>
+            <option>Em elaboração</option>
+            <option>Enviada</option>
+            <option>Aprovada</option>
+            <option>Recusada</option>
+        </select>
+    </div>
+
+    <!-- TABELA DE PROPOSTAS -->
+    <div class="card">
+        <div class="tw">
+            <table aria-label="Tabela de propostas">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Cliente</th>
+                        <th>Objeto</th>
+                        <th>Valor</th>
+                        <th>Prazo</th>
+                        <th>Status</th>
+                        <th>Data Envio</th>
+                        <th style="text-align:right;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-propostas-corpo"></tbody>
+            </table>
+        </div>
+        <div class="sum-row" id="prop-sum"></div>
+    </div>
+</div>
+
+                                
+
+                    <!-- ==================== PÁGINA PROJETOS ==================== -->
+                    <div id="page-projetos" class="page">
+
+                        <!-- Filtros -->
+                        <div class="frow">
+                            <div class="sbar" style="flex:1;max-width:300px">
+                                <i class="ti ti-search" aria-hidden="true"></i>
+                                <input type="search" placeholder="Projeto, proposta, cliente..." oninput="renderProjetos(this.value)" id="psearch" aria-label="Buscar projeto">
+                            </div>
+                            <select onchange="renderProjetos()" id="pfst" aria-label="Filtrar por status">
+                                <option value="">Todos status</option>
+                                <option>Pendente</option>
+                                <option>Em andamento</option>
+                                <option>Aguardando aprovação</option>
+                                <option>Concluído</option>
+                                <option>Cancelado</option>
+                            </select>
+                            <select onchange="renderProjetos()" id="pfpg" aria-label="Filtrar por pagamento">
+                                <option value="">Todos pagamentos</option>
+                                <option>Pendente</option>
+                                <option>Parcial</option>
+                                <option>Pago</option>
+                                <option>Atrasado</option>
+                            </select>
+                            <select onchange="renderProjetos()" id="pfcl" aria-label="Filtrar por cliente">
+                                <option value="">Todos clientes</option>
+                            </select>
+                        </div>
+
+                        <!-- Tabela de Projetos -->
+                        <div class="card">
+                            <div class="tw">
+                                <table aria-label="Tabela de projetos">
+                                    <thead>
+                                        <tr>
+                                            <th>Código Proposta</th>
+                                            <th>Razão Social Cliente</th>
+                                            <th>Escopo Técnico / Descrição</th>
+                                            <th>Valor Bruto Contratual</th>
+                                            <th>Custo Terceiros Alocados</th>
+                                            <th>Margem Operacional Líquida</th>
+                                            <th>Prazo Final Contratual</th>
+                                            <th>Fase Física</th>
+                                            <th>Situação Financeira</th>
+                                            <th style="text-align:right;">Ações de Controle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabela-projetos-corpo"></tbody>
+                                </table>
+                            </div>
+                            <div class="sum-row" id="proj-sum"></div>
+                        </div>
+                    </div>
+
+                    <!-- ==================== PÁGINA FINANCEIRO ==================== -->
+                    <div id="page-financeiro" class="page">
+                        <!-- Cards de Resumo -->
+                        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                            <div class="card" style="padding: 16px; background: #ffffff; border-radius: var(--r); border: 1px solid var(--border);">
+                                <div style="font-size: 12px; color: var(--tx2); font-weight: 500;">Total Entradas (Recebimentos)</div>
+                                <div style="font-size: 20px; font-weight: 700; color: var(--gn); margin-top: 4px;" id="fin-entradas">R$ 0,00</div>
+                            </div>
+                            <div class="card" style="padding: 16px; background: #ffffff; border-radius: var(--r); border: 1px solid var(--border);">
+                                <div style="font-size: 12px; color: var(--tx2); font-weight: 500;">Total Saídas (Repasses/Custos)</div>
+                                <div style="font-size: 20px; font-weight: 700; color: var(--rd); margin-top: 4px;" id="fin-saidas">R$ 0,00</div>
+                            </div>
+                            <div class="card" style="padding: 16px; background: #ffffff; border-radius: var(--r); border: 1px solid var(--border);">
+                                <div style="font-size: 12px; color: var(--tx2); font-weight: 500;">Saldo em Caixa Atual</div>
+                                <div style="font-size: 20px; font-weight: 700; color: var(--bl); margin-top: 4px;" id="fin-saldo">R$ 0,00</div>
+                            </div>
+                        </div>
+
+                        <!-- Filtros Financeiros -->
+                        <div class="frow" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
+                            <span class="chip on" onclick="fchip('todos', this)" role="button" tabindex="0">Todos os Registros</span>
+                            <span class="chip" onclick="fchip('entrada', this)" role="button" tabindex="0">Receitas (Entradas)</span>
+                            <span class="chip" onclick="fchip('saida', this)" role="button" tabindex="0">Custos (Saídas)</span>
+                            <div class="sbar" style="flex: 1; max-width: 200px;">
+                                <i class="ti ti-search" aria-hidden="true"></i>
+                                <input type="search" placeholder="Buscar transação..." oninput="renderFin()" id="fsearch" aria-label="Buscar transação financeira">
+                            </div>
+                            <select onchange="renderFin()" id="ffcat" aria-label="Filtrar por categoria">
+                                <option value="">Todas categorias</option>
+                                <option>Honorário</option>
+                                <option>Pagamento terceirizado</option>
+                                <option>Imposto / Taxa</option>
+                                <option>Reembolso</option>
+                                <option>Adiantamento</option>
+                                <option>Outros</option>
+                            </select>
+                        </div>
+
+                        <!-- Tabela Financeira -->
+                        <div class="card">
+                            <div class="tw">
+                                <table aria-label="Tabela de lançamentos financeiros">
+                                    <thead>
+                                        <tr>
+                                            <th>Data de Competência</th>
+                                            <th>Descrição Contábil da Operação</th>
+                                            <th>Grupo / Categoria</th>
+                                            <th>Projeto Técnico Vinculado</th>
+                                            <th>Fluxo de Caixa</th>
+                                            <th>Valor Nominal Líquido</th>
+                                            <th style="text-align:right;">Ações de Controle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabela-financeiro-corpo"></tbody>
+                                </table>
+                            </div>
+
+                            <div style="display: flex; gap: 10px; padding: 12px; background: #f8fafc; border-top: 1px solid #e2e8f0;">
+                                <div style="flex: 1;">
+                                    <label for="filtro_fin_proj" style="font-size: 11px; font-weight: 600; color: #64748b; display: block; margin-bottom: 4px;">Auditar por Projeto Técnico:</label>
+                                    <select onchange="renderFin()" id="filtro_fin_proj" style="width: 100%; height: 32px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0 8px;">
+                                        <option value="">— Ver todos os Projetos da TCL —</option>
+                                    </select>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="filtro_fin_terc" style="font-size: 11px; font-weight: 600; color: #64748b; display: block; margin-bottom: 4px;">Auditar por Engenheiro Terceirizado:</label>
+                                    <select onchange="renderFin()" id="filtro_fin_terc" style="width: 100%; height: 32px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 4px; padding: 0 8px;">
+                                        <option value="">— Ver todos os Terceirizados Homologados —</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="sum-row" id="fin-sum" style="padding: 14px; background: #f8fafc; border-top: 1px solid #e2e8f0;"></div>
+                        </div>
+                    </div>
+
+                    <!-- ==================== PÁGINA TERCEIRIZADOS ==================== -->
+                    <div id="page-terceirizados" class="page">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 15px; flex-wrap: wrap;">
+                            <div style="display: flex; gap: 10px; align-items: center; flex-grow: 1; max-width: 500px;">
+                                <div style="position: relative; flex-grow: 1;">
+                                    <i class="ti ti-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b;" aria-hidden="true"></i>
+                                    <input type="text" id="search-terc" oninput="window.renderTerc(this.value)" placeholder="Buscar engenheiro por nome, disciplina ou e-mail..." style="padding-left: 35px; width: 100%;" aria-label="Buscar terceirizado">
+                                </div>
+                            </div>
+                            <button class="btn bp" onclick="window.openModalTerc()">
+                                <i class="ti ti-plus" aria-hidden="true"></i> Novo Especialista
+                            </button>
+                        </div>
+
+                        <div class="card" style="padding: 10px; overflow: hidden;">
+                            <div class="table-responsive">
+                                <table aria-label="Tabela de terceirizados">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome do Engenheiro / Técnico</th>
+                                            <th>Disciplina Principal</th>
+                                            <th>Telefone / WhatsApp</th>
+                                            <th>E-mail de Contato</th>
+                                            <th>Avaliação Técnica</th>
+                                            <th>Última Alocação</th>
+                                            <th style="width: 80px; text-align: center;">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tterc">
+                                        <tr>
+                                            <td colspan="7" style="text-align:center; color:#64748b; padding: 20px;">
+                                                Carregando dados dos especialistas da TCL Dynamis...
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+<!-- ==================== PÁGINA ENTREGAS TÉCNICAS ==================== -->
+<div id="page-entregas" class="page">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; gap: 8px;">
+            <span class="chip on" onclick="filtroEntregas('todos', this)" role="button" tabindex="0">📋 Todos</span>
+            <span class="chip" onclick="filtroEntregas('pendentes', this)" role="button" tabindex="0">⏳ Pendentes</span>
+            <span class="chip" onclick="filtroEntregas('atrasados', this)" role="button" tabindex="0">⚠️ Atrasados</span>
+        </div>
+    </div>
+    
+    <div id="entregas-container"></div>
+</div>
+
+                    <!-- ==================== PÁGINA ALERTAS ==================== -->
+<div id="page-alertas" class="page">
+    <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+        <span class="chip on" onclick="filtroAlertas('todos', this)" role="button" tabindex="0">🔔 Todos</span>
+        <span class="chip" onclick="filtroAlertas('atraso', this)" role="button" tabindex="0">⚠️ Atrasados</span>
+        <span class="chip" onclick="filtroAlertas('prazo', this)" role="button" tabindex="0">⏰ Próximos do Prazo</span>
+        <span class="chip" onclick="filtroAlertas('pgto', this)" role="button" tabindex="0">💰 Pagamentos</span>
+    </div>
+    
+    <div id="alertas-container"></div>
+</div>
+
+                    <!-- ==================== PÁGINA BACKUP ==================== -->
+                    <div id="page-backup" class="page">
+                        <div class="abox ok" style="margin-bottom:18px">
+                            <i class="ti ti-shield-check" aria-hidden="true"></i>
+                            <div><strong>Engine LocalStorage Ativa:</strong> Sincronização em tempo real concluída. Exporte backups estrategicamente para contingência.</div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:720px">
+                            <div class="card">
+                                <div class="card-h"><span class="card-t"><i class="ti ti-download" aria-hidden="true"></i> Exportar Estrutura (.json)</span></div>
+                                <div style="padding:16px">
+                                    <button class="btn bp" onclick="doExport()">Baixar snapshot</button>
+                                    <p id="ulb" style="font-size:11px;color:var(--tx3);margin-top:8px">Último backup: Nunca</p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-h"><span class="card-t"><i class="ti ti-upload" aria-hidden="true"></i> Alimentar Banco / Carregar Backup</span></div>
+                                <div style="padding:16px">
+                                    <label class="btn" style="cursor:pointer">Selecionar arquivo JSON
+                                        <input type="file" accept=".json" onchange="doImport(this)" style="display:none" aria-label="Selecionar arquivo de backup">
+                                    </label>
+                                    <p id="impmsg" style="font-size:12px;margin-top:8px"></p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-h"><span class="card-t"><i class="ti ti-table-export" aria-hidden="true"></i> Mineração de Dados (.csv)</span></div>
+                                <div style="padding:16px">
+                                    <div style="display:flex;gap:7px;flex-wrap:wrap">
+                                        <button class="btn bsm" onclick="doCSV('projetos')">Projetos</button>
+                                        <button class="btn bsm" onclick="doCSV('financeiro')">Financeiro</button>
+                                        <button class="btn bsm" onclick="doCSV('terceirizados')">Terceirizados</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-h"><span class="card-t"><i class="ti ti-chart-bar" aria-hidden="true"></i> Diagnóstico de Particionamento</span></div>
+                                <div style="padding:16px;font-size:13px;color:var(--tx2);line-height:2" id="bkstats"></div>
+                            </div>
+                        </div>
+                        <div class="card" style="max-width:720px;margin-top:14px;border-color:var(--rdm)">
+                            <div class="card-h" style="background:var(--rdl);color:var(--rd)">
+                                <span class="card-t"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Hard Reset (Limpeza de Memória Cache)</span>
+                            </div>
+                            <div style="padding:16px;display:flex;align-items:center;justify-content:space-between">
+                                <div><p style="font-size:12px;color:var(--tx3)">Deleta permanentemente o LocalStorage do domínio.</p></div>
+                                <button class="btn bsm bdanger" onclick="doLimpar()">Expurgar tabelas</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== OVERLAY ÚNICO ==================== -->
+        <div class="ov" id="ov" onclick="if (event.target === this) closeModal()" aria-hidden="true"></div>
+
+            <!-- ==================== MODAL DE PROJETO (LIMPO - SÓ ACOMPANHAMENTO) ==================== -->
+        <div class="modal" id="mprojeto" style="display:none;max-width:550px;" role="dialog" aria-modal="true" aria-labelledby="ptitle">
+            <div class="mh">
+                <h3 id="ptitle">Acompanhamento do Projeto</h3>
+                <button class="btn bic bsm" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x" aria-hidden="true"></i></button>
+            </div>
+            <div class="mb" style="max-height: 75vh; overflow-y: auto;">
+                <input type="hidden" id="peid">
+                
+                <div class="fr">
+                    <div class="fg"><label for="pprop">Código Proposta</label><input id="pprop" readonly style="background:#f1f5f9;"></div>
+                    <div class="fg"><label for="pcliente">Cliente</label><input id="pcliente" readonly style="background:#f1f5f9;"></div>
+                </div>
+                
+                <div class="fg">
+                    <label for="pnome">Objeto do Projeto</label>
+                    <input id="pnome" readonly style="background:#f1f5f9;">
+                </div>
+
+                <div class="fg">
+                    <label style="font-weight:600;font-size:11px;">Disciplinas do Projeto</label>
+                    <div id="disciplinas-projeto-view" style="display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#f8fafc;border-radius:6px;"></div>
+                </div>
+
+                <div class="fg">
+                    <label style="font-weight:600;font-size:11px;">Terceirizados Alocados</label>
+                    <div id="terceirizados-projeto-view" style="padding:8px;background:#f8fafc;border-radius:6px;font-size:12px;"></div>
+                </div>
+                
+                <div class="fr">
+                    <div class="fg"><label for="pvalor">Valor do Contrato (R$)</label><input id="pvalor" type="number" readonly style="background:#f1f5f9;font-weight:600;"></div>
+                    <div class="fg"><label for="pcusto">Custo Terceiros (R$)</label><input id="pcusto" type="number" readonly style="background:#f1f5f9;font-weight:600;color:var(--rd);"></div>
+                </div>
+                
+                <div class="fr">
+                    <div class="fg"><label for="pentrega">Data Limite</label><input id="pentrega" type="date"></div>
+                    <div class="fg"><label for="pprazo_dias">Prazo (dias)</label><input id="pprazo_dias" type="number" readonly style="background:#f1f5f9;"></div>
+                </div>
+                <div class="fr">
+    <div class="fg"><label for="pinicio">Data de Início</label><input id="pinicio" type="date"></div>
+    <div class="fg"><label for="pemissao">Data de Emissão/Conversão</label><input id="pemissao" type="date"></div>
+</div>
+                <div class="fr">
+                    <div class="fg"><label for="pstatus">Fase Física</label>
+                        <select id="pstatus">
+                            <option>Pendente</option>
+                            <option>Em andamento</option>
+                            <option>Aguardando aprovação</option>
+                            <option>Concluído</option>
+                            <option>Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="fg"><label for="ppgto">Status Financeiro</label>
+                        <select id="ppgto">
+                            <option>Pendente</option>
+                            <option>Parcial</option>
+                            <option>Pago</option>
+                            <option>Atrasado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="fg"><label for="pobs">Observações / Andamento</label><textarea id="pobs" rows="2"></textarea></div>
+                
+                <div class="mf">
+                    <button class="btn" onclick="closeModal()">Cancelar</button>
+                    <button class="btn bp" onclick="salvarProjeto()">Atualizar Projeto</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ==================== MODAL FINANCEIRO (ÚNICO) ==================== -->
+        <div class="modal" id="mfinanceiro" style="display:none; max-width:580px" role="dialog" aria-modal="true" aria-labelledby="mfinanceiro-title">
+            <div class="mh">
+                <h3 id="mfinanceiro-title"><i class="ti ti-cash-banknote" aria-hidden="true"></i> Gestão Contábil e Fluxo de Caixa</h3>
+                <button class="btn bic bsm" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x" aria-hidden="true"></i></button>
+            </div>
+            <div class="mb" style="max-height: 75vh; overflow-y: auto; padding-top: 14px;">
+                <input type="hidden" id="feid">
+                <div class="fr" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                    <div class="fg" style="margin:0">
+                        <label for="ftipo">Fluxo de Caixa</label>
+                        <select id="ftipo">
+                            <option value="entrada">Receita (Entrada / Cliente)</option>
+                            <option value="saida">Custo (Saída / Despesa / Repasse)</option>
+                        </select>
+                    </div>
+                    <div class="fg" style="margin:0">
+                        <label for="fdata">Data de Competência</label>
+                        <input id="fdata" type="date">
+                    </div>
+                </div>
+                <div class="fg" style="margin-bottom: 12px;">
+                    <label for="fdesc">Descrição Contábil da Operação</label>
+                    <input id="fdesc" placeholder="Ex: Recebimento da 1ª Medição do Projeto de Engenharia">
+                </div>
+                <div class="fr" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                    <div class="fg" style="margin:0">
+                        <label for="fcat">Grupo / Categoria</label>
+                        <select id="fcat">
+                            <option value="Honorário">Honorário Técnico</option>
+                            <option value="Pagamento terceirizado">Pagamento Terceirizado (Repasse)</option>
+                            <option value="Imposto / Taxa">Imposto / Taxa de ART</option>
+                            <option value="Reembolso">Reembolso Logístico</option>
+                            <option value="Adiantamento">Adiantamento de Projeto</option>
+                            <option value="Outros">Outras Despesas Operacionais</option>
+                        </select>
+                    </div>
+                    <div class="fg" style="margin:0">
+                        <label for="fvalor">Valor Nominal Líquido (R$)</label>
+                        <input id="fvalor" type="number" step="0.01" placeholder="Ex: 7500.00">
+                    </div>
+                </div>
+                <div class="fg" style="margin-bottom: 12px;">
+                    <label for="fproj_vinculo"><i class="ti ti-briefcase" aria-hidden="true"></i> Projeto Técnico Vinculado</label>
+                    <select id="fproj_vinculo"><option value="">— Vincular a um Projeto Técnico... —</option></select>
+                </div>
+                <div class="fg" style="margin-bottom: 12px;">
+                    <label for="fterc_vinculo"><i class="ti ti-user-bolt" aria-hidden="true"></i> Engenheiro Terceirizado Alocado (Se aplicável)</label>
+                    <select id="fterc_vinculo"><option value="">— Sem repasse (Custo Interno TCL) —</option></select>
+                </div>
+                <div class="fg">
+                    <label for="fobs">Notas Internas / Registro de Auditoria</label>
+                    <textarea id="fobs" rows="2" placeholder="Informações complementares sobre a transação financeira..."></textarea>
+                </div>
+                <div class="mf" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+                    <button class="btn" onclick="closeModal()">Abortar</button>
+                    <button class="btn bp" onclick="salvarFin()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Processar Lançamento</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== MODAL TERCEIRIZADO (ÚNICO) ==================== -->
+        <div class="modal" id="mterceirizado" style="display:none; max-width:550px" role="dialog" aria-modal="true" aria-labelledby="mterceirizado-t">
+            <div class="mh">
+                <h3 id="mterceirizado-t">Cadastrar Novo Engenheiro Especialista</h3>
+                <button class="btn bic bsm" onclick="closeModal()" aria-label="Fechar modal"><i class="ti ti-x" aria-hidden="true"></i></button>
+            </div>
+            <div class="mb" style="max-height: 75vh; overflow-y: auto; padding-top: 14px;">
+                <input type="hidden" id="teid">
+                <div class="fg" style="margin-bottom: 12px;">
+                    <label for="tnome">Nome Completo do Engenheiro</label>
+                    <input id="tnome" placeholder="Ex: Engenheiro Mecânico Sênior">
+                </div>
+                <div class="fr" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                    <div class="fg" style="margin:0"><label for="tfone">Telefone / WhatsApp</label><input id="tfone" placeholder="(00) 00000-0000"></div>
+                    <div class="fg" style="margin:0"><label for="temail">E-mail de Contato</label><input id="temail" type="email" placeholder="nome@email.com"></div>
+                </div>
+                <div class="fr" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                    <div class="fg" style="margin:0">
+                        <label for="tdisc">Disciplina Técnica Principal</label>
+                        <select id="tdisc">
+                            <option>Mecânica</option>
+                            <option>Estrutura metálica</option>
+                            <option>Arquitetura</option>
+                            <option>Tubulação</option>
+                            <option>Civil</option>
+                            <option>Elétrica</option>
+                            <option>Automação</option>
+                        </select>
+                    </div>
+                    <div class="fg" style="margin:0">
+                        <label for="taval">Avaliação Técnica (1 a 5)</label>
+                        <select id="taval"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+                    </div>
+                </div>
+                <div class="fg" style="margin-bottom: 12px;">
+                    <label for="tultimo">Última Obra / Alocação Ativa</label>
+                    <input id="tultimo" placeholder="Ex: CARAJAS - Galpão de Triagem">
+                </div>
+                <div class="fg">
+                    <label for="tobs">Observações / Restrições Logísticas</label>
+                    <textarea id="tobs" rows="2" placeholder="Notas sobre a homologação do fornecedor..."></textarea>
+                </div>
+                <div class="mf" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+                    <button class="btn" onclick="closeModal()">Abortar</button>
+                    <button class="btn bp" onclick="window.salvarTerceirizado()">Gravar Especialista</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== MODAL DE PROPOSTA (NOVO) ==================== -->
+        <div class="modal" id="mproposta" style="display:none;max-width:800px;" role="dialog" aria-modal="true" aria-labelledby="mproposta-title">
+            <div class="mh">
+                <h3 id="mproposta-title">📄 Elaboração de Proposta Técnica Comercial</h3>
+                <button class="btn bic bsm" onclick="closeModal()" aria-label="Fechar"><i class="ti ti-x"></i></button>
+            </div>
+            <div class="mb" style="max-height:75vh;overflow-y:auto;">
+                <input type="hidden" id="propid">
+                
+                <div class="fr">
+                    <div class="fg"><label>Código</label><input id="prop-codigo" placeholder="PROP-2026-XX"></div>
+                    <div class="fg"><label>Cliente</label><input id="prop-cliente" placeholder="Razão Social"></div>
+                </div>
+                <div class="fr">
+                    <div class="fg"><label>Cidade/UF</label><input id="prop-cidade" placeholder="Ex: Nova Xavantina/MT"></div>
+                    <div class="fg"><label>Valor Global (R$)</label><input id="prop-valor" type="number" step="0.01"></div>
+                </div>
+                <div class="fr">
+                    <div class="fg"><label>Prazo (dias)</label><input id="prop-prazo" type="number" value="90"></div>
+                    <div class="fg"><label>Status</label>
+                        <select id="prop-status">
+                            <option>Em elaboração</option>
+                            <option>Enviada</option>
+                            <option>Aprovada</option>
+                            <option>Recusada</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="fr">
+    <div class="fg"><label>Data de Envio</label><input id="prop-data-envio" type="date"></div>
+    <div class="fg"><label>Data de Criação</label><input id="prop-data-criacao" type="date"></div>
+</div>
+
+
+                <div class="fg"><label>Objeto do Contrato</label>
+                    <input id="prop-objeto" placeholder="Ex: Projeto Executivo para Galpão Industrial 20x40m">
+                </div>
+                
+                <div class="fg"><label>Escopo Técnico / Entregáveis</label>
+                    <textarea id="prop-escopo" rows="6" placeholder="Descreva os entregáveis por disciplina..." style="font-family:monospace;font-size:12px;"></textarea>
+                </div>
+                
+                <div class="fg"><label>Premissas Técnicas</label>
+                    <textarea id="prop-premissas" rows="4" placeholder="Dados de entrada, normas, responsabilidades..." style="font-family:monospace;font-size:12px;"></textarea>
+                </div>
+                
+                <div class="fg"><label>Fora de Escopo (Exclusões)</label>
+                    <textarea id="prop-fora-escopo" rows="4" placeholder="O que está expressamente excluído..." style="font-family:monospace;font-size:12px;"></textarea>
+                </div>
+                
+                <div class="fg"><label>Condições de Pagamento</label>
+                    <textarea id="prop-pagamento" rows="2" placeholder="Ex: 25% sinal + 40% intermediário + 35% final"></textarea>
+                </div>
+                
+<!-- ==================== ALOCAÇÃO DE TERCEIRIZADOS ==================== -->
+<div style="margin-top:10px;border-top:1px dashed #cbd5e1;padding-top:12px;">
+    <label style="font-weight:600;font-size:12px;color:var(--tx1);display:block;margin-bottom:4px;">
+        <i class="ti ti-users"></i> Alocar Especialista Técnico:
+    </label>
+    <div style="display:flex;gap:6px;margin-bottom:8px;">
+        <select id="pterc" style="flex:2;padding:6px;border-radius:4px;border:1px solid #cbd5e1;font-size:12px;" aria-label="Selecionar especialista"></select>
+        <input id="pcusto_terc" type="number" placeholder="Custo R$" style="flex:1;padding:6px;border-radius:4px;border:1px solid #cbd5e1;font-size:12px;" aria-label="Custo do terceirizado">
+        <button type="button" class="btn bp" style="padding:0 12px;font-size:12px;" onclick="addTerc()">Vincular</button>
+    </div>
+    <div id="lista_terceirizados_projeto" style="max-height:120px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:6px;" role="list" aria-label="Terceirizados alocados"></div>
+</div>
+
+<div class="fg" style="margin-top: 8px;">
+    <label for="pcusto">Custo Consolidado de Terceiros (R$)</label>
+    <input id="pcusto" type="number" readonly style="background:#f1f5f9;font-weight:600;color:var(--rd);width:100%;">
+</div>
+
+                <!-- CHECKLIST IA -->
+                <div style="margin-top:10px;border-top:2px solid #6366f1;padding-top:12px;">
+                    <button type="button" class="btn" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;width:100%;font-weight:600;padding:10px;" onclick="gerarChecklistProposta()">
+                        <i class="ti ti-sparkles"></i> ✨ Analisar com Gerente de Contratos IA
+                    </button>
+                    <div id="checklist-proposta-container" style="display:none;margin-top:12px;"></div>
+                </div>
+                
+                <!-- BOTÕES -->
+                <div style="margin-top:15px;border-top:1px solid #e2e8f0;padding-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+                    <button class="btn" style="flex:1;background:#1a365d;color:#fff;font-weight:600;" onclick="gerarTextoProposta()">📝 Gerar Texto</button>
+                    <button class="btn" style="flex:1;background:#10b981;color:#fff;font-weight:600;" onclick="copiarProposta()">📋 Copiar</button>
+                    <button class="btn bp" style="flex:1;" onclick="converterEmProjeto()">✅ Converter em Projeto</button>
+                </div>
+                
+                <div id="proposta-texto-preview" style="display:none;margin-top:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:15px;max-height:300px;overflow-y:auto;">
+                    <pre id="proposta-texto-conteudo" style="font-size:11px;line-height:1.6;white-space:pre-wrap;font-family:monospace;margin:0;"></pre>
+                </div>
+                
+                <div class="mf">
+                    <button class="btn" onclick="closeModal()">Cancelar</button>
+                    <button class="btn bp" onclick="salvarProposta()">💾 Salvar Proposta</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Template PDF (oculto) -->
+        <div id="template-pdf-proposta" style="display: none;">
+            <div style="padding: 50px; font-family: 'Inter', sans-serif; color: #1e293b; line-height: 1.5; background: #ffffff;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #2b6cb0; padding-bottom: 16px; margin-bottom: 24px;">
+                    <div>
+                        <h1 style="margin: 0; font-size: 20px; color: #1a365d; font-weight: 700; letter-spacing: -0.5px;">TCL DYNAMIS ENGENHARIA LTDA</h1>
+                        <p style="margin: 2px 0 0 0; font-size: 10px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Documento Técnico-Comercial — GRC-PMO-2026</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <span id="pdf-codigo-prop" style="font-size: 12px; font-weight: 700; color: #ffffff; background: #1a365d; padding: 6px 14px; border-radius: 4px; font-family: monospace;">PROP-2026-XXXX</span>
+                    </div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #2b6cb0; padding: 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 12px;">
+                    <div><span style="color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 10px; display:inline-block; width: 140px;">Contratante:</span> <strong id="pdf-cliente" style="color: #1e293b;">--</strong></div>
+                    <div><span style="color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 10px; display:inline-block; width: 140px;">Localidade da Obra:</span> <span id="pdf-local" style="color: #334155; font-weight: 500;">--</span></div>
+                    <div><span style="color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 10px; display:inline-block; width: 140px;">Objeto Contratual:</span> <span id="pdf-objeto" style="color: #334155; font-weight: 500;">--</span></div>
+                </div>
+            </div>
+        </div>
+
+  <script>
+    // ============================================
+// TCL DYNAMIS - JAVASCRIPT COMPLETO E FUNCIONAL
+// ============================================
+'use strict';
+
+// Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyADPZY7unD8J0vzGZlhuzT4hvy2WkC8Bhc",
+    authDomain: "gestao-engenharia-25dee.firebaseapp.com",
+    projectId: "gestao-engenharia-25dee",
+    storageBucket: "gestao-engenharia-25dee.firebasestorage.app",
+    messagingSenderId: "638287442376",
+    appId: "1:638287442376:web:c596de19cbfbffe56fd0fd"
+};
+firebase.initializeApp(firebaseConfig);
+const dbFirebase = firebase.firestore();
+const DOC_ID = "tcl_dynamis_dados";
+
+var DB = { projetos: [], financeiro: [], terceirizados: [], propostas: [] };
+const DISCIPLINAS_PADRAO = ["Mecânica", "Estrutura metálica", "Arquitetura", "Tubulação", "Civil", "Elétrica", "Automação"];
+
+const SEED_DATA = {
+    terceirizados: [
+        { id: "t1", nome: "Carlos Silva", fone: "(31) 98888-1111", email: "carlos@eng.com", disc: "Elétrica", aval: 5, ultimo: "Prédio Industrial", obs: "" },
+        { id: "t2", nome: "Mariana Costa", fone: "(31) 97777-2222", email: "mariana@metalica.com", disc: "Estrutura metálica", aval: 4, ultimo: "Galpão Logístico", obs: "" },
+        { id: "t3", nome: "Roberto Souza", fone: "(11) 96666-3333", email: "roberto@civil.com", disc: "Civil", aval: 5, ultimo: "Fundação de Máquinas", obs: "" }
+    ],
+    projetos: [],
+    financeiro: [],
+    propostas: []
+};
+
+if (!window.temporarioTercs) window.temporarioTercs = [];
+var filtroTipoGlobal = 'todos';
+
+// ====================== PERSISTÊNCIA ======================
+async function carregarDB() {
+    try {
+        const doc = await dbFirebase.collection("sistema").doc(DOC_ID).get();
+        if (doc.exists) {
+            const dadosNuvem = doc.data();
+            DB.projetos = dadosNuvem.projetos || [];
+            DB.financeiro = dadosNuvem.financeiro || [];
+            DB.terceirizados = dadosNuvem.terceirizados || [];
+            DB.propostas = dadosNuvem.propostas || [];
+            console.log("✅ Dados carregados:", DB.projetos.length, "projetos,", DB.financeiro.length, "financeiro,", DB.terceirizados.length, "terceirizados");
+        } else {
+            DB = JSON.parse(JSON.stringify(SEED_DATA));
+            console.log("📦 Nenhum dado, usando SEED_DATA");
+        }
+    } catch (error) {
+        console.error("❌ Erro ao carregar:", error);
+        DB = JSON.parse(JSON.stringify(SEED_DATA));
+    }
+    renderizarTudo();
+    atualizarBotaoModoCliente();
+}
+
+async function salvarDB() {
+    try {
+        await dbFirebase.collection("sistema").doc(DOC_ID).set(DB);
+        document.getElementById("svtxt").innerText = "Dados Sincronizados";
+    } catch (error) {
+        document.getElementById("svtxt").innerText = "Erro ao Sincronizar";
+    }
+    renderizarTudo();
+}
+
+function formataMoeda(valor) {
+    return (parseFloat(valor) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function openModal(id) {
+    document.getElementById('ov').style.display = 'flex';
+    const modal = document.getElementById(id);
+    if (modal) { modal.style.display = 'block'; modal.style.zIndex = "1000"; }
+}
+
+function closeModal() {
+    document.getElementById('ov').style.display = 'none';
+    document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+}
+
+// ====================== NAVEGAÇÃO ======================
+function nav(page, el) {
+      // Se estiver em modo cliente, bloqueia abas sigilosas
+    if (modoClienteAtivo) {
+        const abasBloqueadas = ['financeiro', 'terceirizados', 'backup', 'alertas', 'dashboard', 'propostas', 'projetos'];
+        if (abasBloqueadas.includes(page)) {
+            alert('🔒 Modo Cliente ativo. Apenas Entregas Técnicas disponível.');
+            return;
+        }
+    }
+    document.querySelectorAll('.page').forEach(p => { p.classList.remove('on'); p.style.display = 'none'; });
+    const targetPage = document.getElementById(`page-${page}`) || document.getElementById(page);
+    if (targetPage) { targetPage.classList.add('on'); targetPage.style.display = 'block'; }
+    document.querySelectorAll('.ni').forEach(a => a.classList.remove('on'));
+    if (el) el.classList.add('on');
+    
+    const titles = {
+        'dashboard':'Dashboard','kanban':'Kanban','propostas':'Propostas Comerciais',
+        'projetos':'Projetos em Execução','financeiro':'Financeiro','terceirizados':'Terceirizados',
+        'alertas':'Alertas','backup':'Backup'
+    };
+    document.getElementById('tbtitle').textContent = titles[page] || page;
+    
+    gerarBotoesAcao(page);
+    
+    if (page === 'propostas') renderPropostas();
+    else if (page === 'projetos') renderProjetos();
+    else if (page === 'financeiro') renderFinanceiro();
+    else if (page === 'terceirizados') renderTerceirizados();
+    else if (page === 'dashboard') renderDashboard();
+    else if (page === 'kanban') renderKanban();
+    if (page === 'entregas') renderEntregas();
+     if (page === 'alertas') renderAlertas();
+}
+
+function gerarBotoesAcao(page) {
+    const tbacts = document.getElementById('tbacts');
+    if (!tbacts) return;
+    tbacts.innerHTML = '';
+    if (page === 'propostas') tbacts.innerHTML = '<button class="btn bp" onclick="openModalProposta()"><i class="ti ti-plus"></i> Nova Proposta</button>';
+    else if (page === 'financeiro') tbacts.innerHTML = '<button class="btn bp" onclick="openModalFin()"><i class="ti ti-plus"></i> Nova Transação</button>';
+    else if (page === 'terceirizados') tbacts.innerHTML = '<button class="btn bp" onclick="openModalTerc()"><i class="ti ti-plus"></i> Novo Especialista</button>';
+}
+
+function renderizarTudo() {
+    try { renderDashboard(); } catch(e) { console.error(e); }
+    try { renderKanban(); } catch(e) {}
+    try { renderPropostas(); } catch(e) {}
+    try { renderProjetos(); } catch(e) { console.error(e); }
+    try { renderFinanceiro(); } catch(e) { console.error(e); }
+    try { renderTerceirizados(); } catch(e) { console.error(e); }
+    try { renderEntregas(); } catch(e) { console.error(e); }
+    try { renderAlertas(); } catch(e) { console.error(e); }
+}
+
+// ====================== DASHBOARD ======================
+function renderDashboard() {
+    if (!DB.projetos) DB.projetos = [];
+    if (!DB.terceirizados) DB.terceirizados = [];
+    if (!DB.financeiro) DB.financeiro = [];
+
+    // Dentro de renderDashboard(), substitua o cálculo de projetosComDebito e htmlPgto:
+
+const projetosComDebito = DB.projetos.filter(p => {
+    return (p.pgto || '').toLowerCase() !== 'pago' && ['em andamento', 'concluído'].includes((p.status || '').toLowerCase());
+});
+
+let totalDevido = 0, htmlPgto = '';
+projetosComDebito.forEach(p => {
+    // ✅ Aceita tanto 'terceirizados_alocados' quanto 'tercs'
+    const listaTercs = p.terceirizados_alocados || p.tercs || [];
+    const custo = listaTercs.reduce((acc, t) => acc + (Number(t.custo) || 0), 0);
+    totalDevido += custo;
+    
+    const nomes = listaTercs.length > 0
+        ? listaTercs.map(pt => {
+            // ✅ Busca pelo id OU pelo nome direto
+            const found = DB.terceirizados.find(t => t.id === pt.id);
+            return found?.nome || pt.nome || 'Especialista';
+        }).join(', ')
+        : 'Nenhum alocado';
+
+    htmlPgto += `<tr>
+        <td><strong>${p.nome || '-'}</strong></td>
+        <td>${p.cliente || '-'}</td>
+        <td style="color:var(--rd);font-weight:600;">${formataMoeda(custo)}</td>
+        <td><small>${nomes}</small></td>
+        <td><span class="st pendente">${p.pgto || 'Pendente'}</span></td>
+        <td><span class="st andamento">${p.status || '-'}</span></td>
+    </tr>`;
+});
+
+const elTotal = document.getElementById('pgto-total');
+if (elTotal) elTotal.innerText = `Total a Pagar: ${formataMoeda(totalDevido)}`;
+const elTabela = document.getElementById('tpgto');
+if (elTabela) elTabela.innerHTML = htmlPgto || '<tr><td colspan="6">Nenhum repasse pendente.</td></tr>';
+
+    const propostasNaRua = (DB.propostas || []).filter(p =>
+        ['em elaboração', 'enviada'].includes((p.status || '').toLowerCase())
+    );
+    const valorTotalPropostas = propostasNaRua.reduce((acc, p) => acc + (Number(p.valor) || 0), 0);
+
+    const elPropStatus = document.getElementById('propostas-status');
+    if (elPropStatus) elPropStatus.innerText = `${propostasNaRua.length} Proposta${propostasNaRua.length !== 1 ? 's' : ''}`;
+    const elPropTotal = document.getElementById('propostas-total');
+    if (elPropTotal) elPropTotal.innerText = `Total potencial: ${formataMoeda(valorTotalPropostas)}`;
+
+    let htmlProx = '';
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    DB.projetos.forEach(p => {
+        if (!p.entrega || ['concluído','cancelado'].includes((p.status||'').toLowerCase())) return;
+        const d = new Date(p.entrega + 'T00:00:00');
+        const diff = Math.ceil((d - hoje) / 86400000);
+        if (diff >= 0 && diff <= 30) htmlProx += `<tr><td><strong>${p.nome||'-'}</strong></td><td>${p.cliente||'-'}</td><td>${d.toLocaleDateString('pt-BR')}</td><td><strong style="color:var(--rd)">${diff} dias</strong></td><td><span class="st andamento">${p.status}</span></td></tr>`;
+    });
+    const elProx = document.getElementById('tprox');
+    if (elProx) elProx.innerHTML = htmlProx || '<tr><td colspan="5">Nenhuma entrega crítica.</td></tr>';
+
+    // ✅ CORRIGIDO: Ranking de Terceirizados
+const rk = DB.terceirizados.map(t => ({
+    nome: t.nome, 
+    disc: t.disc,
+    faturado: (DB.financeiro || []).reduce((acc, f) => {
+        if ((f.tipo || '').toLowerCase() !== 'saida') return acc;
+        // Verifica se o ID do terceirizado está no campo 'terc' OU se o nome aparece na descrição
+        if (f.terc === t.id) return acc + (Number(f.valor) || 0);
+        if ((f.desc || '').toLowerCase().includes((t.nome || '').toLowerCase())) return acc + (Number(f.valor) || 0);
+        return acc;
+    }, 0)
+})).sort((a, b) => b.faturado - a.faturado).slice(0, 5);
+
+const elRk = document.getElementById('rk');
+if (elRk) {
+    if (rk.length === 0 || rk.every(r => r.faturado === 0)) {
+        elRk.innerHTML = '<div style="color:#94a3b8;font-size:12px;padding:8px;">Nenhum pagamento registrado para terceirizados ainda.</div>';
+    } else {
+        elRk.innerHTML = rk.map((r, i) => {
+            const medalhas = ['🥇', '🥈', '🥉'];
+            return `<div style="display:flex;justify-content:space-between;padding:8px;background:#f8fafc;border-radius:6px;margin-bottom:6px;">
+                <span>${medalhas[i] || '📌'} <strong>${r.nome}</strong> <small>(${r.disc})</small></span>
+                <strong>${formataMoeda(r.faturado)}</strong>
+            </div>`;
+        }).join('');
+    }
+}
+initCharts();
+}
+
+function initCharts() {
+    if (typeof Chart === 'undefined') return;
+    if (typeof ChartDataLabels !== 'undefined') Chart.register(ChartDataLabels);
+
+    function safeRenderChart(id, config) {
+        try {
+            const ctx = document.getElementById(id);
+            if (!ctx) return;
+            const existing = Chart.getChart(ctx);
+            if (existing) existing.destroy();
+            new Chart(ctx, config);
+        } catch (err) {
+            console.error(`Erro no gráfico [${id}]:`, err);
+        }
+    }
+
+    const rec = (DB.financeiro || []).filter(f => (f.tipo || '').toLowerCase() === 'entrada').reduce((a, c) => a + (Number(c.valor) || 0), 0);
+    const cst = (DB.financeiro || []).filter(f => (f.tipo || '').toLowerCase() === 'saida').reduce((a, c) => a + (Number(c.valor) || 0), 0);
+    
+        // ==================== GRÁFICO 1: Fluxo de Caixa (VALORES NO TOPO) ====================
+    safeRenderChart('ch1', {
+        type: 'bar',
+        data: {
+            labels: ['Receitas', 'Custos', 'Lucro Real'],
+            datasets: [{ 
+                data: [rec, cst, rec - cst], 
+                backgroundColor: ['#2563eb', '#eab308', '#16a34a'],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                datalabels: { 
+                    anchor: 'end', 
+                    align: 'top', 
+                    formatter: v => formataMoeda(v), 
+                    font: { weight: 'bold', size: 10 },
+                    color: '#1e293b',
+                    offset: 2,
+                    // ✅ Força mostrar mesmo se for grande
+                    display: true,
+                    clamp: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => formataMoeda(ctx.parsed.y)
+                    }
+                }
+            },
+            scales: { 
+                y: { 
+                    // ✅ Mostra o eixo Y com valores monetários
+                    display: true,
+                    ticks: {
+                        callback: v => formataMoeda(v),
+                        font: { size: 9 }
+                    },
+                    grid: { display: false }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            },
+            // ✅ Aumenta o espaço no topo para os labels
+            layout: {
+                padding: {
+                    top: 30
+                }
+            }
+        }
+    });
+
+    // ==================== GRÁFICO 2: Status do Portfólio ====================
+    const statusList = ['Em andamento', 'Pendente', 'Concluído', 'Cancelado'];
+    const counts = statusList.map(s => (DB.projetos || []).filter(p => (p.status || '').toLowerCase() === s.toLowerCase()).length);
+    
+    safeRenderChart('ch2', {
+        type: 'doughnut',
+        data: { 
+            labels: statusList, 
+            datasets: [{ 
+                data: counts, 
+                backgroundColor: ['#0284c7', '#facc15', '#4ade80', '#dc2626'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }] 
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false, 
+            cutout: '65%',
+            plugins: {
+                legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 }, padding: 15 } },
+                datalabels: { formatter: v => v > 0 ? v + ' proj.' : '', color: '#fff', font: { weight: 'bold', size: 11 } }
+            }
+        }
+    });
+
+    // ==================== GRÁFICO 3: Margem por Cliente ====================
+    const clientesMap = {};
+    (DB.projetos || []).forEach(p => {
+        const cliente = p.cliente || 'Sem cliente';
+        const valor = Number(p.valor) || 0;
+        const custo = Number(p.custo) || 0;
+        if (!clientesMap[cliente]) clientesMap[cliente] = { valor: 0, custo: 0 };
+        clientesMap[cliente].valor += valor;
+        clientesMap[cliente].custo += custo;
+    });
+    
+    const margensClientes = Object.entries(clientesMap)
+        .map(([nome, dados]) => ({ nome, margem: dados.valor - dados.custo }))
+        .sort((a, b) => b.margem - a.margem)
+        .slice(0, 6);
+    
+    safeRenderChart('ch3', {
+        type: 'bar',
+        data: {
+            labels: margensClientes.length > 0 ? margensClientes.map(c => c.nome.substring(0, 20)) : ['Sem dados'],
+            datasets: [{ 
+                label: 'Margem Líquida', 
+                data: margensClientes.length > 0 ? margensClientes.map(c => c.margem) : [0], 
+                backgroundColor: ['#a855f7', '#7c3aed', '#6366f1', '#8b5cf6', '#9333ea', '#6d28d9'],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            indexAxis: 'y', 
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                datalabels: { 
+                    anchor: 'end', 
+                    align: 'right', 
+                    formatter: v => v !== 0 ? formataMoeda(v) : '', 
+                    font: { weight: '600', size: 10 },
+                    color: '#1e293b'
+                }
+            },
+            scales: { 
+                x: { display: true, grid: { display: false }, ticks: { callback: v => formataMoeda(v) } },
+                y: { grid: { display: false } }
+            }
+        }
+    });
+
+    // ==================== GRÁFICO 4: Faturamento Mensal ====================
+    const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const faturamentoMensal = meses.map(() => rec * (0.3 + Math.random() * 0.7) / 6);
+    
+    safeRenderChart('ch4', {
+        type: 'line',
+        data: {
+            labels: meses,
+            datasets: [{
+                label: 'Faturamento (R$)',
+                data: faturamentoMensal,
+                borderColor: '#06b6d4', 
+                backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                fill: true, 
+                tension: 0.4, 
+                pointRadius: 4,
+                pointBackgroundColor: '#06b6d4',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                datalabels: { display: false },
+                tooltip: { callbacks: { label: ctx => formataMoeda(ctx.parsed.y) } }
+            },
+            scales: { 
+                y: { display: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => formataMoeda(v) } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // ==================== GRÁFICO 5: Demanda por Disciplina ====================
+    const disciplinas = DISCIPLINAS_PADRAO || ["Mecânica", "Estrutura metálica", "Arquitetura", "Tubulação", "Civil", "Elétrica", "Automação"];
+    const vDiscs = disciplinas.map(d =>
+        (DB.projetos || []).filter(p => {
+            const discProjeto = p.disciplinas || [];
+            return discProjeto.includes(d);
+        }).length
+    );
+    
+    safeRenderChart('ch5', {
+        type: 'radar',
+        data: {
+            labels: disciplinas.map(d => d.substring(0, 3)),
+            datasets: [{
+                label: 'Projetos Alocados', 
+                data: vDiscs.length > 0 && vDiscs.some(v => v > 0) ? vDiscs : [1, 1, 1, 1, 1, 1, 1],
+                backgroundColor: 'rgba(99, 102, 241, 0.2)', 
+                borderColor: '#6366f1', 
+                pointBackgroundColor: '#6366f1',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                borderWidth: 2,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { display: false }, 
+                datalabels: { display: true, formatter: v => v > 0 ? v : '', font: { weight: 'bold', size: 10 }, color: '#6366f1' } 
+            },
+            scales: { 
+                r: { 
+                    ticks: { stepSize: 1, showLabelBackdrop: false, font: { size: 10 } },
+                    pointLabels: { font: { size: 11, weight: '600' } },
+                    grid: { color: '#e2e8f0' }
+                } 
+            }
+        }
+    });
+}
+
+// ====================== KANBAN ======================
+function renderKanban(search = '') {
+    const container = document.getElementById('kanban');
+    if (!container) return;
+    
+    const kfterc = document.getElementById('kfterc')?.value || '';
+    const kfcli = document.getElementById('kfcli')?.value || '';
+    const kfpgto = document.getElementById('kfpgto')?.value || '';
+    
+    const s = search.toLowerCase();
+    
+    // Colunas do Kanban
+    const cols = [
+        { id: 'em_elaboracao', titulo: '📝 Em Elaboração', tipo: 'proposta' },
+        { id: 'enviada', titulo: '📤 Enviadas / Aguardando', tipo: 'proposta' },
+        { id: 'Pendente', titulo: '⏳ Projetos Pendentes', tipo: 'projeto' },
+        { id: 'Em andamento', titulo: '🏗️ Em Andamento', tipo: 'projeto' },
+        { id: 'Aguardando aprovação', titulo: '🔍 Aguardando Aprovação', tipo: 'projeto' },
+        { id: 'Concluído', titulo: '✅ Concluído', tipo: 'projeto' }
+    ];
+    
+    container.innerHTML = cols.map(col => {
+        let cards = [];
+        
+        if (col.tipo === 'proposta') {
+            // Filtra propostas por status
+            let propostasFiltradas = (DB.propostas || []).filter(p => {
+                const statusLower = (p.status || '').toLowerCase();
+                if (col.id === 'em_elaboracao') return statusLower === 'em elaboração';
+                if (col.id === 'enviada') return statusLower === 'enviada';
+                return false;
+            });
+            
+            // Aplica filtros
+            if (search) {
+                propostasFiltradas = propostasFiltradas.filter(p => 
+                    (p.codigo || '').toLowerCase().includes(s) || 
+                    (p.cliente || '').toLowerCase().includes(s) || 
+                    (p.objeto || '').toLowerCase().includes(s)
+                );
+            }
+            if (kfcli) {
+                propostasFiltradas = propostasFiltradas.filter(p => p.cliente === kfcli);
+            }
+            
+                        // Gera cards de proposta
+            cards = propostasFiltradas.map(p => `
+                <div class="kb-card" onclick="editarProposta('${p.id}')" style="border-left: 4px solid #6366f1;">
+                    <div class="kb-card-t" style="display: flex; justify-content: space-between; align-items: start;">
+                        <span style="font-size: 12px; font-weight: 700; color: #6366f1;">📄 ${p.codigo || 'Sem código'}</span>
+                        <span style="font-size: 10px; background: #e0e7ff; color: #4338ca; padding: 2px 8px; border-radius: 10px;">PROPOSTA</span>
+                    </div>
+                    <div class="kb-card-c" style="font-size: 13px; font-weight: 600; margin: 6px 0;">${p.cliente || 'Sem cliente'}</div>
+                    <div style="font-size: 11px; color: #64748b; margin-bottom: 6px; line-height: 1.3;">${p.objeto || 'Sem descrição'}</div>
+                    <div class="kb-card-f" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 700; color: #6366f1;">${formataMoeda(p.valor)}</span>
+                        <span style="font-size: 10px; color: #64748b;">⏰ ${p.prazo || '-'} dias</span>
+                    </div>
+                    ${p.dataEnvio ? `<div style="font-size: 10px; color: #10b981; margin-top: 4px;">📤 Enviada: ${new Date(p.dataEnvio + 'T00:00:00').toLocaleDateString('pt-BR')}</div>` : ''}
+                    ${p.cidade ? `<div style="font-size: 10px; color: #94a3b8; margin-top: 2px;">📍 ${p.cidade}</div>` : ''}
+                </div>
+            `);
+            
+        } else {
+            // Filtra projetos por status
+            let projetosFiltrados = (DB.projetos || []).filter(p => {
+                return (p.status || '') === col.id;
+            });
+            
+            // Aplica filtros
+            if (search) {
+                projetosFiltrados = projetosFiltrados.filter(p => 
+                    (p.nome || '').toLowerCase().includes(s) || 
+                    (p.cliente || '').toLowerCase().includes(s)
+                );
+            }
+            if (kfcli) {
+                projetosFiltrados = projetosFiltrados.filter(p => p.cliente === kfcli);
+            }
+            if (kfpgto) {
+                projetosFiltrados = projetosFiltrados.filter(p => (p.pgto || '') === kfpgto);
+            }
+            if (kfterc) {
+                projetosFiltrados = projetosFiltrados.filter(p => {
+                    const tercs = p.terceirizados_alocados || p.tercs || [];
+                    return tercs.some(t => t.id === kfterc);
+                });
+            }
+            
+            // Gera cards de projeto
+            cards = projetosFiltrados.map(p => {
+                const prazoRestante = p.entrega ? Math.ceil((new Date(p.entrega + 'T00:00:00') - new Date()) / 86400000) : null;
+                const statusPgto = (p.pgto || 'Pendente').toLowerCase();
+                
+                return `
+                <div class="kb-card" onclick="editarProjeto('${p.id}')" style="border-left: 4px solid ${statusPgto === 'pago' ? '#10b981' : statusPgto === 'atrasado' ? '#ef4444' : '#f59e0b'};">
+                    <div class="kb-card-t" style="display: flex; justify-content: space-between; align-items: start;">
+                        <span style="font-size: 12px; font-weight: 700;">🏗️ ${p.prop || p.proposta || 'Sem código'}</span>
+                        <span style="font-size: 10px; background: ${statusPgto === 'pago' ? '#d1fae5' : statusPgto === 'atrasado' ? '#fee2e2' : '#fef3c7'}; color: ${statusPgto === 'pago' ? '#065f46' : statusPgto === 'atrasado' ? '#991b1b' : '#92400e'}; padding: 2px 8px; border-radius: 10px;">
+                            ${p.pgto || 'Pendente'}
+                        </span>
+                    </div>
+                    <div class="kb-card-c" style="font-size: 13px; font-weight: 600; margin: 6px 0;">${p.cliente || 'Sem cliente'}</div>
+                    <div style="font-size: 11px; color: #64748b; margin-bottom: 6px; line-height: 1.3;">${p.nome || 'Sem descrição'}</div>
+                    <div class="kb-card-f" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 700; color: #1e293b;">${formataMoeda(p.valor)}</span>
+                        <span style="font-size: 10px; color: #64748b;">
+                            ${prazoRestante !== null ? (prazoRestante < 0 ? '⚠️ Atrasado' : `⏰ ${prazoRestante} dias`) : '📅 Sem prazo'}
+                        </span>
+                    </div>
+                    ${p.entrega ? `<div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">📅 Entrega: ${new Date(p.entrega + 'T00:00:00').toLocaleDateString('pt-BR')}</div>` : ''}
+                </div>
+                `;
+            });
+        }
+        
+        return `
+        <div class="kb-col">
+            <div class="kb-col-h">
+                <span>${col.titulo}</span>
+                <strong style="background: ${col.tipo === 'proposta' ? '#e0e7ff' : '#dbeafe'}; color: ${col.tipo === 'proposta' ? '#4338ca' : '#1e40af'}; padding: 2px 10px; border-radius: 12px; font-size: 13px;">
+                    ${cards.length}
+                </strong>
+            </div>
+            <div class="kb-cards">
+                ${cards.length > 0 ? cards.join('') : '<div style="padding: 20px; text-align: center; color: #94a3b8; font-size: 12px;">Nenhum item</div>'}
+            </div>
+        </div>`;
+    }).join('');
+    
+    // Popula os filtros
+    popularFiltrosKanban();
+}
+
+function popularFiltrosKanban() {
+    // Popula filtro de terceirizados
+    const selTerc = document.getElementById('kfterc');
+    if (selTerc && selTerc.options.length <= 1) {
+        const currentValue = selTerc.value;
+        selTerc.innerHTML = '<option value="">Todos terceirizados</option>';
+        (DB.terceirizados || []).forEach(t => {
+            selTerc.innerHTML += `<option value="${t.id}">${t.nome} (${t.disc})</option>`;
+        });
+        selTerc.value = currentValue;
+    }
+    
+    // Popula filtro de clientes (propostas + projetos)
+    const selCli = document.getElementById('kfcli');
+    if (selCli && selCli.options.length <= 1) {
+        const currentValue = selCli.value;
+        selCli.innerHTML = '<option value="">Todos clientes</option>';
+        const clientes = new Set();
+        (DB.propostas || []).forEach(p => { if (p.cliente) clientes.add(p.cliente); });
+        (DB.projetos || []).forEach(p => { if (p.cliente) clientes.add(p.cliente); });
+        clientes.forEach(c => {
+            selCli.innerHTML += `<option value="${c}">${c}</option>`;
+        });
+        selCli.value = currentValue;
+    }
+}
+
+// ====================== PROJETOS ======================
+function renderProjetos(busca = '') {
+    const tbody = document.getElementById('tabela-projetos-corpo');
+    if (!tbody) return;
+    const fst = document.getElementById('pfst')?.value || '', fpg = document.getElementById('pfpg')?.value || '', fcl = document.getElementById('pfcl')?.value || '';
+    const filtrados = DB.projetos.filter(p => {
+        if (busca && !`${p.prop||p.proposta||''} ${p.cliente||''} ${p.nome||''}`.toLowerCase().includes(busca.toLowerCase())) return false;
+        if (fst && p.status !== fst) return false;
+        if (fpg && p.pgto !== fpg) return false;
+        if (fcl && p.cliente !== fcl) return false;
+        return true;
+    });
+    let totBruto = 0, totTerc = 0;
+    tbody.innerHTML = '';
+    if (filtrados.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:24px;">Nenhum projeto encontrado.</td></tr>';
+    } else {
+        filtrados.forEach(p => {
+            const vB = parseFloat(p.valor)||0, vT = parseFloat(p.custo)||0;
+            totBruto += vB; totTerc += vT;
+            tbody.innerHTML += `<tr>
+                <td><strong>${p.prop || p.proposta || '-'}</strong></td><td>${p.cliente||'-'}</td><td style="max-width:200px;font-size:11px;">${p.nome||'-'}</td>
+                <td>${formataMoeda(vB)}</td><td>${formataMoeda(vT)}</td><td style="font-weight:600;color:${vB-vT>=0?'var(--gn)':'var(--rd)'}">${formataMoeda(vB-vT)}</td>
+                <td>${p.entrega?p.entrega.split('-').reverse().join('/'):'-'}</td>
+                <td><span class="st andamento">${p.status||'-'}</span></td><td><span class="st pendente">${p.pgto||'-'}</span></td>
+                <td style="text-align:right;"><button class="btn bsm bedit" onclick="editarProjeto('${p.id}')"><i class="ti ti-edit"></i></button> <button class="btn bsm bdanger" onclick="deletarProjeto('${p.id}')"><i class="ti ti-trash"></i></button></td>
+            </tr>`;
+        });
+    }
+    const sumRow = document.getElementById('proj-sum');
+    if (sumRow) sumRow.innerHTML = `<div>${filtrados.length} projeto(s)</div><div>Bruto: <strong>${formataMoeda(totBruto)}</strong> | Terceiros: <strong>${formataMoeda(totTerc)}</strong> | Margem: <strong>${formataMoeda(totBruto-totTerc)}</strong></div>`;
+}
+
+function openModalProj() {
+    alert('Projetos são criados a partir de propostas aprovadas.\nVá para a aba "Propostas" e clique em "Converter em Projeto".');
+}
+
+function editarProjeto(id) {
+     const p = DB.projetos.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('peid').value = p.id;
+    document.getElementById('pprop').value = p.prop || p.proposta || '';
+    document.getElementById('pcliente').value = p.cliente || '';
+    document.getElementById('pnome').value = p.nome || '';
+    document.getElementById('pvalor').value = p.valor || 0;
+    document.getElementById('pcusto').value = p.custo || 0;
+    document.getElementById('pentrega').value = p.entrega || '';
+    document.getElementById('pprazo_dias').value = p.prazo_dias || '';
+    document.getElementById('pinicio').value = p.dataInicio || ''; // ✅ Novo
+    document.getElementById('pemissao').value = p.dataEmissao || ''; // ✅ Novo
+    document.getElementById('pstatus').value = p.status || 'Pendente';
+    document.getElementById('ppgto').value = p.pgto || 'Pendente';
+    document.getElementById('pobs').value = p.obs || '';
+    
+    // Dentro da função editarProjeto(), atualize a parte de disciplinas:
+const discView = document.getElementById('disciplinas-projeto-view');
+if (discView) {
+    const disciplinas = p.disciplinas || [];
+    discView.innerHTML = (disciplinas.length > 0 
+        ? disciplinas.map(d => `<span style="background:var(--bll);color:var(--bl);padding:4px 10px;border-radius:12px;font-size:11px;">${d}</span>`).join('') 
+        : '<span style="color:#94a3b8;">Nenhuma disciplina</span>'
+    ) + `<button class="btn bsm" style="margin-left:8px;font-size:10px;" onclick="editarDisciplinasProjeto('${p.id}')">✏️ Editar</button>`;
+}
+
+    const tercView = document.getElementById('terceirizados-projeto-view');
+    if (tercView) {
+        const tercs = p.terceirizados_alocados || p.tercs || [];
+        tercView.innerHTML = tercs.length > 0 ? tercs.map(t => {
+            const info = DB.terceirizados.find(x => x.id === t.id);
+            return `<div style="display:flex;justify-content:space-between;padding:4px 0;">${info?.nome || t.nome || 'Especialista'} <span style="color:var(--rd);">${formataMoeda(t.custo||0)}</span></div>`;
+        }).join('') : '<span style="color:#94a3b8;">Nenhum terceirizado</span>';
+    }
+    openModal('mprojeto');
+}
+
+async function salvarProjeto() {
+    const id = document.getElementById('peid').value;
+    if (!id) return;
+    const idx = DB.projetos.findIndex(p => p.id === id);
+    if (idx === -1) return;
+    DB.projetos[idx].entrega = document.getElementById('pentrega').value;
+    DB.projetos[idx].dataInicio = document.getElementById('pinicio').value; // ✅ Novo
+    DB.projetos[idx].dataEmissao = document.getElementById('pemissao').value; // ✅ Novo
+    DB.projetos[idx].status = document.getElementById('pstatus').value;
+    DB.projetos[idx].pgto = document.getElementById('ppgto').value;
+    DB.projetos[idx].obs = document.getElementById('pobs').value;
+    closeModal();
+    await salvarDB();
+}
+
+async function deletarProjeto(id) { if(confirm('Excluir projeto?')) { DB.projetos = DB.projetos.filter(p => p.id !== id); await salvarDB(); } }
+
+// ====================== ALOCAÇÃO DE TERCEIRIZADOS ======================
+function preencherSelectTerc() {
+    const sel = document.getElementById('pterc');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">-- Selecione um Especialista --</option>' + 
+        DB.terceirizados.map(t => `<option value="${t.id}">${t.nome} (${t.disc})</option>`).join('');
+}
+
+function addTerc() {
+    const idTerc = document.getElementById('pterc')?.value;
+    const custo = parseFloat(document.getElementById('pcusto_terc')?.value) || 0;
+    if (!idTerc) return alert('Selecione um especialista!');
+    if (window.temporarioTercs.some(x => x.id === idTerc)) return alert('Já alocado!');
+    window.temporarioTercs.push({ id: idTerc, custo });
+    document.getElementById('pterc').value = '';
+    document.getElementById('pcusto_terc').value = '';
+    atualizarListaTercsModal();
+    recalcularCusto();
+}
+
+function atualizarListaTercsModal() {
+    const c = document.getElementById('lista_terceirizados_projeto');
+    if (!c) return;
+    c.innerHTML = window.temporarioTercs.length === 0 ? '<div style="color:#64748b;font-size:12px;">Nenhum alocado.</div>' :
+        window.temporarioTercs.map((item, i) => {
+            const info = DB.terceirizados.find(t => t.id === item.id);
+            return `<div style="display:flex;justify-content:space-between;background:#f8fafc;border:1px solid #e2e8f0;padding:6px 10px;border-radius:6px;margin-bottom:4px;font-size:12px;">
+                <span><strong>${info?.nome||'Especialista'}</strong> (${info?.disc||''})</span>
+                <span style="color:#dc2626;">${formataMoeda(item.custo)}</span>
+                <button class="btn bsm bdanger" onclick="removerTercAlocado(${i})"><i class="ti ti-trash"></i></button>
+            </div>`;
+        }).join('');
+}
+
+function removerTercAlocado(i) { window.temporarioTercs.splice(i,1); atualizarListaTercsModal(); recalcularCusto(); }
+function recalcularCusto() { 
+    const el = document.getElementById('pcusto'); 
+    if (el) {
+        const total = window.temporarioTercs.reduce((a, c) => a + (parseFloat(c.custo) || 0), 0);
+        el.value = total;
+        console.log('Custo atualizado:', total); // Para debug
+    } else {
+        console.error('Elemento #pcusto não encontrado!');
+    }
+}
+
+// ====================== FINANCEIRO ======================
+function fchip(tipo, el) { document.querySelectorAll('.chip').forEach(c => c.classList.remove('on')); if(el) el.classList.add('on'); filtroTipoGlobal = tipo; renderFinanceiro(); }
+
+function preencherSelectsFinanceiro() {
+    // Popula select de Projetos
+    const selectProj = document.getElementById('fproj_vinculo');
+    if (selectProj) {
+        const projetos = DB.projetos || [];
+        console.log('📊 Populando projetos:', projetos.length); // Debug
+        
+        selectProj.innerHTML = '<option value="">— Vincular a um Projeto Técnico... —</option>';
+        
+        projetos.forEach(p => {
+            const option = document.createElement('option');
+            option.value = p.id;
+            option.textContent = `${p.prop || p.proposta || 'Sem código'} - ${p.nome || 'Sem nome'} (${p.cliente || 'Sem cliente'})`;
+            selectProj.appendChild(option);
+        });
+    } else {
+        console.error('❌ Select fproj_vinculo não encontrado!');
+    }
+    
+    // Popula select de Terceirizados
+    const selectTerc = document.getElementById('fterc_vinculo');
+    if (selectTerc) {
+        const terceirizados = DB.terceirizados || [];
+        console.log('📊 Populando terceirizados:', terceirizados.length); // Debug
+        
+        selectTerc.innerHTML = '<option value="">— Sem repasse (Custo Interno TCL) —</option>';
+        
+        terceirizados.forEach(t => {
+            const option = document.createElement('option');
+            option.value = t.id;
+            option.textContent = `${t.nome || 'Sem nome'} - ${t.disc || 'Geral'}`;
+            selectTerc.appendChild(option);
+        });
+    } else {
+        console.error('❌ Select fterc_vinculo não encontrado!');
+    }
+}
+
+function popularFiltrosAuditoria() {
+    // Popula filtro de Projetos
+    const filtroProj = document.getElementById('filtro_fin_proj');
+    if (filtroProj) {
+        const valorAtual = filtroProj.value;
+        filtroProj.innerHTML = '<option value="">— Ver todos os Projetos da TCL —</option>';
+        
+        (DB.projetos || []).forEach(p => {
+            const option = document.createElement('option');
+            option.value = p.id;
+            option.textContent = `${p.prop || p.proposta || 'Sem código'} - ${p.nome || 'Sem nome'} (${p.cliente || 'Sem cliente'})`;
+            filtroProj.appendChild(option);
+        });
+        
+        filtroProj.value = valorAtual;
+    }
+    
+    // Popula filtro de Terceirizados
+    const filtroTerc = document.getElementById('filtro_fin_terc');
+    if (filtroTerc) {
+        const valorAtual = filtroTerc.value;
+        filtroTerc.innerHTML = '<option value="">— Ver todos os Terceirizados Homologados —</option>';
+        
+        (DB.terceirizados || []).forEach(t => {
+            const option = document.createElement('option');
+            option.value = t.id;
+            option.textContent = `${t.nome || 'Sem nome'} - ${t.disc || 'Geral'}`;
+            filtroTerc.appendChild(option);
+        });
+        
+        filtroTerc.value = valorAtual;
+    }
+}
+
+function atualizarAlocacaoTerceirizados(terceirizadosAlocados, nomeProjeto) {
+    if (!terceirizadosAlocados || terceirizadosAlocados.length === 0) return;
+    
+    terceirizadosAlocados.forEach(t => {
+        const terc = DB.terceirizados.find(x => x.id === t.id);
+        if (terc) {
+            terc.ultimo = nomeProjeto || 'Projeto recente';
+            terc.dataUltimaAlocacao = new Date().toISOString();
+            terc.totalProjetos = (terc.totalProjetos || 0) + 1;
+            
+            console.log(`✅ Atualizado: ${terc.nome} → ${terc.ultimo} (Total: ${terc.totalProjetos} projetos)`);
+        }
+    });
+}
+
+function renderFinanceiro() {
+    const tbody = document.getElementById('tabela-financeiro-corpo');
+    if (!tbody) return;
+    
+    // ✅ POPULA OS FILTROS DE AUDITORIA
+    popularFiltrosAuditoria();
+    
+    // Aplica filtros de auditoria
+    const filtroProj = document.getElementById('filtro_fin_proj')?.value || '';
+    const filtroTerc = document.getElementById('filtro_fin_terc')?.value || '';
+    
+    const busca = (document.getElementById('fsearch')?.value || '').toLowerCase();
+    const cat = document.getElementById('ffcat')?.value || '';
+    let totE = 0, totS = 0;
+    
+    const filtrados = (DB.financeiro || []).filter(f => {
+        if (filtroTipoGlobal !== 'todos' && f.tipo !== filtroTipoGlobal) return false;
+        if (busca && !(f.desc||'').toLowerCase().includes(busca)) return false;
+        if (cat && f.cat !== cat && f.categoria !== cat) return false;
+        // ✅ Filtros de auditoria
+        if (filtroProj && f.projeto !== filtroProj) return false;
+        if (filtroTerc && f.terc !== filtroTerc) return false;
+        return true;
+    });
+    
+    // Gera a tabela
+    tbody.innerHTML = filtrados.length === 0 
+        ? '<tr><td colspan="7" style="text-align:center;padding:24px;">Nenhum lançamento.</td></tr>' 
+        : filtrados.map(f => {
+            const v = parseFloat(f.valor)||0;
+            if (f.tipo === 'entrada') totE += v; else totS += v;
+            return `<tr>
+                <td>${f.data||'-'}</td>
+                <td><strong>${f.desc||'-'}</strong></td>
+                <td>${f.cat || f.categoria || 'Outros'}</td>
+                <td>${f.projNome || f.projetoNome || 'Geral'}</td>
+                <td><span class="st" style="background:${f.tipo==='entrada'?'var(--gnl)':'var(--rdl)'};color:${f.tipo==='entrada'?'var(--gn)':'var(--rd)'}">${f.tipo==='entrada'?'RECEITA':'CUSTO'}</span></td>
+                <td style="font-weight:600;color:${f.tipo==='entrada'?'var(--gn)':'var(--rd)'}">${f.tipo==='entrada'?'+':'-'} ${formataMoeda(v)}</td>
+                <td style="text-align:right;">
+                    <button class="btn bsm bedit" onclick="editarFinanceiro('${f.id}')"><i class="ti ti-edit"></i></button>
+                    <button class="btn bsm bdanger" onclick="deletarFinanceiro('${f.id}')"><i class="ti ti-trash"></i></button>
+                </td>
+            </tr>`;
+        }).join('');
+    
+    // Atualiza cards de resumo
+    document.getElementById('fin-entradas').innerText = formataMoeda(totE);
+    document.getElementById('fin-saidas').innerText = formataMoeda(totS);
+    document.getElementById('fin-saldo').innerText = formataMoeda(totE - totS);
+    document.getElementById('fin-sum').innerHTML = `<strong>Receitas:</strong> ${formataMoeda(totE)} | <strong>Custos:</strong> ${formataMoeda(totS)} | <strong>Saldo:</strong> ${formataMoeda(totE-totS)}`;
+}
+
+function openModalFin(editando = false) {
+    // 🔑 GARANTE que o ID está vazio para novos lançamentos
+    document.getElementById('feid').value = '';
+    
+    // Limpa os campos
+    document.getElementById('fdesc').value = '';
+    document.getElementById('fvalor').value = '';
+    document.getElementById('fdata').value = new Date().toISOString().split('T')[0];
+    document.getElementById('fobs').value = '';
+    document.getElementById('ftipo').value = 'entrada';
+    document.getElementById('fcat').value = 'Honorário';
+    
+    // Abre o modal
+    openModal('mfinanceiro');
+    
+    // Popula os selects com delay
+    setTimeout(() => {
+        const selectProj = document.getElementById('fproj_vinculo');
+        const selectTerc = document.getElementById('fterc_vinculo');
+        
+        // ... resto do código de população dos selects ...
+        
+        // Força o reset dos selects
+        if (selectProj) selectProj.value = '';
+        if (selectTerc) selectTerc.value = '';
+        
+        console.log('🆕 Modal resetado para NOVO lançamento');
+    }, 300);
+}
+
+async function salvarFin() {
+    const idExistente = document.getElementById('feid').value;
+    
+    // Gera ID único garantido (timestamp + random)
+    const id = idExistente || 'f_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    const desc = document.getElementById('fdesc').value.trim();
+    const valor = parseFloat(document.getElementById('fvalor').value) || 0;
+    const tipo = document.getElementById('ftipo').value;
+    const data = document.getElementById('fdata').value;
+    const cat = document.getElementById('fcat').value;
+    const projetoId = document.getElementById('fproj_vinculo').value;
+    const tercId = document.getElementById('fterc_vinculo').value;
+    const obs = document.getElementById('fobs').value;
+    
+    if (!desc || valor <= 0) {
+        alert('Preencha a descrição e um valor maior que zero!');
+        return;
+    }
+    
+    // Busca informações adicionais para exibição
+    const projetoInfo = DB.projetos.find(p => p.id === projetoId);
+    const tercInfo = DB.terceirizados.find(t => t.id === tercId);
+    
+    const lanc = {
+        id: id,
+        desc: desc,
+        valor: valor,
+        tipo: tipo,
+        data: data,
+        cat: cat,
+        categoria: cat,
+        projeto: projetoId,
+        projNome: projetoInfo?.nome || '',
+        projetoNome: projetoInfo?.nome || '',
+        projCodigo: projetoInfo?.prop || projetoInfo?.proposta || '',
+        terc: tercId,
+        tercNome: tercInfo?.nome || '',
+        obs: obs,
+        dataCriacao: new Date().toISOString()
+    };
+    
+    // Se for edição, atualiza; se for novo, adiciona
+    const idx = idExistente ? DB.financeiro.findIndex(f => f.id === idExistente) : -1;
+    
+    if (idx > -1) {
+        DB.financeiro[idx] = lanc;
+        console.log('✏️ Lançamento ATUALIZADO:', lanc.desc);
+    } else {
+        DB.financeiro.push(lanc);
+        console.log('✅ Novo lançamento CRIADO:', lanc.desc, '| ID:', lanc.id);
+    }
+    
+    console.log('📊 Total de lançamentos:', DB.financeiro.length);
+    
+    closeModal();
+    await salvarDB();
+}
+
+function editarFinanceiro(id) {
+    const f = DB.financeiro.find(x => x.id === id);
+    if (!f) return;
+    
+    openModalFin(); // Isso já popula os selects
+    
+    // Preenche os campos com um pequeno delay
+    setTimeout(() => {
+        document.getElementById('feid').value = f.id || '';
+        document.getElementById('fdesc').value = f.desc || '';
+        document.getElementById('fvalor').value = f.valor || 0;
+        document.getElementById('ftipo').value = f.tipo || 'entrada';
+        document.getElementById('fdata').value = f.data || '';
+        document.getElementById('fcat').value = f.cat || f.categoria || 'Honorário';
+        document.getElementById('fobs').value = f.obs || '';
+        
+        if (f.projeto) {
+            const sel = document.getElementById('fproj_vinculo');
+            if (sel) sel.value = f.projeto;
+        }
+        if (f.terc) {
+            const sel = document.getElementById('fterc_vinculo');
+            if (sel) sel.value = f.terc;
+        }
+    }, 300);
+}
+
+async function deletarFinanceiro(id) { if(confirm('Excluir?')) { DB.financeiro = DB.financeiro.filter(f => f.id !== id); await salvarDB(); } }
+
+// ====================== TERCEIRIZADOS ======================
+function renderTerceirizados(busca = '') {
+    const tbody = document.getElementById('tterc');
+    if (!tbody) return;
+    const termo = busca.toLowerCase();
+    const filtrados = DB.terceirizados.filter(t => !termo || (t.nome||'').toLowerCase().includes(termo) || (t.disc||'').toLowerCase().includes(termo) || (t.email||'').toLowerCase().includes(termo));
+    
+    tbody.innerHTML = filtrados.length === 0 
+        ? '<tr><td colspan="7" style="text-align:center;padding:24px;">Nenhum encontrado.</td></tr>' 
+        : filtrados.map(t => {
+            const totalProj = t.totalProjetos || 0;
+            const ultimaData = t.dataUltimaAlocacao 
+                ? new Date(t.dataUltimaAlocacao).toLocaleDateString('pt-BR') 
+                : '-';
+            
+            return `<tr>
+                <td>
+                    <strong>${t.nome||'-'}</strong>
+                    ${totalProj > 0 ? `<br><small style="color:#64748b;">📊 ${totalProj} projeto(s)</small>` : ''}
+                </td>
+                <td><span style="background:var(--bll);color:var(--bl);padding:4px 8px;border-radius:4px;font-size:11px;">${t.disc||'-'}</span></td>
+                <td>${t.fone||'-'}</td>
+                <td>${t.email||'-'}</td>
+                <td><span style="color:var(--amm)">${'★'.repeat(t.aval||5)}</span></td>
+                <td>
+                    <strong>${t.ultimo||'Nenhuma'}</strong>
+                    ${ultimaData !== '-' ? `<br><small style="color:#94a3b8;">📅 ${ultimaData}</small>` : ''}
+                </td>
+                <td style="text-align:center;">
+                    <button class="btn bsm bedit" onclick="editarTerceirizado('${t.id}')"><i class="ti ti-edit"></i></button> 
+                    <button class="btn bsm bdanger" onclick="deletarTerc('${t.id}')"><i class="ti ti-trash"></i></button>
+                </td>
+            </tr>`;
+        }).join('');
+}
+
+function openModalTerc() {
+    ['teid','tnome','tfone','temail','tultimo','tobs'].forEach(c => { const el = document.getElementById(c); if(el) el.value = ''; });
+    document.getElementById('tdisc').value = 'Mecânica';
+    document.getElementById('taval').value = '5';
+    openModal('mterceirizado');
+}
+
+// Força a população dos selects quando o modal financeiro for aberto
+document.addEventListener('DOMContentLoaded', function() {
+    // Observa mudanças no DOM para detectar quando o modal é aberto
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.target.id === 'mfinanceiro' && 
+                mutation.target.style.display === 'block') {
+                console.log('🔔 Modal financeiro aberto, populando selects...');
+                setTimeout(() => {
+                    preencherSelectsFinanceiro();
+                }, 100);
+            }
+        });
+    });
+    
+    const modalFinanceiro = document.getElementById('mfinanceiro');
+    if (modalFinanceiro) {
+        observer.observe(modalFinanceiro, { 
+            attributes: true, 
+            attributeFilter: ['style'] 
+        });
+    }
+});
+
+async function salvarTerceirizado() {
+    const id = document.getElementById('teid').value || 't_' + Date.now();
+    const terc = {
+        id, nome: document.getElementById('tnome').value, fone: document.getElementById('tfone').value,
+        email: document.getElementById('temail').value, disc: document.getElementById('tdisc').value,
+        aval: parseInt(document.getElementById('taval').value)||5,
+        ultimo: document.getElementById('tultimo').value, obs: document.getElementById('tobs').value
+    };
+    if (!terc.nome) return alert('Nome é obrigatório!');
+    const idx = DB.terceirizados.findIndex(t => t.id === id);
+    if (idx > -1) DB.terceirizados[idx] = terc; else DB.terceirizados.push(terc);
+    closeModal(); await salvarDB();
+}
+
+function editarTerceirizado(id) {
+    const t = DB.terceirizados.find(x => x.id === id);
+    if (!t) return;
+    openModalTerc();
+    document.getElementById('teid').value = t.id;
+    document.getElementById('tnome').value = t.nome || '';
+    document.getElementById('tfone').value = t.fone || '';
+    document.getElementById('temail').value = t.email || '';
+    document.getElementById('tdisc').value = t.disc || 'Mecânica';
+    document.getElementById('taval').value = t.aval || 5;
+    document.getElementById('tultimo').value = t.ultimo || '';
+    document.getElementById('tobs').value = t.obs || '';
+}
+
+async function deletarTerc(id) { if(confirm('Excluir?')) { DB.terceirizados = DB.terceirizados.filter(t => t.id !== id); await salvarDB(); } }
+
+// ====================== PROPOSTAS ======================
+if (!DB.propostas) DB.propostas = [];
+
+function openModalProposta() {
+    document.getElementById('propid').value = '';
+    document.getElementById('prop-codigo').value = 'PROP-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 99)).padStart(2, '0');
+    document.getElementById('prop-cliente').value = '';
+    document.getElementById('prop-cidade').value = '';
+    document.getElementById('prop-valor').value = '';
+    document.getElementById('prop-prazo').value = '90';
+    document.getElementById('prop-status').value = 'Em elaboração';
+    document.getElementById('prop-objeto').value = '';
+    document.getElementById('prop-escopo').value = '';
+    document.getElementById('prop-premissas').value = '';
+    document.getElementById('prop-fora-escopo').value = '';
+    document.getElementById('prop-pagamento').value = '25% sinal + 40% intermediário + 35% final';
+    document.getElementById('prop-data-envio').value = ''; // ✅ Novo
+    document.getElementById('prop-data-criacao').value = new Date().toISOString().split('T')[0]; // ✅ Novo
+    document.getElementById('checklist-proposta-container').style.display = 'none';
+    document.getElementById('proposta-texto-preview').style.display = 'none';
+    
+    window.temporarioTercs = [];
+    preencherSelectTerc();
+    atualizarListaTercsModal();
+    document.getElementById('pcusto').value = '0';
+    
+    openModal('mproposta');
+}
+
+async function salvarProposta() {
+    const id = document.getElementById('propid').value || 'prop_' + Date.now();
+    const proposta = {
+        id, 
+        codigo: document.getElementById('prop-codigo').value,
+        cliente: document.getElementById('prop-cliente').value,
+        cidade: document.getElementById('prop-cidade').value,
+        valor: parseFloat(document.getElementById('prop-valor').value) || 0,
+        prazo: document.getElementById('prop-prazo').value,
+        status: document.getElementById('prop-status').value,
+        objeto: document.getElementById('prop-objeto').value,
+        escopo: document.getElementById('prop-escopo').value,
+        premissas: document.getElementById('prop-premissas').value,
+        foraEscopo: document.getElementById('prop-fora-escopo').value,
+        pagamento: document.getElementById('prop-pagamento').value,
+        terceirizados_alocados: [...(window.temporarioTercs || [])],
+        custoTerceirizados: (window.temporarioTercs || []).reduce((a, c) => a + (parseFloat(c.custo) || 0), 0),
+        dataEnvio: document.getElementById('prop-data-envio').value, // ✅ Agora é manual
+        dataCriacao: document.getElementById('prop-data-criacao').value, // ✅ Agora é manual
+    };
+    if (!proposta.cliente || !proposta.objeto) return alert('Preencha Cliente e Objeto.');
+    
+    // Se marcou como "Enviada" e não preencheu data, preenche automaticamente
+    if (proposta.status === 'Enviada' && !proposta.dataEnvio) {
+        proposta.dataEnvio = new Date().toISOString().split('T')[0];
+        document.getElementById('prop-data-envio').value = proposta.dataEnvio;
+    }
+    
+    const idx = DB.propostas.findIndex(p => p.id === id);
+    if (idx > -1) DB.propostas[idx] = proposta; 
+    else DB.propostas.push(proposta);
+    closeModal(); 
+    await salvarDB();
+}
+
+function renderPropostas(busca = '') {
+    const tbody = document.getElementById('tabela-propostas-corpo');
+    if (!tbody) return;
+    const fst = document.getElementById('propst')?.value || '';
+    let filtradas = DB.propostas || [];
+    if (busca) { const s = busca.toLowerCase(); filtradas = filtradas.filter(p => (p.codigo||'').toLowerCase().includes(s) || (p.cliente||'').toLowerCase().includes(s) || (p.objeto||'').toLowerCase().includes(s)); }
+    if (fst) filtradas = filtradas.filter(p => p.status === fst);
+    let totalValor = 0;
+    tbody.innerHTML = filtradas.length === 0 ? '<tr><td colspan="8" style="text-align:center;padding:24px;">Nenhuma proposta.</td></tr>' :
+        filtradas.map(p => {
+            totalValor += p.valor || 0;
+            const sc = {'Em elaboração':'st andamento','Enviada':'st pendente','Aprovada':'st concluido','Recusada':'st atrasado'}[p.status] || 'st andamento';
+            return `<tr><td><strong>${p.codigo||'-'}</strong></td><td>${p.cliente||'-'}</td><td style="max-width:200px;font-size:11px;">${p.objeto||'-'}</td><td>${formataMoeda(p.valor)}</td><td>${p.prazo||'-'} dias</td><td><span class="${sc}">${p.status||'-'}</span></td><td>${p.dataEnvio?new Date(p.dataEnvio+'T00:00:00').toLocaleDateString('pt-BR'):'-'}</td><td style="text-align:right;"><button class="btn bsm bedit" onclick="editarProposta('${p.id}')"><i class="ti ti-edit"></i></button> <button class="btn bsm bdanger" onclick="deletarProposta('${p.id}')"><i class="ti ti-trash"></i></button></td></tr>`;
+        }).join('');
+    const sumRow = document.getElementById('prop-sum');
+    if (sumRow) sumRow.innerHTML = `<div>${filtradas.length} proposta(s)</div><div>Valor total: <strong>${formataMoeda(totalValor)}</strong></div>`;
+}
+
+function editarProposta(id) {
+    const p = DB.propostas.find(x => x.id === id);
+    if (!p) return;
+    
+    document.getElementById('propid').value = p.id;
+    document.getElementById('prop-codigo').value = p.codigo || '';
+    document.getElementById('prop-cliente').value = p.cliente || '';
+    document.getElementById('prop-cidade').value = p.cidade || '';
+    document.getElementById('prop-valor').value = p.valor || '';
+    document.getElementById('prop-prazo').value = p.prazo || '90';
+    document.getElementById('prop-status').value = p.status || 'Em elaboração';
+    document.getElementById('prop-objeto').value = p.objeto || '';
+    document.getElementById('prop-escopo').value = p.escopo || '';
+    document.getElementById('prop-premissas').value = p.premissas || '';
+    document.getElementById('prop-fora-escopo').value = p.foraEscopo || '';
+    document.getElementById('prop-pagamento').value = p.pagamento || '';
+    document.getElementById('prop-data-envio').value = p.dataEnvio || ''; // ✅ Novo
+    document.getElementById('prop-data-criacao').value = p.dataCriacao || ''; // ✅ Novo
+    document.getElementById('checklist-proposta-container').style.display = 'none';
+    document.getElementById('proposta-texto-preview').style.display = 'none';
+    
+    window.temporarioTercs = p.terceirizados_alocados ? [...p.terceirizados_alocados] : [];
+    preencherSelectTerc();
+    atualizarListaTercsModal();
+    document.getElementById('pcusto').value = p.custoTerceirizados || 0;
+    
+    openModal('mproposta');
+}
+
+async function deletarProposta(id) { if(confirm('Excluir?')) { DB.propostas = DB.propostas.filter(p => p.id !== id); await salvarDB(); } }
+
+function converterEmProjeto() {
+    const id = document.getElementById('propid').value;
+    if (!id) return alert('Salve a proposta primeiro!');
+    const p = DB.propostas.find(x => x.id === id);
+    if (!p) return;
+    if (p.status !== 'Aprovada' && !confirm('Proposta não está Aprovada. Converter mesmo assim?')) return;
+    
+    // Extrai disciplinas do escopo da proposta automaticamente
+    const disciplinasEncontradas = [];
+    const escopo = (p.escopo || '').toLowerCase();
+    
+    // Procura por disciplinas mencionadas no escopo
+    const disciplinasMap = {
+        'mecânica': 'Mecânica',
+        'mecanica': 'Mecânica',
+        'estrutura metálica': 'Estrutura metálica',
+        'estrutura metalica': 'Estrutura metálica',
+        'arquitetura': 'Arquitetura',
+        'arquitetonico': 'Arquitetura',
+        'tubulação': 'Tubulação',
+        'tubulacao': 'Tubulação',
+        'civil': 'Civil',
+        'fundação': 'Civil',
+        'fundacao': 'Civil',
+        'elétrica': 'Elétrica',
+        'eletrica': 'Elétrica',
+        'automação': 'Automação',
+        'automacao': 'Automação'
+    };
+    
+    for (const [termo, disciplina] of Object.entries(disciplinasMap)) {
+        if (escopo.includes(termo) && !disciplinasEncontradas.includes(disciplina)) {
+            disciplinasEncontradas.push(disciplina);
+        }
+    }
+    
+    // Se não encontrou nenhuma, pergunta ao usuário
+    let disciplinasFinal = disciplinasEncontradas;
+    if (disciplinasFinal.length === 0) {
+        const discSelecionadas = prompt(
+            'Não foi possível identificar as disciplinas automaticamente.\n\n' +
+            'Digite as disciplinas separadas por vírgula:\n' +
+            'Ex: Mecânica, Civil, Elétrica\n\n' +
+            'Disciplinas disponíveis: ' + DISCIPLINAS_PADRAO.join(', ')
+        );
+        if (discSelecionadas) {
+            disciplinasFinal = discSelecionadas.split(',').map(d => d.trim()).filter(d => d.length > 0);
+        }
+    }
+    
+    // Cria o projeto com disciplinas
+     const projeto = {
+        id: 'p_' + Date.now(),
+        prop: p.codigo,
+        proposta: p.codigo,
+        cliente: p.cliente,
+        nome: p.objeto,
+        valor: p.valor,
+        entrega: new Date(Date.now() + (p.prazo || 90) * 86400000).toISOString().split('T')[0],
+        dataInicio: new Date().toISOString().split('T')[0], // ✅ Data de início
+        dataEmissao: new Date().toISOString().split('T')[0], // ✅ Data de emissão
+        status: 'Pendente',
+        pgto: 'Pendente',
+        custo: p.custoTerceirizados || 0,
+        terceirizados_alocados: p.terceirizados_alocados || [],
+        disciplinas: disciplinasFinal,
+        cidade: p.cidade,
+        prazo_dias: p.prazo,
+        escopo_detalhado: p.escopo,
+        premissas: p.premissas,
+        fora_escopo: p.foraEscopo,
+        obs: 'Convertido da proposta ' + p.codigo
+    };
+    
+    // Cria template automático de entregas (1 item por disciplina)
+    projeto.entregas = {};
+    disciplinasFinal.forEach(disc => {
+        projeto.entregas[disc] = {
+            itens: [{
+                id: 'e_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                desc: 'Entrega Final - ' + disc,
+                prev: projeto.entrega || '',
+                entregue: false,
+                dataReal: '',
+                obs: 'Item gerado automaticamente na conversão. Edite conforme necessário.'
+            }]
+        };
+    });
+    projeto.obsEntregas = '';
+
+    DB.projetos.push(projeto);
+    p.status = 'Aprovada';
+    
+    // Atualiza última alocação dos terceirizados
+    atualizarAlocacaoTerceirizados(p.terceirizados_alocados || [], p.objeto);
+    
+    closeModal();
+    salvarDB().then(() => { 
+        alert('✅ Projeto convertido com sucesso!\nDisciplinas: ' + (disciplinasFinal.length > 0 ? disciplinasFinal.join(', ') : 'Nenhuma'));
+        nav('projetos'); 
+    });
+}
+
+// Função para editar disciplinas de um projeto existente
+function editarDisciplinasProjeto(projetoId) {
+    const projeto = DB.projetos.find(p => p.id === projetoId);
+    if (!projeto) return;
+    
+    const disciplinasAtuais = projeto.disciplinas || [];
+    const discStr = prompt(
+        'Editar disciplinas do projeto:\n\n' +
+        'Disciplinas atuais: ' + (disciplinasAtuais.length > 0 ? disciplinasAtuais.join(', ') : 'Nenhuma') + '\n\n' +
+        'Digite as disciplinas separadas por vírgula:\n' +
+        'Disponíveis: ' + DISCIPLINAS_PADRAO.join(', '),
+        disciplinasAtuais.join(', ')
+    );
+    
+    if (discStr !== null) {
+        projeto.disciplinas = discStr.split(',').map(d => d.trim()).filter(d => d.length > 0);
+        salvarDB();
+        renderProjetos();
+    }
+}
+
+function gerarChecklistProposta() {
+    const container = document.getElementById('checklist-proposta-container');
+    container.style.display = 'block';
+    const cliente = document.getElementById('prop-cliente')?.value || 'Cliente';
+    const perguntas = [
+        { q: `📋 ${cliente} possui ART/RRT anterior?`, impacto: 'Se NÃO, adicionar 15%.' },
+        { q: `🏗️ Local possui infraestrutura?`, impacto: 'Remoto exige diárias.' },
+        { q: `💰 Valor cobre todos os custos?`, impacto: 'Definir reembolsos.' },
+        { q: `⏰ Prazo considera aprovação?`, impacto: 'Atraso do cliente não altera prazo.' },
+        { q: `📄 ART em nome da TCL?`, impacto: 'Taxa adicional.' },
+        { q: `🔍 Memorial descritivo formal?`, impacto: 'Sem TR, validar por e-mail.' },
+        { q: `🛡️ Seguro RC profissional?`, impacto: '~1,5% do contrato.' },
+        { q: `⚖️ Contrato global ou H/H?`, impacto: 'H/H exige controle.' },
+    ];
+    container.innerHTML = `<div style="background:#fefce8;border:1px solid #facc15;padding:12px;border-radius:6px;margin-bottom:12px;"><strong>⚠️ CHECKLIST DE BLINDAGEM</strong></div>` +
+        perguntas.map((item, i) => `<div style="background:#fff;border:1px solid #e2e8f0;padding:10px;border-radius:6px;margin-bottom:8px;"><p style="font-weight:600;font-size:11px;">${i+1}. ${item.q}</p><p style="font-size:10px;color:#64748b;">💡 ${item.impacto}</p><div style="display:flex;gap:10px;"><label style="font-size:10px;"><input type="radio" name="check_${i}" value="sim"> ✅ Sim</label><label style="font-size:10px;"><input type="radio" name="check_${i}" value="nao"> ❌ Não</label><label style="font-size:10px;"><input type="radio" name="check_${i}" value="pendente"> ❓ Verificar</label></div></div>`).join('');
+}
+
+function gerarTextoProposta() {
+    const p = {
+        codigo: document.getElementById('prop-codigo')?.value || 'PROP-XXXX',
+        cliente: document.getElementById('prop-cliente')?.value || '[CLIENTE]',
+        cidade: document.getElementById('prop-cidade')?.value || '[CIDADE]',
+        valor: parseFloat(document.getElementById('prop-valor')?.value) || 0,
+        prazo: document.getElementById('prop-prazo')?.value || '90',
+        objeto: document.getElementById('prop-objeto')?.value || '[OBJETO]',
+        escopo: document.getElementById('prop-escopo')?.value || '',
+        premissas: document.getElementById('prop-premissas')?.value || '',
+        foraEscopo: document.getElementById('prop-fora-escopo')?.value || '',
+    };
+    const hoje = new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'});
+    const texto = `PROPOSTA TÉCNICA COMERCIAL - ${p.codigo}\nTCL DYNAMIS ENGENHARIA LTDA.\n${'='.repeat(60)}\n\n1. SUMÁRIO\n${p.objeto}, em ${p.cidade}.\n\n2. ESCOPO\n${p.escopo}\n\n3. PREMISSAS\n${p.premissas}\n\n4. FORA DE ESCOPO\n${p.foraEscopo}\n\n5. PRAZO: ${p.prazo} dias\n6. VALOR: ${formataMoeda(p.valor)}\n\nEmitido em: ${hoje}\nTulio Leite | (31) 98220-9893`;
+    document.getElementById('proposta-texto-conteudo').textContent = texto;
+    document.getElementById('proposta-texto-preview').style.display = 'block';
+}
+
+function copiarProposta() {
+    const texto = document.getElementById('proposta-texto-conteudo')?.textContent;
+    if (!texto) return alert('Clique em "Gerar Texto" primeiro!');
+    navigator.clipboard.writeText(texto).then(() => alert('✅ Copiado!'));
+}
+
+// ====================== BACKUP ======================
+function doExport() { const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(DB,null,2)],{type:'application/json'})); a.download='backup-tcl.json'; a.click(); }
+function doImport(input) { const r=new FileReader(); r.onload=async function(e){ try{ const d=JSON.parse(e.target.result); DB=d; await salvarDB(); }catch(err){ alert('Arquivo inválido!'); } }; r.readAsText(input.files[0]); }
+function doCSV(tipo) { let csv=''; if(tipo==='projetos'){ csv='Código,Cliente,Nome,Valor\n'; DB.projetos.forEach(p=>csv+=`"${p.prop||p.proposta||''}","${p.cliente}","${p.nome}","${p.valor}"\n`); } else if(tipo==='financeiro'){ csv='Data,Descrição,Tipo,Valor\n'; DB.financeiro.forEach(f=>csv+=`"${f.data}","${f.desc}","${f.tipo}","${f.valor}"\n`); } else if(tipo==='terceirizados'){ csv='Nome,Disciplina,Telefone,Email\n'; DB.terceirizados.forEach(t=>csv+=`"${t.nome}","${t.disc}","${t.fone}","${t.email}"\n`); } const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv'})); a.download=`${tipo}.csv`; a.click(); }
+function doLimpar() { if(confirm('Apagar TUDO?')) { DB=JSON.parse(JSON.stringify(SEED_DATA)); salvarDB(); } }
+
+// ====================== SIMULADOR ======================
+function calcularPrecoVenda() {
+    const custo=parseFloat(document.getElementById('calc-custo')?.value)||0;
+    const imp=parseFloat(document.getElementById('calc-imposto')?.value)||0;
+    const adm=parseFloat(document.getElementById('calc-adm')?.value)||0;
+    const lucro=parseFloat(document.getElementById('calc-lucro')?.value)||0;
+    const total=(imp+adm+lucro)/100;
+    const preco=total<1?custo/(1-total):0;
+    document.getElementById('calc-resultado').innerHTML=custo===0?'Aguardando dados...':`<strong>${formataMoeda(preco)}</strong>`;
+}
+
+// ====================== ENTREGAS TÉCNICAS ======================
+var filtroEntregasGlobal = 'todos';
+
+function filtroEntregas(tipo, el) {
+    document.querySelectorAll('#page-entregas .chip').forEach(c => c.classList.remove('on'));
+    if(el) el.classList.add('on');
+    filtroEntregasGlobal = tipo;
+    renderEntregas();
+}
+
+function renderEntregas() {
+    const container = document.getElementById('entregas-container');
+    if (!container) return;
+    
+    // Pega apenas projetos ativos
+    const projetosAtivos = (DB.projetos || []).filter(p => 
+        ['Pendente', 'Em andamento', 'Aguardando aprovação'].includes(p.status || '')
+    );
+    
+    if (projetosAtivos.length === 0) {
+        container.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#64748b;">Nenhum projeto ativo com entregas para gerenciar.</div>';
+        return;
+    }
+    
+    let html = '';
+    
+    projetosAtivos.forEach(projeto => {
+        // Inicializa entregas se não existir
+        if (!projeto.entregas) projeto.entregas = {};
+        
+        // Calcula progresso
+        let totalItens = 0, itensEntregues = 0, temAtrasado = false;
+        const hoje = new Date(); hoje.setHours(0,0,0,0);
+        
+        Object.values(projeto.entregas || {}).forEach(disc => {
+            (disc.itens || []).forEach(item => {
+                totalItens++;
+                if (item.entregue) {
+                    itensEntregues++;
+                } else if (item.prev) {
+                    const dataPrev = new Date(item.prev + 'T00:00:00');
+                    if (dataPrev < hoje) temAtrasado = true;
+                }
+            });
+        });
+        
+        const progresso = totalItens > 0 ? Math.round((itensEntregues / totalItens) * 100) : 0;
+        const disciplinas = projeto.disciplinas || Object.keys(projeto.entregas || {});
+        
+        // Aplica filtro
+        if (filtroEntregasGlobal === 'pendentes' && progresso === 100) return;
+        if (filtroEntregasGlobal === 'atrasados' && !temAtrasado) return;
+        
+        html += `
+        <div class="card" style="margin-bottom: 16px; border-left: 4px solid ${temAtrasado ? '#ef4444' : progresso === 100 ? '#10b981' : '#3b82f6'};">
+            <div style="padding: 16px; cursor: pointer;" onclick="toggleEntregasProjeto('${projeto.id}')">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <strong style="font-size: 15px;">🏗️ ${projeto.prop || projeto.proposta || '-'} - ${projeto.nome || 'Sem nome'}</strong>
+                        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
+                            ${projeto.cliente || 'Sem cliente'} | 
+                            Disciplinas: ${disciplinas.length > 0 ? disciplinas.join(', ') : 'Nenhuma'} |
+                            Prazo: ${projeto.entrega ? new Date(projeto.entrega + 'T00:00:00').toLocaleDateString('pt-BR') : 'Não definido'}
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 13px; font-weight: 600; color: ${progresso === 100 ? '#10b981' : temAtrasado ? '#ef4444' : '#3b82f6'};">
+                            ${progresso}% concluído (${itensEntregues}/${totalItens})
+                        </div>
+                        ${temAtrasado ? '<span style="font-size: 11px; color: #ef4444; font-weight: 600;">⚠️ Itens atrasados!</span>' : ''}
+                    </div>
+                </div>
+                <div style="margin-top: 10px; background: #f1f5f9; border-radius: 8px; height: 8px; overflow: hidden;">
+                    <div style="width: ${progresso}%; height: 100%; background: ${progresso === 100 ? '#10b981' : temAtrasado ? '#ef4444' : '#3b82f6'}; border-radius: 8px; transition: width 0.3s;"></div>
+                </div>
+            </div>
+            
+            <div id="entregas-${projeto.id}" style="display: none; padding: 0 16px 16px 16px; border-top: 1px solid #e2e8f0;">
+                ${renderDisciplinasEntregas(projeto)}
+            </div>
+        </div>`;
+    });
+    
+    container.innerHTML = html || '<div class="card" style="text-align:center;padding:40px;color:#64748b;">Nenhum resultado para o filtro selecionado.</div>';
+}
+
+function toggleEntregasProjeto(projetoId) {
+    const div = document.getElementById('entregas-' + projetoId);
+    if (div) {
+        div.style.display = div.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+function renderDisciplinasEntregas(projeto) {
+    if (!projeto.entregas) projeto.entregas = {};
+    
+    const disciplinas = projeto.disciplinas || Object.keys(projeto.entregas);
+    
+    // Garante que todas as disciplinas do projeto tenham entrada em entregas
+    disciplinas.forEach(disc => {
+        if (!projeto.entregas[disc]) {
+            projeto.entregas[disc] = { itens: [] };
+        }
+    });
+    
+    let html = '';
+    
+    disciplinas.forEach(disc => {
+        const dados = projeto.entregas[disc] || { itens: [] };
+        const terc = (projeto.terceirizados_alocados || []).find(t => {
+            const info = DB.terceirizados.find(x => x.id === t.id);
+            return info && info.disc === disc;
+        });
+        const nomeTerc = terc ? (DB.terceirizados.find(x => x.id === terc.id)?.nome || 'Não alocado') : 'Não alocado';
+        
+        html += `
+        <div style="margin-top: 16px; padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <strong style="font-size: 14px;">📐 ${disc}</strong>
+                <small style="color: #64748b;">👷 ${nomeTerc}</small>
+            </div>`;
+        
+        (dados.itens || []).forEach((item, i) => {
+            const atrasado = !item.entregue && item.prev && new Date(item.prev + 'T00:00:00') < new Date().setHours(0,0,0,0);
+            
+            html += `
+            <div style="display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; flex-wrap: wrap;">
+                <input type="checkbox" ${item.entregue ? 'checked' : ''} 
+                    onchange="toggleItemEntrega('${projeto.id}', '${disc}', ${i})" 
+                    style="width: 18px; height: 18px; cursor: pointer;">
+                <span style="flex: 1; min-width: 150px; font-size: 13px; ${item.entregue ? 'text-decoration: line-through; color: #10b981;' : atrasado ? 'color: #ef4444; font-weight: 600;' : ''}">
+                    ${item.desc || 'Novo item'}
+                </span>
+                <input type="date" value="${item.prev || ''}" 
+                    onchange="atualizarDataPrev('${projeto.id}', '${disc}', ${i}, this.value)"
+                    style="width: 130px; font-size: 11px; padding: 4px; border: 1px solid #e2e8f0; border-radius: 4px;">
+                ${item.entregue ? 
+                    `<span style="font-size: 11px; color: #10b981;">✅ ${item.dataReal ? new Date(item.dataReal + 'T00:00:00').toLocaleDateString('pt-BR') : 'Entregue'}</span>` : 
+                    atrasado ? '<span style="font-size: 11px; color: #ef4444;">⚠️ Atrasado</span>' : 
+                    '<span style="font-size: 11px; color: #94a3b8;">⏳ Pendente</span>'
+                }
+                <button class="btn bsm" onclick="toggleObsEntrega('${projeto.id}', '${disc}', ${i})" title="Observações">💬</button>
+                <button class="btn bsm bdanger" onclick="removerItemEntrega('${projeto.id}', '${disc}', ${i})">🗑️</button>
+            </div>
+            
+            <div id="obs-${projeto.id}-${disc.replace(/[^a-zA-Z0-9]/g,'')}-${i}" style="display: none; padding: 8px; margin: 4px 0; background: #fffbeb; border-radius: 4px;">
+                <textarea placeholder="Observações sobre este item..." 
+                    onchange="atualizarObsEntrega('${projeto.id}', '${disc}', ${i}, this.value)"
+                    style="width: 100%; font-size: 11px; padding: 6px; border: 1px solid #fcd34d; border-radius: 4px; resize: vertical;" rows="2">${item.obs || ''}</textarea>
+            </div>`;
+        });
+        
+        html += `
+            <div style="display: flex; gap: 8px; margin-top: 10px;">
+                <input type="text" id="novo-item-${projeto.id}-${disc.replace(/[^a-zA-Z0-9]/g,'')}" 
+                    placeholder="Novo item para ${disc}..." 
+                    style="flex: 1; font-size: 11px; padding: 6px; border: 1px solid #e2e8f0; border-radius: 4px;">
+                <input type="date" id="nova-data-${projeto.id}-${disc.replace(/[^a-zA-Z0-9]/g,'')}" 
+                    style="width: 130px; font-size: 11px; padding: 6px; border: 1px solid #e2e8f0; border-radius: 4px;">
+                <button class="btn bp" style="font-size: 11px; padding: 6px 12px;" 
+                    onclick="adicionarItemEntrega('${projeto.id}', '${disc}')">+ Adicionar</button>
+            </div>
+        </div>`;
+    });
+    
+    // Observação geral do projeto
+    html += `
+    <div style="margin-top: 16px; padding: 12px; background: #fefce8; border-radius: 8px; border: 1px solid #facc15;">
+        <strong style="font-size: 13px;">📝 Observações Gerais do Projeto:</strong>
+        <textarea id="obs-geral-${projeto.id}" 
+            onchange="atualizarObsGeralProjeto('${projeto.id}', this.value)"
+            style="width: 100%; font-size: 11px; padding: 8px; margin-top: 6px; border: 1px solid #fcd34d; border-radius: 4px; resize: vertical;" 
+            rows="2">${projeto.obsEntregas || ''}</textarea>
+    </div>`;
+    
+    return html;
+}
+
+// Funções de manipulação
+function adicionarItemEntrega(projetoId, disciplina) {
+    const projeto = DB.projetos.find(p => p.id === projetoId);
+    if (!projeto) return;
+    
+    if (!projeto.entregas) projeto.entregas = {};
+    if (!projeto.entregas[disciplina]) projeto.entregas[disciplina] = { itens: [] };
+    
+    const descEl = document.getElementById(`novo-item-${projetoId}-${disciplina.replace(/[^a-zA-Z0-9]/g,'')}`);
+    const dataEl = document.getElementById(`nova-data-${projetoId}-${disciplina.replace(/[^a-zA-Z0-9]/g,'')}`);
+    
+    const desc = descEl?.value?.trim();
+    if (!desc) return alert('Digite a descrição do item!');
+    
+    projeto.entregas[disciplina].itens.push({
+        id: 'e_' + Date.now(),
+        desc: desc,
+        prev: dataEl?.value || '',
+        entregue: false,
+        dataReal: '',
+        obs: ''
+    });
+    
+    if (descEl) descEl.value = '';
+    if (dataEl) dataEl.value = '';
+    
+    salvarDB().then(() => renderEntregas());
+}
+
+function toggleItemEntrega(projetoId, disciplina, index) {
+    const projeto = DB.projetos.find(p => p.id === projetoId);
+    if (!projeto?.entregas?.[disciplina]?.itens?.[index]) return;
+    
+    const item = projeto.entregas[disciplina].itens[index];
+    item.entregue = !item.entregue;
+    
+    if (item.entregue) {
+        item.dataReal = new Date().toISOString().split('T')[0];
+    } else {
+        item.dataReal = '';
+    }
+    
+    salvarDB().then(() => renderEntregas());
+}
+
+function atualizarDataPrev(projetoId, disciplina, index, valor) {
+    const projeto = DB.projetos.find(p => p.id === projetoId);
+    if (!projeto?.entregas?.[disciplina]?.itens?.[index]) return;
+    projeto.entregas[disciplina].itens[index].prev = valor;
+    salvarDB();
+}
+
+function atualizarObsEntrega(projetoId, disciplina, index, valor) {
+    const projeto = DB.projetos.find(p => p.id === projetoId);
+    if (!projeto?.entregas?.[disciplina]?.itens?.[index]) return;
+    projeto.entregas[disciplina].itens[index].obs = valor;
+    salvarDB();
+}
+
+function toggleObsEntrega(projetoId, disciplina, index) {
+    const div = document.getElementById(`obs-${projetoId}-${disciplina.replace(/[^a-zA-Z0-9]/g,'')}-${index}`);
+    if (div) div.style.display = div.style.display === 'none' ? 'block' : 'none';
+}
+
+function removerItemEntrega(projetoId, disciplina, index) {
+    if (!confirm('Remover este item?')) return;
+    const projeto = DB.projetos.find(p => p.id === projetoId);
+    if (!projeto?.entregas?.[disciplina]) return;
+    projeto.entregas[disciplina].itens.splice(index, 1);
+    salvarDB().then(() => renderEntregas());
+}
+
+function atualizarObsGeralProjeto(projetoId, valor) {
+    const projeto = DB.projetos.find(p => p.id === projetoId);
+    if (!projeto) return;
+    projeto.obsEntregas = valor;
+    salvarDB();
+}
+
+// ====================== ALERTAS ======================
+var filtroAlertaGlobal = 'todos';
+
+function filtroAlertas(tipo, el) {
+    document.querySelectorAll('#page-alertas .chip').forEach(c => c.classList.remove('on'));
+    if(el) el.classList.add('on');
+    filtroAlertaGlobal = tipo;
+    renderAlertas();
+}
+
+function gerarAlertas() {
+    const alertas = [];
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const daqui7dias = new Date(hoje); daqui7dias.setDate(daqui7dias.getDate() + 7);
+    const daqui15dias = new Date(hoje); daqui15dias.setDate(daqui15dias.getDate() + 15);
+    
+    // 1. Itens de entrega atrasados
+    (DB.projetos || []).forEach(projeto => {
+        if (!projeto.entregas) return;
+        
+        Object.entries(projeto.entregas).forEach(([disciplina, dados]) => {
+            (dados.itens || []).forEach(item => {
+                if (!item.entregue && item.prev) {
+                    const dataPrev = new Date(item.prev + 'T00:00:00');
+                    if (dataPrev < hoje) {
+                        alertas.push({
+                            tipo: 'atraso',
+                            prioridade: 'alta',
+                            projeto: projeto.nome || projeto.prop || 'Sem nome',
+                            projetoId: projeto.id,
+                            mensagem: `⚠️ ${item.desc} (${disciplina}) atrasado desde ${dataPrev.toLocaleDateString('pt-BR')}`,
+                            data: item.prev
+                        });
+                    }
+                }
+            });
+        });
+    });
+    
+    // 2. Entregas próximas do prazo (7 dias)
+    (DB.projetos || []).forEach(projeto => {
+        if (!projeto.entregas) return;
+        
+        Object.entries(projeto.entregas).forEach(([disciplina, dados]) => {
+            (dados.itens || []).forEach(item => {
+                if (!item.entregue && item.prev) {
+                    const dataPrev = new Date(item.prev + 'T00:00:00');
+                    if (dataPrev >= hoje && dataPrev <= daqui7dias) {
+                        const diasRestantes = Math.ceil((dataPrev - hoje) / 86400000);
+                        alertas.push({
+                            tipo: 'prazo',
+                            prioridade: 'media',
+                            projeto: projeto.nome || projeto.prop || 'Sem nome',
+                            projetoId: projeto.id,
+                            mensagem: `⏰ ${item.desc} (${disciplina}) - ${diasRestantes} dia(s) restante(s)`,
+                            data: item.prev
+                        });
+                    }
+                }
+            });
+        });
+    });
+    
+    // 3. Projetos próximos da data limite (15 dias)
+    (DB.projetos || []).forEach(projeto => {
+        if (['Concluído', 'Cancelado'].includes(projeto.status || '')) return;
+        if (projeto.entrega) {
+            const dataEntrega = new Date(projeto.entrega + 'T00:00:00');
+            if (dataEntrega >= hoje && dataEntrega <= daqui15dias) {
+                const diasRestantes = Math.ceil((dataEntrega - hoje) / 86400000);
+                alertas.push({
+                    tipo: 'prazo',
+                    prioridade: diasRestantes <= 7 ? 'alta' : 'media',
+                    projeto: projeto.nome || projeto.prop || 'Sem nome',
+                    projetoId: projeto.id,
+                    mensagem: `📅 Projeto completo vence em ${diasRestantes} dia(s) - ${dataEntrega.toLocaleDateString('pt-BR')}`,
+                    data: projeto.entrega
+                });
+            }
+        }
+    });
+    
+    // 4. Pagamentos pendentes de terceirizados
+    (DB.projetos || []).forEach(projeto => {
+        if (['Concluído', 'Cancelado'].includes(projeto.status || '')) return;
+        if ((projeto.pgto || '').toLowerCase() === 'pago') return;
+        
+        const tercs = projeto.terceirizados_alocados || [];
+        if (tercs.length > 0) {
+            const custoTotal = tercs.reduce((acc, t) => acc + (Number(t.custo) || 0), 0);
+            alertas.push({
+                tipo: 'pgto',
+                prioridade: (projeto.pgto || '').toLowerCase() === 'atrasado' ? 'alta' : 'media',
+                projeto: projeto.nome || projeto.prop || 'Sem nome',
+                projetoId: projeto.id,
+                mensagem: `💰 Repasse pendente: ${formataMoeda(custoTotal)} - Status: ${projeto.pgto || 'Pendente'}`,
+                data: projeto.entrega || ''
+            });
+        }
+    });
+    
+    // Ordena por prioridade (alta primeiro) e depois por data
+    alertas.sort((a, b) => {
+        if (a.prioridade === 'alta' && b.prioridade !== 'alta') return -1;
+        if (a.prioridade !== 'alta' && b.prioridade === 'alta') return 1;
+        return (a.data || '').localeCompare(b.data || '');
+    });
+    
+    return alertas;
+}
+
+function renderAlertas() {
+    const container = document.getElementById('alertas-container');
+    if (!container) return;
+    
+    const todosAlertas = gerarAlertas();
+    
+    // Aplica filtro
+    const alertasFiltrados = filtroAlertaGlobal === 'todos' 
+        ? todosAlertas 
+        : todosAlertas.filter(a => a.tipo === filtroAlertaGlobal);
+    
+    // Atualiza badge no menu
+    const alertasAlta = todosAlertas.filter(a => a.prioridade === 'alta').length;
+    const badge = document.getElementById('bdot');
+    const acount = document.getElementById('acount');
+    if (badge) {
+        badge.style.display = alertasAlta > 0 ? 'inline-block' : 'none';
+        badge.textContent = alertasAlta;
+    }
+    if (acount) {
+        acount.textContent = alertasAlta + ' alerta(s)';
+    }
+    
+    if (alertasFiltrados.length === 0) {
+        container.innerHTML = `
+            <div class="card" style="text-align:center;padding:40px;color:#64748b;">
+                <div style="font-size:40px;margin-bottom:10px;">✅</div>
+                <strong>Tudo em dia!</strong>
+                <p style="font-size:12px;margin-top:6px;">Nenhum alerta para o filtro selecionado.</p>
+            </div>`;
+        return;
+    }
+    
+    const icones = {
+        'atraso': { icon: '⚠️', cor: '#ef4444', bg: '#fef2f2', borda: '#fecaca' },
+        'prazo': { icon: '⏰', cor: '#f59e0b', bg: '#fffbeb', borda: '#fde68a' },
+        'pgto': { icon: '💰', cor: '#8b5cf6', bg: '#f5f3ff', borda: '#ddd6fe' }
+    };
+    
+    container.innerHTML = alertasFiltrados.map(a => {
+        const estilo = icones[a.tipo] || icones['prazo'];
+        return `
+        <div style="background: ${estilo.bg}; border: 1px solid ${estilo.borda}; border-left: 4px solid ${estilo.cor}; padding: 12px 16px; border-radius: 8px; margin-bottom: 10px; cursor: pointer;"
+            onclick="nav('entregas'); setTimeout(() => toggleEntregasProjeto('${a.projetoId}'), 300);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <div>
+                    <strong style="font-size: 13px;">${estilo.icon} ${a.projeto}</strong>
+                    <p style="font-size: 12px; margin: 4px 0 0 0; color: #475569;">${a.mensagem}</p>
+                </div>
+                <span style="font-size: 10px; padding: 4px 10px; border-radius: 12px; font-weight: 600; 
+                    background: ${a.prioridade === 'alta' ? '#fee2e2' : '#fef3c7'}; 
+                    color: ${a.prioridade === 'alta' ? '#991b1b' : '#92400e'};">
+                    ${a.prioridade === 'alta' ? '🔴 Urgente' : '🟡 Atenção'}
+                </span>
+            </div>
+        </div>`;
+    }).join('');
+    
+    // Resumo no topo
+    const totalAlta = alertasFiltrados.filter(a => a.prioridade === 'alta').length;
+    const totalOutros = alertasFiltrados.length - totalAlta;
+    
+    container.innerHTML = `
+        <div style="margin-bottom: 12px; font-size: 12px; color: #64748b;">
+            ${alertasFiltrados.length} alerta(s) encontrado(s) • 
+            ${totalAlta > 0 ? `<span style="color:#ef4444;font-weight:600;">${totalAlta} urgente(s)</span>` : 'Nenhum urgente'}
+        </div>
+    ` + container.innerHTML;
+}
+
+// ====================== MODO CLIENTE ======================
+var modoClienteAtivo = false;
+const SENHA_MODO_CLIENTE = '2026'; // Altere para sua senha
+const PROJETOS_DEMO = [
+    {
+        id: 'demo_1',
+        prop: 'DEMO-2026-01',
+        proposta: 'DEMO-2026-01',
+        cliente: 'Cliente Industrial',
+        nome: 'Projeto Executivo - Galpão Logístico 2.000m²',
+        valor: 0,
+        entrega: new Date(Date.now() + 60 * 86400000).toISOString().split('T')[0],
+        dataInicio: new Date().toISOString().split('T')[0],
+        dataEmissao: new Date().toISOString().split('T')[0],
+        status: 'Em andamento',
+        pgto: 'Parcial',
+        custo: 0,
+        disciplinas: ['Civil', 'Estrutura metálica', 'Elétrica', 'Hidráulica'],
+        terceirizados_alocados: [
+            { id: 'demo_t1', nome: 'Engenheiro Civil Sênior', custo: 0 },
+            { id: 'demo_t2', nome: 'Engenheiro Estrutural', custo: 0 },
+            { id: 'demo_t3', nome: 'Engenheiro Eletricista', custo: 0 },
+            { id: 'demo_t4', nome: 'Engenheiro Hidráulico', custo: 0 }
+        ],
+        entregas: {
+            'Civil': {
+                itens: [
+                    { id: 'de1', desc: 'Projeto de fundação', prev: new Date(Date.now() + 15 * 86400000).toISOString().split('T')[0], entregue: true, dataReal: new Date(Date.now() + 13 * 86400000).toISOString().split('T')[0], obs: '' },
+                    { id: 'de2', desc: 'Planta baixa estrutural', prev: new Date(Date.now() + 25 * 86400000).toISOString().split('T')[0], entregue: true, dataReal: new Date(Date.now() + 24 * 86400000).toISOString().split('T')[0], obs: 'Aprovado pelo cliente' },
+                    { id: 'de3', desc: 'Memorial descritivo', prev: new Date(Date.now() + 40 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: 'Em elaboração' },
+                    { id: 'de4', desc: 'ART / RRT', prev: new Date(Date.now() + 50 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            },
+            'Estrutura metálica': {
+                itens: [
+                    { id: 'de5', desc: 'Cálculo estrutural', prev: new Date(Date.now() + 20 * 86400000).toISOString().split('T')[0], entregue: true, dataReal: new Date(Date.now() + 18 * 86400000).toISOString().split('T')[0], obs: '' },
+                    { id: 'de6', desc: 'Desenho de fabricação', prev: new Date(Date.now() + 35 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: 'Aguardando aprovação do cálculo' },
+                    { id: 'de7', desc: 'Lista de materiais', prev: new Date(Date.now() + 45 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            },
+            'Elétrica': {
+                itens: [
+                    { id: 'de8', desc: 'Diagrama unifilar', prev: new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' },
+                    { id: 'de9', desc: 'Lista de cabos e disjuntores', prev: new Date(Date.now() + 40 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            },
+            'Hidráulica': {
+                itens: [
+                    { id: 'de10', desc: 'Projeto de água fria', prev: new Date(Date.now() + 25 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' },
+                    { id: 'de11', desc: 'Projeto de esgoto', prev: new Date(Date.now() + 35 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            }
+        },
+        obsEntregas: 'Projeto demo para apresentação a clientes. Exemplo de gestão completa.'
+    },
+    {
+        id: 'demo_2',
+        prop: 'DEMO-2026-02',
+        proposta: 'DEMO-2026-02',
+        cliente: 'Mineração XYZ',
+        nome: 'Projeto de Adequação - NR-12 Máquinas',
+        valor: 0,
+        entrega: new Date(Date.now() + 45 * 86400000).toISOString().split('T')[0],
+        dataInicio: new Date(Date.now() - 10 * 86400000).toISOString().split('T')[0],
+        dataEmissao: new Date(Date.now() - 10 * 86400000).toISOString().split('T')[0],
+        status: 'Em andamento',
+        pgto: 'Pendente',
+        custo: 0,
+        disciplinas: ['Mecânica', 'Elétrica', 'Automação'],
+        terceirizados_alocados: [
+            { id: 'demo_t5', nome: 'Engenheiro Mecânico Sênior', custo: 0 },
+            { id: 'demo_t6', nome: 'Engenheiro de Automação', custo: 0 }
+        ],
+        entregas: {
+            'Mecânica': {
+                itens: [
+                    { id: 'de12', desc: 'Laudo técnico NR-12', prev: new Date(Date.now() + 5 * 86400000).toISOString().split('T')[0], entregue: true, dataReal: new Date(Date.now() + 3 * 86400000).toISOString().split('T')[0], obs: '' },
+                    { id: 'de13', desc: 'ART de adequação', prev: new Date(Date.now() + 20 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            },
+            'Elétrica': {
+                itens: [
+                    { id: 'de14', desc: 'Painel de comando', prev: new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            },
+            'Automação': {
+                itens: [
+                    { id: 'de15', desc: 'Programação CLP', prev: new Date(Date.now() + 35 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            }
+        },
+        obsEntregas: 'Projeto demo 2. Foco em adequação de máquinas industriais.'
+    },
+    {
+        id: 'demo_3',
+        prop: 'DEMO-2026-03',
+        proposta: 'DEMO-2026-03',
+        cliente: 'Construtora ABC',
+        nome: 'Projeto Executivo - Prédio Administrativo 3 Pavimentos',
+        valor: 0,
+        entrega: new Date(Date.now() + 90 * 86400000).toISOString().split('T')[0],
+        dataInicio: new Date(Date.now() - 30 * 86400000).toISOString().split('T')[0],
+        dataEmissao: new Date(Date.now() - 30 * 86400000).toISOString().split('T')[0],
+        status: 'Aguardando aprovação',
+        pgto: 'Parcial',
+        custo: 0,
+        disciplinas: ['Arquitetura', 'Civil', 'Elétrica', 'Tubulação'],
+        terceirizados_alocados: [
+            { id: 'demo_t7', nome: 'Arquiteto Projetista', custo: 0 },
+            { id: 'demo_t8', nome: 'Engenheiro Calculista', custo: 0 }
+        ],
+        entregas: {
+            'Arquitetura': {
+                itens: [
+                    { id: 'de16', desc: 'Layout pavimento térreo', prev: new Date(Date.now() - 5 * 86400000).toISOString().split('T')[0], entregue: true, dataReal: new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0], obs: 'Aprovado' },
+                    { id: 'de17', desc: 'Layout 2º pavimento', prev: new Date(Date.now() + 10 * 86400000).toISOString().split('T')[0], entregue: true, dataReal: new Date(Date.now() + 8 * 86400000).toISOString().split('T')[0], obs: '' },
+                    { id: 'de18', desc: 'Layout 3º pavimento', prev: new Date(Date.now() + 20 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' },
+                    { id: 'de19', desc: 'Fachada e cortes', prev: new Date(Date.now() + 40 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            },
+            'Civil': {
+                itens: [
+                    { id: 'de20', desc: 'Cálculo estrutural', prev: new Date(Date.now() + 50 * 86400000).toISOString().split('T')[0], entregue: false, dataReal: '', obs: '' }
+                ]
+            }
+        },
+        obsEntregas: 'Projeto demo 3. Obra comercial de médio porte.'
+    }
+];
+
+function toggleModoCliente() {
+    if (modoClienteAtivo) {
+        // Desativar - pede senha
+        const senha = prompt('Digite a senha para SAIR do Modo Cliente:');
+        if (senha === SENHA_MODO_CLIENTE) {
+            desativarModoCliente();
+        } else {
+            alert('Senha incorreta!');
+        }
+    } else {
+        // Ativar - pede senha
+        const senha = prompt('Digite a senha para ATIVAR o Modo Cliente:');
+        if (senha === SENHA_MODO_CLIENTE) {
+            ativarModoCliente();
+        } else {
+            alert('Senha incorreta!');
+        }
+    }
+}
+
+function ativarModoCliente() {
+    modoClienteAtivo = true;
+    
+    // Oculta abas sigilosas
+    document.querySelectorAll('.ni').forEach(btn => {
+        const texto = btn.textContent.toLowerCase();
+        if (texto.includes('financeiro') || texto.includes('terceirizados') || 
+            texto.includes('backup') || texto.includes('alertas') || texto.includes('dashboard')) {
+            btn.style.display = 'none';
+        }
+    });
+    
+    // Muda o botão
+    const btn = document.getElementById('btn-modo-cliente');
+    if (btn) {
+        btn.textContent = '🔒 Sair Modo Cliente';
+        btn.style.background = '#ef4444';
+    }
+    
+    // Substitui DB por versão demo
+    window.DB_REAL = JSON.parse(JSON.stringify(DB));
+    DB.projetos = JSON.parse(JSON.stringify(PROJETOS_DEMO));
+    DB.financeiro = [];
+    DB.terceirizados = [];
+    DB.propostas = [];
+    
+    // Abre direto nas Entregas
+    nav('entregas');
+    renderEntregas();
+    
+    // Força expandir o primeiro projeto demo
+    setTimeout(() => toggleEntregasProjeto('demo_1'), 500);
+    
+    console.log('🔓 Modo Cliente ATIVADO');
+}
+
+function desativarModoCliente() {
+    modoClienteAtivo = false;
+    
+    // Mostra todas as abas
+    document.querySelectorAll('.ni').forEach(btn => {
+        btn.style.display = '';
+    });
+    
+    // Restaura botão
+    const btn = document.getElementById('btn-modo-cliente');
+    if (btn) {
+        btn.textContent = '🔓 Ativar Modo Cliente';
+        btn.style.background = '#f59e0b';
+    }
+    
+    // Restaura DB real
+    if (window.DB_REAL) {
+        DB = JSON.parse(JSON.stringify(window.DB_REAL));
+        delete window.DB_REAL;
+    }
+    
+    nav('dashboard');
+    
+    console.log('🔒 Modo Cliente DESATIVADO');
+}
+
+// Mostra botão apenas nas abas permitidas no modo cliente
+function atualizarBotaoModoCliente() {
+    const btn = document.getElementById('btn-modo-cliente');
+    if (!btn) return;
+    btn.style.display = 'inline-block';
+}
+
+// ====================== INICIALIZAÇÃO ======================
+// Exporta a função COMPLETA, não uma versão simplificada
+window.openModalFin = openModalFin;
+window.openModalTerc = function() { 
+    ['teid','tnome','tfone','temail','tultimo','tobs'].forEach(c => { 
+        const el = document.getElementById(c); 
+        if(el) el.value = ''; 
+    });
+    document.getElementById('tdisc').value = 'Mecânica';
+    document.getElementById('taval').value = '5';
+    openModal('mterceirizado'); 
+};
+window.openModalProj = openModalProj;
+window.renderFin = renderFinanceiro;
+window.renderTerc = renderTerceirizados;
+window.renderFinanceiro = renderFinanceiro;
+window.renderTerceirizados = renderTerceirizados;
+window.fchip = fchip;
+window.salvarTerceirizado = salvarTerceirizado;
+window.salvarProjeto = salvarProjeto;
+window.salvarFin = salvarFin;
+window.renderEntregas = renderEntregas;
+window.filtroEntregas = filtroEntregas;
+window.renderAlertas = renderAlertas;
+window.filtroAlertas = filtroAlertas;
+window.toggleModoCliente = toggleModoCliente;
+window.toggleEntregasProjeto = toggleEntregasProjeto;
+window.onload = carregarDB;
+  </script>
+</body>
+</html>
