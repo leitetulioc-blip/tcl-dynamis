@@ -1885,7 +1885,8 @@ select {
         </div>
 
   <script>
-    // ============================================
+
+// ============================================
 // TCL DYNAMIS - JAVASCRIPT COMPLETO E FUNCIONAL
 // ============================================
 'use strict';
@@ -1944,6 +1945,12 @@ async function carregarDB() {
 }
 
 async function salvarDB() {
+    if (modoClienteAtivo) {
+        console.log('🔒 Modo Cliente: salvamento BLOQUEADO');
+        document.getElementById("svtxt").innerText = "Modo Cliente";
+        return;
+    }
+    
     try {
         await dbFirebase.collection("sistema").doc(DOC_ID).set(DB);
         document.getElementById("svtxt").innerText = "Dados Sincronizados";
@@ -2006,10 +2013,32 @@ function nav(page, el) {
 function gerarBotoesAcao(page) {
     const tbacts = document.getElementById('tbacts');
     if (!tbacts) return;
-    tbacts.innerHTML = '';
-    if (page === 'propostas') tbacts.innerHTML = '<button class="btn bp" onclick="openModalProposta()"><i class="ti ti-plus"></i> Nova Proposta</button>';
-    else if (page === 'financeiro') tbacts.innerHTML = '<button class="btn bp" onclick="openModalFin()"><i class="ti ti-plus"></i> Nova Transação</button>';
-    else if (page === 'terceirizados') tbacts.innerHTML = '<button class="btn bp" onclick="openModalTerc()"><i class="ti ti-plus"></i> Novo Especialista</button>';
+    
+    // Remove apenas os botões de ação, preserva o btn-modo-cliente
+    const botoesAcao = tbacts.querySelectorAll('button:not(#btn-modo-cliente)');
+    botoesAcao.forEach(b => b.remove());
+    
+    // Adiciona botão específico da página
+    if (page === 'propostas') {
+        tbacts.insertAdjacentHTML('afterbegin', '<button class="btn bp" onclick="openModalProposta()"><i class="ti ti-plus"></i> Nova Proposta</button>');
+    } else if (page === 'financeiro') {
+        tbacts.insertAdjacentHTML('afterbegin', '<button class="btn bp" onclick="openModalFin()"><i class="ti ti-plus"></i> Nova Transação</button>');
+    } else if (page === 'terceirizados') {
+        tbacts.insertAdjacentHTML('afterbegin', '<button class="btn bp" onclick="openModalTerc()"><i class="ti ti-plus"></i> Novo Especialista</button>');
+    }
+    
+    // Atualiza o botão de modo cliente
+    const btnMC = document.getElementById('btn-modo-cliente');
+    if (btnMC) {
+        btnMC.style.display = 'inline-block';
+        if (modoClienteAtivo) {
+            btnMC.textContent = '🔒 Sair Modo Cliente';
+            btnMC.style.background = '#ef4444';
+        } else {
+            btnMC.textContent = '🔓 Ativar Modo Cliente';
+            btnMC.style.background = '#f59e0b';
+        }
+    }
 }
 
 function renderizarTudo() {
@@ -3982,6 +4011,7 @@ window.filtroAlertas = filtroAlertas;
 window.toggleModoCliente = toggleModoCliente;
 window.toggleEntregasProjeto = toggleEntregasProjeto;
 window.onload = carregarDB;
+    
   </script>
 </body>
 </html>
