@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TCL Dynamis - Sistema de Gestão</title>
 
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; style-src * 'unsafe-inline'; font-src * data:;">
+  
   <style>
     /* ============================================
    TCL DYNAMIS - SISTEMA DE GESTÃO v3.5
@@ -1094,22 +1096,8 @@ inicio do html
     </div>
 </div>
 
-// Aguarda Firebase carregar antes de inicializar
-function initFirebase() {
-    if (typeof firebase === 'undefined') {
-        console.log('⏳ Aguardando Firebase...');
-        setTimeout(initFirebase, 500);
-        return;
-    }
-    
-    firebase.initializeApp(firebaseConfig);
-    console.log('✅ Firebase inicializado!');
-}
 
-// Inicia após a página carregar
-window.addEventListener('load', initFirebase);
 
-<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; style-src * 'unsafe-inline'; font-src * data:;">
   
 <!-- Firebase -->
         <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
