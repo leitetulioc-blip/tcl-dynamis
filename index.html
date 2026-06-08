@@ -1136,6 +1136,9 @@ select {
 <button class="ni" onclick="nav('entregas', this)">
     <i class="ti ti-checklist" aria-hidden="true"></i>Entregas Técnicas
 </button>
+                  <button class="ni" onclick="nav('crm', this)">
+    <i class="ti ti-building" aria-hidden="true"></i>CRM / Empresas
+</button>
 
                     <div class="ngrp" role="group" aria-label="Sistema">Sistema</div>
                     <button class="ni" onclick="nav('alertas', this)">
@@ -1545,6 +1548,60 @@ select {
     <div id="entregas-container"></div>
 </div>
 
+<!-- ==================== PÁGINA CRM / EMPRESAS ==================== -->
+<div id="page-crm" class="page">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px;">
+        <div class="card" style="padding:14px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:#3b82f6;" id="crm-total">0</div>
+            <div style="font-size:11px;color:#64748b;">Total Empresas</div>
+        </div>
+        <div class="card" style="padding:14px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:#f59e0b;" id="crm-leads">0</div>
+            <div style="font-size:11px;color:#64748b;">Leads Novos</div>
+        </div>
+        <div class="card" style="padding:14px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:#8b5cf6;" id="crm-negociacao">0</div>
+            <div style="font-size:11px;color:#64748b;">Em Negociação</div>
+        </div>
+        <div class="card" style="padding:14px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:#10b981;" id="crm-clientes">0</div>
+            <div style="font-size:11px;color:#64748b;">Clientes</div>
+        </div>
+        <div class="card" style="padding:14px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:#ef4444;" id="crm-followups">0</div>
+            <div style="font-size:11px;color:#64748b;">Follow-ups Atrasados</div>
+        </div>
+    </div>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;">
+        <div style="position: relative; flex: 1; max-width: 300px;">
+            <i class="ti ti-search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+            <input type="text" id="crm-search" placeholder="Buscar empresa ou contato..." oninput="renderCRM()" style="padding-left: 32px; width: 100%;">
+        </div>
+        <select onchange="renderCRM()" id="crm-status-filter">
+            <option value="">Todos os Status</option>
+            <option>Lead</option>
+            <option>Em negociação</option>
+            <option>Cliente</option>
+            <option>Inativo</option>
+        </select>
+        <select onchange="renderCRM()" id="crm-segmento-filter">
+            <option value="">Todos os Segmentos</option>
+            <option>Engenharia de Projetos</option>
+            <option>Construção Civil</option>
+            <option>Mineração</option>
+            <option>Indústria</option>
+            <option>Energia</option>
+            <option>Outros</option>
+        </select>
+        <button class="btn bp" onclick="abrirModalEmpresa()">
+            <i class="ti ti-plus"></i> Nova Empresa
+        </button>
+    </div>
+    
+    <div id="crm-container"></div>
+</div>
+                  
                     <!-- ==================== PÁGINA ALERTAS ==================== -->
 <div id="page-alertas" class="page">
     <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
@@ -1912,7 +1969,83 @@ select {
                 </div>
             </div>
         </div>
-
+<!-- ==================== MODAL CRM EMPRESA ==================== -->
+<div class="modal" id="mcrm" style="display:none;max-width:650px;" role="dialog" aria-modal="true" aria-labelledby="mcrm-title">
+    <div class="mh">
+        <h3 id="mcrm-title">🏢 Cadastro de Empresa</h3>
+        <button class="btn bic bsm" onclick="closeModal()">✕</button>
+    </div>
+    <div class="mb" style="max-height:75vh;overflow-y:auto;padding-top:14px;">
+        <input type="hidden" id="crm-id">
+        
+        <div class="fr">
+            <div class="fg"><label>Nome da Empresa *</label><input id="crm-nome" placeholder="Razão Social"></div>
+            <div class="fg"><label>CNPJ</label><input id="crm-cnpj" placeholder="00.000.000/0000-00"></div>
+        </div>
+        
+        <div class="fr">
+            <div class="fg"><label>Cidade/UF</label><input id="crm-cidade" placeholder="Ex: Belo Horizonte/MG"></div>
+            <div class="fg"><label>Segmento</label>
+                <select id="crm-segmento">
+                    <option>Engenharia de Projetos</option>
+                    <option>Construção Civil</option>
+                    <option>Mineração</option>
+                    <option>Indústria</option>
+                    <option>Energia</option>
+                    <option>Outros</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="fr">
+            <div class="fg"><label>Site</label><input id="crm-site" placeholder="www.empresa.com.br"></div>
+            <div class="fg"><label>Status</label>
+                <select id="crm-status">
+                    <option>Lead</option>
+                    <option>Em negociação</option>
+                    <option>Cliente</option>
+                    <option>Inativo</option>
+                </select>
+            </div>
+        </div>
+        
+        <div style="border-top:2px solid #6366f1;padding-top:12px;margin-top:12px;">
+            <strong style="font-size:13px;">👤 Contato Principal</strong>
+        </div>
+        
+        <div class="fr">
+            <div class="fg"><label>Nome do Contato *</label><input id="crm-contato-nome" placeholder="Nome completo"></div>
+            <div class="fg"><label>Cargo</label><input id="crm-contato-cargo" placeholder="Gerente de Projetos"></div>
+        </div>
+        
+        <div class="fr">
+            <div class="fg"><label>E-mail *</label><input id="crm-contato-email" type="email" placeholder="contato@empresa.com"></div>
+            <div class="fg"><label>Telefone/WhatsApp</label><input id="crm-contato-telefone" placeholder="(00) 00000-0000"></div>
+        </div>
+        
+        <div class="fg"><label>LinkedIn</label><input id="crm-contato-linkedin" placeholder="linkedin.com/in/contato"></div>
+        
+        <div style="border-top:2px solid #6366f1;padding-top:12px;margin-top:12px;">
+            <strong style="font-size:13px;">📝 Observações</strong>
+        </div>
+        <div class="fg"><textarea id="crm-obs" rows="3" placeholder="Notas sobre a empresa, potencial, objeções..."></textarea></div>
+        
+        <div style="border-top:2px solid #e2e8f0;padding-top:12px;margin-top:12px;">
+            <strong style="font-size:13px;">📅 Histórico de Follow-ups</strong>
+            <div id="crm-followup-list" style="margin-top:8px;font-size:12px;color:#64748b;"></div>
+            <div style="display:flex;gap:8px;margin-top:8px;">
+                <input type="date" id="crm-followup-data" style="flex:1;font-size:12px;">
+                <input type="text" id="crm-followup-nota" placeholder="Nota do follow-up..." style="flex:2;font-size:12px;">
+                <button class="btn bsm bp" onclick="adicionarFollowup()" style="font-size:11px;">+ Adicionar</button>
+            </div>
+        </div>
+        
+        <div class="mf" style="margin-top:20px;padding-top:15px;border-top:1px solid #e2e8f0;">
+            <button class="btn" onclick="closeModal()">Cancelar</button>
+            <button class="btn bp" onclick="salvarEmpresaCRM()">💾 Salvar Empresa</button>
+        </div>
+    </div>
+</div>
   <script>
     // ============================================
 // TCL DYNAMIS - JAVASCRIPT COMPLETO E FUNCIONAL
@@ -2035,6 +2168,7 @@ function nav(page, el) {
             alert('🔒 Modo Cliente ativo. Apenas Entregas Técnicas disponível.');
             return;
         }
+      if (page === 'crm') renderCRM();
     }
     document.querySelectorAll('.page').forEach(p => { p.classList.remove('on'); p.style.display = 'none'; });
     const targetPage = document.getElementById(`page-${page}`) || document.getElementById(page);
@@ -3634,6 +3768,225 @@ function atualizarObsGeralProjeto(projetoId, valor) {
     salvarDB();
 }
 
+
+// ====================== CRM / EMPRESAS ======================
+if (!DB.crm) DB.crm = [];
+
+function abrirModalEmpresa(id) {
+    document.getElementById('crm-id').value = '';
+    document.getElementById('crm-nome').value = '';
+    document.getElementById('crm-cnpj').value = '';
+    document.getElementById('crm-cidade').value = '';
+    document.getElementById('crm-segmento').value = 'Engenharia de Projetos';
+    document.getElementById('crm-site').value = '';
+    document.getElementById('crm-status').value = 'Lead';
+    document.getElementById('crm-contato-nome').value = '';
+    document.getElementById('crm-contato-cargo').value = '';
+    document.getElementById('crm-contato-email').value = '';
+    document.getElementById('crm-contato-telefone').value = '';
+    document.getElementById('crm-contato-linkedin').value = '';
+    document.getElementById('crm-obs').value = '';
+    document.getElementById('crm-followup-data').value = new Date().toISOString().split('T')[0];
+    document.getElementById('crm-followup-nota').value = '';
+    document.getElementById('crm-followup-list').innerHTML = '';
+    
+    if (id) {
+        const empresa = (DB.crm || []).find(e => e.id === id);
+        if (empresa) {
+            document.getElementById('crm-id').value = empresa.id;
+            document.getElementById('crm-nome').value = empresa.nome || '';
+            document.getElementById('crm-cnpj').value = empresa.cnpj || '';
+            document.getElementById('crm-cidade').value = empresa.cidade || '';
+            document.getElementById('crm-segmento').value = empresa.segmento || 'Engenharia de Projetos';
+            document.getElementById('crm-site').value = empresa.site || '';
+            document.getElementById('crm-status').value = empresa.status || 'Lead';
+            document.getElementById('crm-contato-nome').value = empresa.contatoNome || '';
+            document.getElementById('crm-contato-cargo').value = empresa.contatoCargo || '';
+            document.getElementById('crm-contato-email').value = empresa.contatoEmail || '';
+            document.getElementById('crm-contato-telefone').value = empresa.contatoTelefone || '';
+            document.getElementById('crm-contato-linkedin').value = empresa.contatoLinkedin || '';
+            document.getElementById('crm-obs').value = empresa.obs || '';
+            renderFollowupList(empresa);
+        }
+    }
+    openModal('mcrm');
+}
+
+function renderFollowupList(empresa) {
+    const container = document.getElementById('crm-followup-list');
+    if (!container) return;
+    const followups = empresa.followups || [];
+    if (followups.length === 0) {
+        container.innerHTML = '<span style="color:#94a3b8;">Nenhum follow-up registrado.</span>';
+        return;
+    }
+    container.innerHTML = followups.sort((a, b) => b.data.localeCompare(a.data)).map(f => `
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9;">
+            <span><strong>${new Date(f.data + 'T00:00:00').toLocaleDateString('pt-BR')}</strong> - ${f.nota || 'Sem nota'}</span>
+            <button class="btn bsm bdanger" style="font-size:10px;padding:2px 6px;" onclick="removerFollowup('${empresa.id}', '${f.data}')">✕</button>
+        </div>
+    `).join('');
+}
+
+function adicionarFollowup() {
+    const empresaId = document.getElementById('crm-id').value;
+    if (!empresaId) { alert('Salve a empresa primeiro.'); return; }
+    const data = document.getElementById('crm-followup-data').value;
+    const nota = document.getElementById('crm-followup-nota').value.trim();
+    if (!data) return alert('Selecione uma data!');
+    const empresa = (DB.crm || []).find(e => e.id === empresaId);
+    if (!empresa) return;
+    if (!empresa.followups) empresa.followups = [];
+    empresa.followups.push({ data, nota });
+    empresa.proximoFollowup = data;
+    document.getElementById('crm-followup-nota').value = '';
+    renderFollowupList(empresa);
+}
+
+function removerFollowup(empresaId, data) {
+    const empresa = (DB.crm || []).find(e => e.id === empresaId);
+    if (!empresa) return;
+    empresa.followups = (empresa.followups || []).filter(f => f.data !== data);
+    renderFollowupList(empresa);
+}
+
+async function salvarEmpresaCRM() {
+    const id = document.getElementById('crm-id').value || 'crm_' + Date.now();
+    const nome = document.getElementById('crm-nome').value.trim();
+    const contatoNome = document.getElementById('crm-contato-nome').value.trim();
+    const contatoEmail = document.getElementById('crm-contato-email').value.trim();
+    if (!nome) return alert('Nome da empresa é obrigatório!');
+    if (!contatoNome) return alert('Nome do contato é obrigatório!');
+    if (!contatoEmail) return alert('E-mail do contato é obrigatório!');
+    
+    const empresa = {
+        id, nome,
+        cnpj: document.getElementById('crm-cnpj').value,
+        cidade: document.getElementById('crm-cidade').value,
+        segmento: document.getElementById('crm-segmento').value,
+        site: document.getElementById('crm-site').value,
+        status: document.getElementById('crm-status').value,
+        contatoNome, contatoEmail,
+        contatoCargo: document.getElementById('crm-contato-cargo').value,
+        contatoTelefone: document.getElementById('crm-contato-telefone').value,
+        contatoLinkedin: document.getElementById('crm-contato-linkedin').value,
+        obs: document.getElementById('crm-obs').value,
+        followups: [],
+        dataCriacao: new Date().toISOString().split('T')[0]
+    };
+    
+    const idx = (DB.crm || []).findIndex(e => e.id === id);
+    if (idx > -1) {
+        empresa.followups = DB.crm[idx].followups || [];
+        empresa.dataCriacao = DB.crm[idx].dataCriacao;
+        DB.crm[idx] = empresa;
+    } else {
+        if (!DB.crm) DB.crm = [];
+        DB.crm.push(empresa);
+    }
+    closeModal();
+    await salvarDB();
+}
+
+function renderCRM() {
+    const container = document.getElementById('crm-container');
+    if (!container) return;
+    const busca = (document.getElementById('crm-search')?.value || '').toLowerCase();
+    const statusFilter = document.getElementById('crm-status-filter')?.value || '';
+    const segmentoFilter = document.getElementById('crm-segmento-filter')?.value || '';
+    let empresas = DB.crm || [];
+    if (busca) {
+        empresas = empresas.filter(e => (e.nome||'').toLowerCase().includes(busca) || (e.contatoNome||'').toLowerCase().includes(busca) || (e.contatoEmail||'').toLowerCase().includes(busca) || (e.cidade||'').toLowerCase().includes(busca));
+    }
+    if (statusFilter) empresas = empresas.filter(e => e.status === statusFilter);
+    if (segmentoFilter) empresas = empresas.filter(e => e.segmento === segmentoFilter);
+    const ordemStatus = { 'Cliente': 0, 'Em negociação': 1, 'Lead': 2, 'Inativo': 3 };
+    empresas.sort((a, b) => (ordemStatus[a.status] || 4) - (ordemStatus[b.status] || 4));
+    
+    const total = (DB.crm || []).length;
+    const leads = (DB.crm || []).filter(e => e.status === 'Lead').length;
+    const negociacao = (DB.crm || []).filter(e => e.status === 'Em negociação').length;
+    const clientes = (DB.crm || []).filter(e => e.status === 'Cliente').length;
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const atrasados = (DB.crm || []).filter(e => e.proximoFollowup && new Date(e.proximoFollowup + 'T00:00:00') < hoje && e.status !== 'Inativo').length;
+    
+    document.getElementById('crm-total').textContent = total;
+    document.getElementById('crm-leads').textContent = leads;
+    document.getElementById('crm-negociacao').textContent = negociacao;
+    document.getElementById('crm-clientes').textContent = clientes;
+    document.getElementById('crm-followups').textContent = atrasados;
+    
+    if (empresas.length === 0) {
+        container.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#64748b;">Nenhuma empresa encontrada. Clique em "Nova Empresa" para começar.</div>';
+        return;
+    }
+    const coresStatus = { 'Lead': '#3b82f6', 'Em negociação': '#f59e0b', 'Cliente': '#10b981', 'Inativo': '#94a3b8' };
+    container.innerHTML = empresas.map(e => {
+        const followups = e.followups || [];
+        const ultimoFollowup = followups.length > 0 ? followups.sort((a, b) => b.data.localeCompare(a.data))[0] : null;
+        const temAtraso = e.proximoFollowup && new Date(e.proximoFollowup + 'T00:00:00') < new Date().setHours(0,0,0,0);
+        const propostasVinculadas = (DB.propostas || []).filter(p => p.cliente === e.nome).length;
+        return `<div class="card" style="margin-bottom:12px;border-left:4px solid ${coresStatus[e.status]};cursor:pointer;" onclick="abrirModalEmpresa('${e.id}')">
+            <div style="padding:14px 16px;">
+                <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:8px;">
+                    <div style="flex:1;"><strong>🏢 ${e.nome}</strong>
+                        <span style="font-size:10px;padding:3px 8px;border-radius:10px;background:${coresStatus[e.status]}20;color:${coresStatus[e.status]};">${e.status}</span>
+                        ${temAtraso ? '<span style="font-size:10px;color:#ef4444;">⚠️ Atrasado</span>' : ''}
+                        <div style="font-size:12px;color:#64748b;">📍 ${e.cidade||'-'} | 🏭 ${e.segmento||'-'}</div>
+                    </div>
+                    <div style="font-size:11px;color:#64748b;">👤 ${e.contatoNome}${e.contatoCargo ? '<br>💼 '+e.contatoCargo : ''}</div>
+                </div>
+                <div style="font-size:11px;color:#64748b;margin-top:8px;">
+                    ${e.contatoEmail ? '📧 '+e.contatoEmail : ''} ${e.contatoTelefone ? '📱 '+e.contatoTelefone : ''}
+                    ${ultimoFollowup ? '📅 Último: '+new Date(ultimoFollowup.data+'T00:00:00').toLocaleDateString('pt-BR') : '📅 Sem follow-up'}
+                    ${propostasVinculadas > 0 ? '📝 '+propostasVinculadas+' proposta(s)' : ''}
+                </div>
+                <div style="display:flex;gap:6px;margin-top:10px;" onclick="event.stopPropagation();">
+                    <button class="btn bsm bp" style="font-size:10px;" onclick="criarPropostaParaEmpresa('${e.nome}','${e.id}')">📝 Proposta</button>
+                    <button class="btn bsm" style="font-size:10px;" onclick="registrarFollowupRapido('${e.id}')">📅 Follow-up</button>
+                    <button class="btn bsm bdanger" style="font-size:10px;" onclick="deletarEmpresaCRM('${e.id}')">🗑️</button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function criarPropostaParaEmpresa(nomeEmpresa, crmId) {
+    openModalProposta();
+    setTimeout(() => { document.getElementById('prop-cliente').value = nomeEmpresa; }, 200);
+    nav('propostas');
+}
+
+function registrarFollowupRapido(empresaId) {
+    const empresa = (DB.crm || []).find(e => e.id === empresaId);
+    if (!empresa) return;
+    if (!empresa.followups) empresa.followups = [];
+    empresa.followups.push({ data: new Date().toISOString().split('T')[0], nota: 'Follow-up realizado em ' + new Date().toLocaleDateString('pt-BR') });
+    empresa.proximoFollowup = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
+    salvarDB().then(() => { alert('✅ Follow-up registrado!'); renderCRM(); });
+}
+
+async function deletarEmpresaCRM(id) {
+    if (!confirm('Excluir esta empresa?')) return;
+    DB.crm = (DB.crm || []).filter(e => e.id !== id);
+    await salvarDB();
+}
+
+function gerarAlertasCRM() {
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const alertas = [];
+    (DB.crm || []).forEach(empresa => {
+        if (empresa.proximoFollowup && new Date(empresa.proximoFollowup + 'T00:00:00') < hoje && empresa.status !== 'Inativo') {
+            alertas.push({
+                tipo: 'crm', prioridade: 'alta', projeto: empresa.nome, projetoId: empresa.id,
+                mensagem: '📞 Follow-up atrasado para ' + (empresa.contatoNome || 'contato'),
+                data: empresa.proximoFollowup
+            });
+        }
+    });
+    return alertas;
+}
+    
 // ====================== ALERTAS ======================
 var filtroAlertaGlobal = 'todos';
 
@@ -3741,7 +4094,9 @@ function gerarAlertas() {
         if (a.prioridade !== 'alta' && b.prioridade === 'alta') return 1;
         return (a.data || '').localeCompare(b.data || '');
     });
-    
+const alertasCRM = gerarAlertasCRM();
+alertas.push(...alertasCRM);
+  
     return alertas;
 }
 
@@ -4070,6 +4425,9 @@ window.toggleModoCliente = toggleModoCliente;
 window.toggleEntregasProjeto = toggleEntregasProjeto;
 // Não carrega automaticamente - aguarda login
 // window.onload = carregarDB;
+    window.renderCRM = renderCRM;
+window.abrirModalEmpresa = abrirModalEmpresa;
+window.salvarEmpresaCRM = salvarEmpresaCRM;
     
   </script>
 </body>
