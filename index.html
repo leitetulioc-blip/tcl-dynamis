@@ -1093,10 +1093,25 @@ inicio do html
         <p style="color:#94a3b8;font-size:10px;margin-top:20px;">TCL Dynamis Engenharia LTDA © 2026</p>
     </div>
 </div>
+
+// Aguarda Firebase carregar antes de inicializar
+function initFirebase() {
+    if (typeof firebase === 'undefined') {
+        console.log('⏳ Aguardando Firebase...');
+        setTimeout(initFirebase, 500);
+        return;
+    }
+    
+    firebase.initializeApp(firebaseConfig);
+    console.log('✅ Firebase inicializado!');
+}
+
+// Inicia após a página carregar
+window.addEventListener('load', initFirebase);
   
 <!-- Firebase -->
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  
         
         <!-- Bibliotecas -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
