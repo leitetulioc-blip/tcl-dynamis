@@ -2121,6 +2121,7 @@ async function carregarDB() {
             DB.financeiro = dadosNuvem.financeiro || [];
             DB.terceirizados = dadosNuvem.terceirizados || [];
             DB.propostas = dadosNuvem.propostas || [];
+          DB.crm = dadosNuvem.crm || [];
             console.log("✅ Dados carregados:", DB.projetos.length, "projetos,", DB.financeiro.length, "financeiro,", DB.terceirizados.length, "terceirizados");
         } else {
             DB = JSON.parse(JSON.stringify(SEED_DATA));
