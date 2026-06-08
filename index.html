@@ -2145,6 +2145,7 @@ document.addEventListener('keydown', function(e) {
 
     
 // Firebase
+// Firebase - Aguarda carregar antes de inicializar
 const firebaseConfig = {
     apiKey: "AIzaSyADPZY7unD8J0vzGZlhuzT4hvy2WkC8Bhc",
     authDomain: "gestao-engenharia-25dee.firebaseapp.com",
@@ -2153,26 +2154,32 @@ const firebaseConfig = {
     messagingSenderId: "638287442376",
     appId: "1:638287442376:web:c596de19cbfbffe56fd0fd"
 };
-firebase.initializeApp(firebaseConfig);
-const dbFirebase = firebase.firestore();
-const DOC_ID = "tcl_dynamis_dados";
 
+var dbFirebase = null;
 var DB = { projetos: [], financeiro: [], terceirizados: [], propostas: [] };
-const DISCIPLINAS_PADRAO = ["Mecânica", "Estrutura metálica", "Arquitetura", "Tubulação", "Civil", "Elétrica", "Automação"];
 
-const SEED_DATA = {
-    terceirizados: [
-        { id: "t1", nome: "Carlos Silva", fone: "(31) 98888-1111", email: "carlos@eng.com", disc: "Elétrica", aval: 5, ultimo: "Prédio Industrial", obs: "" },
-        { id: "t2", nome: "Mariana Costa", fone: "(31) 97777-2222", email: "mariana@metalica.com", disc: "Estrutura metálica", aval: 4, ultimo: "Galpão Logístico", obs: "" },
-        { id: "t3", nome: "Roberto Souza", fone: "(11) 96666-3333", email: "roberto@civil.com", disc: "Civil", aval: 5, ultimo: "Fundação de Máquinas", obs: "" }
-    ],
-    projetos: [],
-    financeiro: [],
-    propostas: []
-};
+// Inicializa Firebase com segurança
+function initFirebase() {
+    if (typeof firebase === 'undefined') {
+        console.log('⏳ Aguardando Firebase carregar...');
+        setTimeout(initFirebase, 500);
+        return;
+    }
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        dbFirebase = firebase.firestore();
+        console.log('✅ Firebase inicializado com sucesso!');
+    } catch(e) {
+        console.error('❌ Erro ao inicializar Firebase:', e);
+    }
+}
 
-if (!window.temporarioTercs) window.temporarioTercs = [];
-var filtroTipoGlobal = 'todos';
+// Inicia Firebase quando a página carregar
+window.addEventListener('load', function() {
+    initFirebase();
+});
 
 // ====================== PERSISTÊNCIA ======================
 async function carregarDB() {
