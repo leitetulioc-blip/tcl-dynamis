@@ -3855,6 +3855,7 @@ async function salvarEmpresaCRM() {
     const nome = document.getElementById('crm-nome').value.trim();
     const contatoNome = document.getElementById('crm-contato-nome').value.trim();
     const contatoEmail = document.getElementById('crm-contato-email').value.trim();
+    
     if (!nome) return alert('Nome da empresa é obrigatório!');
     if (!contatoNome) return alert('Nome do contato é obrigatório!');
     if (!contatoEmail) return alert('E-mail do contato é obrigatório!');
@@ -3875,18 +3876,21 @@ async function salvarEmpresaCRM() {
         dataCriacao: new Date().toISOString().split('T')[0]
     };
     
-    const idx = (DB.crm || []).findIndex(e => e.id === id);
+    if (!DB.crm) DB.crm = [];
+    
+    const idx = DB.crm.findIndex(e => e.id === id);
     if (idx > -1) {
         empresa.followups = DB.crm[idx].followups || [];
         empresa.dataCriacao = DB.crm[idx].dataCriacao;
         DB.crm[idx] = empresa;
     } else {
-        if (!DB.crm) DB.crm = [];
         DB.crm.push(empresa);
     }
+    
     closeModal();
     await salvarDB();
-  renderCRM();
+    renderCRM(); // ✅ Força renderizar após salvar
+    console.log('✅ Empresa salva:', empresa.nome, '| Total:', DB.crm.length);
 }
 
 function renderCRM() {
