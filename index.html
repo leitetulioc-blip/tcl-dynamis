@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+<html>
 
-  
+<html>
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TCL Dynamis - Sistema de Gestão</title>
 
-<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; style-src * 'unsafe-inline'; font-src * data:;">
-  
   <style>
     /* ============================================
    TCL DYNAMIS - SISTEMA DE GESTÃO v3.5
@@ -1057,80 +1055,95 @@ select {
     background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
 }
   </style>
-</head>
-<body>
-
-inicio do html
-
-
 
   
-<!-- ==================== TELA DE LOGIN ==================== -->
-<div id="login-screen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1e293b,#0f172a);z-index:9999;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">
-    <div style="background:#ffffff;padding:40px;border-radius:16px;text-align:center;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
-        <div style="font-size:40px;margin-bottom:10px;">🔐</div>
-        <h2 style="margin:0 0 5px 0;color:#1e293b;font-size:20px;">TCL Dynamis</h2>
-        <p style="color:#64748b;font-size:13px;margin:0 0 25px 0;">Sistema Integrado de Gestão</p>
-        <div style="text-align:left;margin-bottom:16px;">
-            <label style="font-size:12px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">E-mail</label>
-            <input id="login-email" type="email" placeholder="seu@email.com" style="width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;box-sizing:border-box;">
-        </div>
-        <div style="text-align:left;margin-bottom:20px;">
-            <label style="font-size:12px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">Senha</label>
-            <input id="login-senha" type="password" placeholder="••••••" style="width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;box-sizing:border-box;">
-        </div>
-        <button onclick="verificarLogin()" style="width:100%;padding:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">🔓 Entrar no Sistema</button>
-        <p id="login-msg" style="color:#ef4444;font-size:12px;margin-top:12px;display:none;"></p>
-        <p style="color:#94a3b8;font-size:10px;margin-top:20px;">TCL Dynamis Engenharia LTDA © 2026</p>
+</head>
+<body>
+  <!-- Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+        
+        <!-- Bibliotecas -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+        
+        <!-- Fontes e Ícones -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
+        <div class="app" role="application" aria-label="Sistema de Gestão TCL Dynamis">
+            
+            <!-- ==================== SIDEBAR ==================== -->
+            <aside class="sb" role="navigation" aria-label="Navegação principal">
+                <div class="logo">
+                    <div class="logo-n">TCL DYNAMIS ENGENHARIA LTDA</div>
+                    <div class="logo-s">Sistema Integrado de Gestão v3.5</div>
+                </div>
+                
+                <nav class="nav">
+                    <div class="ngrp" role="group" aria-label="Visão Geral">Visão Geral</div>
+                    <button class="ni on" onclick="nav('dashboard', this)" aria-current="page">
+                        <i class="ti ti-layout-dashboard" aria-hidden="true"></i>Dashboard
+                    </button>
+                    <button class="ni" onclick="nav('kanban', this)">
+                        <i class="ti ti-layout-kanban" aria-hidden="true"></i>Kanban
+                    </button>
+                    
+                    <div class="ngrp" role="group" aria-label="Operações">Operações</div>
+    <button class="ni" onclick="nav('propostas', this)">
+        <i class="ti ti-file-text" aria-hidden="true"></i>Propostas
+    </button>
+    <button class="ni" onclick="nav('projetos', this)">
+        <i class="ti ti-briefcase" aria-hidden="true"></i>Projetos
+    </button>
+                    <button class="ni" onclick="nav('financeiro', this)">
+                        <i class="ti ti-cash" aria-hidden="true"></i>Financeiro
+                    </button>
+                    <button class="ni" onclick="nav('terceirizados', this)">
+                        <i class="ti ti-users" aria-hidden="true"></i>Terceirizados
+                    </button>
+                    
+<button class="ni" onclick="nav('entregas', this)">
+    <i class="ti ti-checklist" aria-hidden="true"></i>Entregas Técnicas
+</button>
+
+                    <div class="ngrp" role="group" aria-label="Sistema">Sistema</div>
+                    <button class="ni" onclick="nav('alertas', this)">
+                        <i class="ti ti-bell" aria-hidden="true"></i>Alertas
+                        <span class="badge-dot" id="bdot" style="display:none">0</span>
+                    </button>
+                    <button class="ni" onclick="nav('backup', this)">
+                        <i class="ti ti-database" aria-hidden="true"></i>Backup & Dados
+                    </button>
+                </nav>
+                
+                <div class="sbf">
+                    <div class="apill" id="apill" onclick="nav('alertas')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')nav('alertas')">
+                        <i class="ti ti-bell-ringing" aria-hidden="true"></i>
+                        <span class="apill-t" id="acount">0 alertas</span>
+                    </div>
+                    <div class="sv-status ok" id="svst" role="status" aria-live="polite">
+                        <i class="ti ti-cloud-check" aria-hidden="true"></i>
+                        <span id="svtxt">Dados salvos</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
+            <div class="main">
+                <header class="topbar">
+    <div class="tb-title" id="tbtitle">Dashboard</div>
+    <div class="tb-acts" id="tbacts">
+        <!-- Botão Modo Cliente -->
+        <button id="btn-modo-cliente" class="btn" style="background:#f59e0b;color:#fff;font-weight:600;font-size:12px;margin-right:8px;display:none;" 
+            onclick="toggleModoCliente()">
+            🔓 Ativar Modo Cliente
+        </button>
     </div>
-</div>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<!-- Bibliotecas -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
-<!-- Fontes -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
-
-<div class="app" role="application" aria-label="Sistema de Gestão TCL Dynamis" style="display:none;">
-    <aside class="sb" role="navigation" aria-label="Navegação principal">
-        <div class="logo">
-            <div class="logo-n">TCL DYNAMIS ENGENHARIA LTDA</div>
-            <div class="logo-s">Sistema Integrado de Gestão v3.5</div>
-        </div>
-        <nav class="nav">
-            <div class="ngrp">Visão Geral</div>
-            <button class="ni on" onclick="nav('dashboard', this)"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
-            <button class="ni" onclick="nav('kanban', this)"><i class="ti ti-layout-kanban"></i>Kanban</button>
-            <div class="ngrp">Operações</div>
-            <button class="ni" onclick="nav('propostas', this)"><i class="ti ti-file-text"></i>Propostas</button>
-            <button class="ni" onclick="nav('projetos', this)"><i class="ti ti-briefcase"></i>Projetos</button>
-            <button class="ni" onclick="nav('financeiro', this)"><i class="ti ti-cash"></i>Financeiro</button>
-            <button class="ni" onclick="nav('terceirizados', this)"><i class="ti ti-users"></i>Terceirizados</button>
-            <button class="ni" onclick="nav('entregas', this)"><i class="ti ti-checklist"></i>Entregas Técnicas</button>
-            <button class="ni" onclick="nav('crm', this)"><i class="ti ti-building"></i>CRM / Empresas</button>
-            <div class="ngrp">Sistema</div>
-            <button class="ni" onclick="nav('alertas', this)"><i class="ti ti-bell"></i>Alertas<span class="badge-dot" id="bdot" style="display:none">0</span></button>
-            <button class="ni" onclick="nav('backup', this)"><i class="ti ti-database"></i>Backup & Dados</button>
-        </nav>
-        <div class="sbf">
-            <div class="apill" id="apill" onclick="nav('alertas')"><i class="ti ti-bell-ringing"></i><span class="apill-t" id="acount">0 alertas</span></div>
-            <div class="sv-status ok" id="svst"><i class="ti ti-cloud-check"></i><span id="svtxt">Dados salvos</span></div>
-        </div>
-    </aside>
-    <div class="main">
-        <header class="topbar">
-            <div class="tb-title" id="tbtitle">Dashboard</div>
-            <div class="tb-acts" id="tbacts">
-                <button id="btn-modo-cliente" class="btn" style="background:#f59e0b;color:#fff;font-weight:600;font-size:12px;display:none;" onclick="toggleModoCliente()">🔓 Ativar Modo Cliente</button>
-            </div>
-        </header>
-        <div class="content">
-              
+</header>
+                
+                <div class="content">
                     
                     <!-- ==================== PÁGINA DASHBOARD ==================== -->
                     <div id="page-dashboard" class="page on">
@@ -1499,65 +1512,10 @@ inicio do html
             <span class="chip" onclick="filtroEntregas('atrasados', this)" role="button" tabindex="0">⚠️ Atrasados</span>
         </div>
     </div>
+    
     <div id="entregas-container"></div>
 </div>
 
-<!-- ==================== PÁGINA CRM / EMPRESAS ==================== -->
-<div id="page-crm" class="page">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px;">
-        <div class="card" style="padding:14px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:#3b82f6;" id="crm-total">0</div>
-            <div style="font-size:11px;color:#64748b;">Total Empresas</div>
-        </div>
-        <div class="card" style="padding:14px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:#f59e0b;" id="crm-leads">0</div>
-            <div style="font-size:11px;color:#64748b;">Leads Novos</div>
-        </div>
-        <div class="card" style="padding:14px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:#8b5cf6;" id="crm-negociacao">0</div>
-            <div style="font-size:11px;color:#64748b;">Em Negociação</div>
-        </div>
-        <div class="card" style="padding:14px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:#10b981;" id="crm-clientes">0</div>
-            <div style="font-size:11px;color:#64748b;">Clientes</div>
-        </div>
-        <div class="card" style="padding:14px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:#ef4444;" id="crm-followups">0</div>
-            <div style="font-size:11px;color:#64748b;">Follow-ups Atrasados</div>
-        </div>
-    </div>
-    
-    <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;">
-        <div style="position: relative; flex: 1; max-width: 300px;">
-            <i class="ti ti-search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
-            <input type="text" id="crm-search" placeholder="Buscar empresa ou contato..." oninput="renderCRM()" style="padding-left: 32px; width: 100%;">
-        </div>
-        <select onchange="renderCRM()" id="crm-status-filter">
-            <option value="">Todos os Status</option>
-            <option>Lead</option>
-            <option>Em negociação</option>
-            <option>Cliente</option>
-            <option>Inativo</option>
-        </select>
-        <select onchange="renderCRM()" id="crm-segmento-filter">
-            <option value="">Todos os Segmentos</option>
-            <option>Engenharia de Projetos</option>
-            <option>Construção Civil</option>
-            <option>Mineração</option>
-            <option>Indústria</option>
-            <option>Energia</option>
-            <option>Outros</option>
-        </select>
-        <button class="btn bp" onclick="abrirModalEmpresa()">
-            <i class="ti ti-plus"></i> Nova Empresa
-        </button>
-    </div>
-    
-    <div id="crm-container"></div>
-</div>
-
-
-                  
                     <!-- ==================== PÁGINA ALERTAS ==================== -->
 <div id="page-alertas" class="page">
     <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
@@ -1568,8 +1526,8 @@ inicio do html
     </div>
     
     <div id="alertas-container"></div>
+</div>
 
-                  
                     <!-- ==================== PÁGINA BACKUP ==================== -->
                     <div id="page-backup" class="page">
                         <div class="abox ok" style="margin-bottom:18px">
@@ -1926,160 +1884,13 @@ inicio do html
             </div>
         </div>
 
-
-
-
-<!-- ==================== MODAL CRM EMPRESA ==================== -->
-<div class="modal" id="mcrm" style="display:none;max-width:650px;" role="dialog" aria-modal="true" aria-labelledby="mcrm-title">
-    <div class="mh">
-        <h3 id="mcrm-title">🏢 Cadastro de Empresa</h3>
-        <button class="btn bic bsm" onclick="closeModal()">✕</button>
-    </div>
-    <div class="mb" style="max-height:75vh;overflow-y:auto;padding-top:14px;">
-        <input type="hidden" id="crm-id">
-        
-        <div class="fr">
-            <div class="fg"><label>Nome da Empresa *</label><input id="crm-nome" placeholder="Razão Social"></div>
-            <div class="fg"><label>CNPJ</label><input id="crm-cnpj" placeholder="00.000.000/0000-00"></div>
-        </div>
-        
-        <div class="fr">
-            <div class="fg"><label>Cidade/UF</label><input id="crm-cidade" placeholder="Ex: Belo Horizonte/MG"></div>
-            <div class="fg"><label>Segmento</label>
-                <select id="crm-segmento">
-                    <option>Engenharia de Projetos</option>
-                    <option>Construção Civil</option>
-                    <option>Mineração</option>
-                    <option>Indústria</option>
-                    <option>Energia</option>
-                    <option>Outros</option>
-                </select>
-            </div>
-        </div>
-        
-        <div class="fr">
-            <div class="fg"><label>Site</label><input id="crm-site" placeholder="www.empresa.com.br"></div>
-            <div class="fg"><label>Status</label>
-                <select id="crm-status">
-                    <option>Lead</option>
-                    <option>Em negociação</option>
-                    <option>Cliente</option>
-                    <option>Inativo</option>
-                </select>
-            </div>
-        </div>
-        
-        <div style="border-top:2px solid #6366f1;padding-top:12px;margin-top:12px;">
-            <strong style="font-size:13px;">👤 Contato Principal</strong>
-        </div>
-        
-        <div class="fr">
-            <div class="fg"><label>Nome do Contato *</label><input id="crm-contato-nome" placeholder="Nome completo"></div>
-            <div class="fg"><label>Cargo</label><input id="crm-contato-cargo" placeholder="Gerente de Projetos"></div>
-        </div>
-        
-        <div class="fr">
-            <div class="fg"><label>E-mail *</label><input id="crm-contato-email" type="email" placeholder="contato@empresa.com"></div>
-            <div class="fg"><label>Telefone/WhatsApp</label><input id="crm-contato-telefone" placeholder="(00) 00000-0000"></div>
-        </div>
-        
-        <div class="fg"><label>LinkedIn</label><input id="crm-contato-linkedin" placeholder="linkedin.com/in/contato"></div>
-        
-        <div style="border-top:2px solid #6366f1;padding-top:12px;margin-top:12px;">
-            <strong style="font-size:13px;">📝 Observações</strong>
-        </div>
-        
-        <div class="fg"><textarea id="crm-obs" rows="3" placeholder="Notas sobre a empresa, potencial, objeções..."></textarea></div>
-        
-        <!-- Histórico de Follow-ups -->
-        <div style="border-top:2px solid #e2e8f0;padding-top:12px;margin-top:12px;">
-            <strong style="font-size:13px;">📅 Histórico de Follow-ups</strong>
-            <div id="crm-followup-list" style="margin-top:8px;font-size:12px;color:#64748b;"></div>
-            <div style="display:flex;gap:8px;margin-top:8px;">
-                <input type="date" id="crm-followup-data" style="flex:1;font-size:12px;">
-                <input type="text" id="crm-followup-nota" placeholder="Nota do follow-up..." style="flex:2;font-size:12px;">
-                <button class="btn bsm bp" onclick="adicionarFollowup()" style="font-size:11px;">+ Adicionar</button>
-            </div>
-        </div>
-        
-        <div class="mf" style="margin-top:20px;padding-top:15px;border-top:1px solid #e2e8f0;">
-            <button class="btn" onclick="closeModal()">Cancelar</button>
-            <button class="btn bp" onclick="salvarEmpresaCRM()">💾 Salvar Empresa</button>
-        </div>
-    </div>
-</div>
-
-
-
-
-INICIO DO JAVASCRIPT
-
-
-
-    
-// ============================================
+  <script>
+    // ============================================
 // TCL DYNAMIS - JAVASCRIPT COMPLETO E FUNCIONAL
 // ============================================
 'use strict';
 
-// Verifica se Firebase carregou
-window.addEventListener('DOMContentLoaded', function() {
-    if (typeof firebase === 'undefined') {
-        document.getElementById('login-msg').style.display = 'block';
-        document.getElementById('login-msg').textContent = '⚠️ Erro ao carregar o sistema. Recarregue a página.';
-        console.error('Firebase não carregou!');
-    }
-});
-          
-// ====================== AUTENTICAÇÃO ======================
-const USUARIO_AUTORIZADO = {
-    email: 'tulio@tcldynamis.com.br',
-    senha: 'TCL2026@seguro'
-};
-
-function verificarLogin() {
-    const email = document.getElementById('login-email').value.trim();
-    const senha = document.getElementById('login-senha').value.trim();
-    const msg = document.getElementById('login-msg');
-    
-    if (email === USUARIO_AUTORIZADO.email && senha === USUARIO_AUTORIZADO.senha) {
-        // Verifica se Firebase está pronto
-        if (typeof firebase === 'undefined' || typeof dbFirebase === 'undefined') {
-            msg.style.display = 'block';
-            msg.textContent = '⏳ Carregando sistema... Aguarde e tente novamente.';
-            // Tenta novamente em 1 segundo
-            setTimeout(verificarLogin, 1000);
-            return;
-        }
-        document.getElementById('login-screen').style.display = 'none';
-        document.querySelector('.app').style.display = 'flex';
-        try {
-            carregarDB();
-        } catch(e) {
-            console.error('Erro ao carregar:', e);
-            msg.style.display = 'block';
-            msg.textContent = '⚠️ Erro ao carregar dados. Recarregue a página.';
-        }
-    } else {
-        msg.style.display = 'block';
-        msg.textContent = '❌ E-mail ou senha incorretos.';
-        document.getElementById('login-senha').value = '';
-    }
-}
-
-// Permite pressionar Enter para fazer login
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
-        verificarLogin();
-    }
-});
-
-
-
-
-    
 // Firebase
-// Firebase - Aguarda carregar antes de inicializar
 const firebaseConfig = {
     apiKey: "AIzaSyADPZY7unD8J0vzGZlhuzT4hvy2WkC8Bhc",
     authDomain: "gestao-engenharia-25dee.firebaseapp.com",
@@ -2088,32 +1899,26 @@ const firebaseConfig = {
     messagingSenderId: "638287442376",
     appId: "1:638287442376:web:c596de19cbfbffe56fd0fd"
 };
+firebase.initializeApp(firebaseConfig);
+const dbFirebase = firebase.firestore();
+const DOC_ID = "tcl_dynamis_dados";
 
-var dbFirebase = null;
 var DB = { projetos: [], financeiro: [], terceirizados: [], propostas: [] };
+const DISCIPLINAS_PADRAO = ["Mecânica", "Estrutura metálica", "Arquitetura", "Tubulação", "Civil", "Elétrica", "Automação"];
 
-// Inicializa Firebase com segurança
-function initFirebase() {
-    if (typeof firebase === 'undefined') {
-        console.log('⏳ Aguardando Firebase carregar...');
-        setTimeout(initFirebase, 500);
-        return;
-    }
-    try {
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        dbFirebase = firebase.firestore();
-        console.log('✅ Firebase inicializado com sucesso!');
-    } catch(e) {
-        console.error('❌ Erro ao inicializar Firebase:', e);
-    }
-}
+const SEED_DATA = {
+    terceirizados: [
+        { id: "t1", nome: "Carlos Silva", fone: "(31) 98888-1111", email: "carlos@eng.com", disc: "Elétrica", aval: 5, ultimo: "Prédio Industrial", obs: "" },
+        { id: "t2", nome: "Mariana Costa", fone: "(31) 97777-2222", email: "mariana@metalica.com", disc: "Estrutura metálica", aval: 4, ultimo: "Galpão Logístico", obs: "" },
+        { id: "t3", nome: "Roberto Souza", fone: "(11) 96666-3333", email: "roberto@civil.com", disc: "Civil", aval: 5, ultimo: "Fundação de Máquinas", obs: "" }
+    ],
+    projetos: [],
+    financeiro: [],
+    propostas: []
+};
 
-// Inicia Firebase quando a página carregar
-window.addEventListener('load', function() {
-    initFirebase();
-});
+if (!window.temporarioTercs) window.temporarioTercs = [];
+var filtroTipoGlobal = 'todos';
 
 // ====================== PERSISTÊNCIA ======================
 async function carregarDB() {
@@ -2139,12 +1944,6 @@ async function carregarDB() {
 }
 
 async function salvarDB() {
-    if (modoClienteAtivo) {
-        console.log('🔒 Modo Cliente: salvamento BLOQUEADO');
-        document.getElementById("svtxt").innerText = "Modo Cliente";
-        return;
-    }
-    
     try {
         await dbFirebase.collection("sistema").doc(DOC_ID).set(DB);
         document.getElementById("svtxt").innerText = "Dados Sincronizados";
@@ -2202,38 +2001,15 @@ function nav(page, el) {
     else if (page === 'kanban') renderKanban();
     if (page === 'entregas') renderEntregas();
      if (page === 'alertas') renderAlertas();
-  if (page === 'crm') renderCRM();
 }
 
 function gerarBotoesAcao(page) {
     const tbacts = document.getElementById('tbacts');
     if (!tbacts) return;
-    
-    // Remove apenas os botões de ação, preserva o btn-modo-cliente
-    const botoesAcao = tbacts.querySelectorAll('button:not(#btn-modo-cliente)');
-    botoesAcao.forEach(b => b.remove());
-    
-    // Adiciona botão específico da página
-    if (page === 'propostas') {
-        tbacts.insertAdjacentHTML('afterbegin', '<button class="btn bp" onclick="openModalProposta()"><i class="ti ti-plus"></i> Nova Proposta</button>');
-    } else if (page === 'financeiro') {
-        tbacts.insertAdjacentHTML('afterbegin', '<button class="btn bp" onclick="openModalFin()"><i class="ti ti-plus"></i> Nova Transação</button>');
-    } else if (page === 'terceirizados') {
-        tbacts.insertAdjacentHTML('afterbegin', '<button class="btn bp" onclick="openModalTerc()"><i class="ti ti-plus"></i> Novo Especialista</button>');
-    }
-    
-    // Atualiza o botão de modo cliente
-    const btnMC = document.getElementById('btn-modo-cliente');
-    if (btnMC) {
-        btnMC.style.display = 'inline-block';
-        if (modoClienteAtivo) {
-            btnMC.textContent = '🔒 Sair Modo Cliente';
-            btnMC.style.background = '#ef4444';
-        } else {
-            btnMC.textContent = '🔓 Ativar Modo Cliente';
-            btnMC.style.background = '#f59e0b';
-        }
-    }
+    tbacts.innerHTML = '';
+    if (page === 'propostas') tbacts.innerHTML = '<button class="btn bp" onclick="openModalProposta()"><i class="ti ti-plus"></i> Nova Proposta</button>';
+    else if (page === 'financeiro') tbacts.innerHTML = '<button class="btn bp" onclick="openModalFin()"><i class="ti ti-plus"></i> Nova Transação</button>';
+    else if (page === 'terceirizados') tbacts.innerHTML = '<button class="btn bp" onclick="openModalTerc()"><i class="ti ti-plus"></i> Novo Especialista</button>';
 }
 
 function renderizarTudo() {
@@ -3885,11 +3661,7 @@ function gerarAlertas() {
         if (a.prioridade !== 'alta' && b.prioridade === 'alta') return 1;
         return (a.data || '').localeCompare(b.data || '');
     });
-
-// 5. Follow-ups de CRM atrasados
-const alertasCRM = gerarAlertasCRM();
-alertas.push(...alertasCRM);
-  
+    
     return alertas;
 }
 
@@ -3963,282 +3735,6 @@ function renderAlertas() {
     ` + container.innerHTML;
 }
 
-// ====================== CRM / EMPRESAS ======================
-if (!DB.crm) DB.crm = [];
-
-function abrirModalEmpresa(id) {
-    document.getElementById('crm-id').value = '';
-    document.getElementById('crm-nome').value = '';
-    document.getElementById('crm-cnpj').value = '';
-    document.getElementById('crm-cidade').value = '';
-    document.getElementById('crm-segmento').value = 'Engenharia de Projetos';
-    document.getElementById('crm-site').value = '';
-    document.getElementById('crm-status').value = 'Lead';
-    document.getElementById('crm-contato-nome').value = '';
-    document.getElementById('crm-contato-cargo').value = '';
-    document.getElementById('crm-contato-email').value = '';
-    document.getElementById('crm-contato-telefone').value = '';
-    document.getElementById('crm-contato-linkedin').value = '';
-    document.getElementById('crm-obs').value = '';
-    document.getElementById('crm-followup-data').value = new Date().toISOString().split('T')[0];
-    document.getElementById('crm-followup-nota').value = '';
-    document.getElementById('crm-followup-list').innerHTML = '';
-    
-    if (id) {
-        const empresa = (DB.crm || []).find(e => e.id === id);
-        if (empresa) {
-            document.getElementById('crm-id').value = empresa.id;
-            document.getElementById('crm-nome').value = empresa.nome || '';
-            document.getElementById('crm-cnpj').value = empresa.cnpj || '';
-            document.getElementById('crm-cidade').value = empresa.cidade || '';
-            document.getElementById('crm-segmento').value = empresa.segmento || 'Engenharia de Projetos';
-            document.getElementById('crm-site').value = empresa.site || '';
-            document.getElementById('crm-status').value = empresa.status || 'Lead';
-            document.getElementById('crm-contato-nome').value = empresa.contatoNome || '';
-            document.getElementById('crm-contato-cargo').value = empresa.contatoCargo || '';
-            document.getElementById('crm-contato-email').value = empresa.contatoEmail || '';
-            document.getElementById('crm-contato-telefone').value = empresa.contatoTelefone || '';
-            document.getElementById('crm-contato-linkedin').value = empresa.contatoLinkedin || '';
-            document.getElementById('crm-obs').value = empresa.obs || '';
-            renderFollowupList(empresa);
-        }
-    }
-    
-    openModal('mcrm');
-}
-
-function renderFollowupList(empresa) {
-    const container = document.getElementById('crm-followup-list');
-    if (!container) return;
-    
-    const followups = empresa.followups || [];
-    if (followups.length === 0) {
-        container.innerHTML = '<span style="color:#94a3b8;">Nenhum follow-up registrado.</span>';
-        return;
-    }
-    
-    container.innerHTML = followups.sort((a, b) => b.data.localeCompare(a.data)).map(f => `
-        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9;">
-            <span><strong>${new Date(f.data + 'T00:00:00').toLocaleDateString('pt-BR')}</strong> - ${f.nota || 'Sem nota'}</span>
-            <button class="btn bsm bdanger" style="font-size:10px;padding:2px 6px;" onclick="removerFollowup('${empresa.id}', '${f.data}')">✕</button>
-        </div>
-    `).join('');
-}
-
-function adicionarFollowup() {
-    const empresaId = document.getElementById('crm-id').value;
-    if (!empresaId) {
-        alert('Salve a empresa primeiro para adicionar follow-ups.');
-        return;
-    }
-    
-    const data = document.getElementById('crm-followup-data').value;
-    const nota = document.getElementById('crm-followup-nota').value.trim();
-    
-    if (!data) return alert('Selecione uma data!');
-    
-    const empresa = (DB.crm || []).find(e => e.id === empresaId);
-    if (!empresa) return;
-    
-    if (!empresa.followups) empresa.followups = [];
-    empresa.followups.push({ data, nota });
-    empresa.proximoFollowup = data;
-    
-    document.getElementById('crm-followup-nota').value = '';
-    renderFollowupList(empresa);
-}
-
-function removerFollowup(empresaId, data) {
-    const empresa = (DB.crm || []).find(e => e.id === empresaId);
-    if (!empresa) return;
-    empresa.followups = (empresa.followups || []).filter(f => f.data !== data);
-    renderFollowupList(empresa);
-}
-
-async function salvarEmpresaCRM() {
-    const id = document.getElementById('crm-id').value || 'crm_' + Date.now();
-    const nome = document.getElementById('crm-nome').value.trim();
-    const contatoNome = document.getElementById('crm-contato-nome').value.trim();
-    const contatoEmail = document.getElementById('crm-contato-email').value.trim();
-    
-    if (!nome) return alert('Nome da empresa é obrigatório!');
-    if (!contatoNome) return alert('Nome do contato é obrigatório!');
-    if (!contatoEmail) return alert('E-mail do contato é obrigatório!');
-    
-    const empresa = {
-        id, nome,
-        cnpj: document.getElementById('crm-cnpj').value,
-        cidade: document.getElementById('crm-cidade').value,
-        segmento: document.getElementById('crm-segmento').value,
-        site: document.getElementById('crm-site').value,
-        status: document.getElementById('crm-status').value,
-        contatoNome, contatoEmail,
-        contatoCargo: document.getElementById('crm-contato-cargo').value,
-        contatoTelefone: document.getElementById('crm-contato-telefone').value,
-        contatoLinkedin: document.getElementById('crm-contato-linkedin').value,
-        obs: document.getElementById('crm-obs').value,
-        followups: [],
-        dataCriacao: new Date().toISOString().split('T')[0]
-    };
-    
-    const idx = (DB.crm || []).findIndex(e => e.id === id);
-    if (idx > -1) {
-        empresa.followups = DB.crm[idx].followups || [];
-        empresa.dataCriacao = DB.crm[idx].dataCriacao;
-        DB.crm[idx] = empresa;
-    } else {
-        if (!DB.crm) DB.crm = [];
-        DB.crm.push(empresa);
-    }
-    
-    closeModal();
-    await salvarDB();
-}
-
-function renderCRM() {
-    const container = document.getElementById('crm-container');
-    if (!container) return;
-    
-    const busca = (document.getElementById('crm-search')?.value || '').toLowerCase();
-    const statusFilter = document.getElementById('crm-status-filter')?.value || '';
-    const segmentoFilter = document.getElementById('crm-segmento-filter')?.value || '';
-    
-    let empresas = DB.crm || [];
-    
-    if (busca) {
-        empresas = empresas.filter(e => 
-            (e.nome || '').toLowerCase().includes(busca) ||
-            (e.contatoNome || '').toLowerCase().includes(busca) ||
-            (e.contatoEmail || '').toLowerCase().includes(busca) ||
-            (e.cidade || '').toLowerCase().includes(busca)
-        );
-    }
-    if (statusFilter) empresas = empresas.filter(e => e.status === statusFilter);
-    if (segmentoFilter) empresas = empresas.filter(e => e.segmento === segmentoFilter);
-    
-    const ordemStatus = { 'Cliente': 0, 'Em negociação': 1, 'Lead': 2, 'Inativo': 3 };
-    empresas.sort((a, b) => (ordemStatus[a.status] || 4) - (ordemStatus[b.status] || 4));
-    
-    const total = (DB.crm || []).length;
-    const leads = (DB.crm || []).filter(e => e.status === 'Lead').length;
-    const negociacao = (DB.crm || []).filter(e => e.status === 'Em negociação').length;
-    const clientes = (DB.crm || []).filter(e => e.status === 'Cliente').length;
-    
-    const hoje = new Date(); hoje.setHours(0,0,0,0);
-    const atrasados = (DB.crm || []).filter(e => {
-        return e.proximoFollowup && new Date(e.proximoFollowup + 'T00:00:00') < hoje && e.status !== 'Inativo';
-    }).length;
-    
-    document.getElementById('crm-total').textContent = total;
-    document.getElementById('crm-leads').textContent = leads;
-    document.getElementById('crm-negociacao').textContent = negociacao;
-    document.getElementById('crm-clientes').textContent = clientes;
-    document.getElementById('crm-followups').textContent = atrasados;
-    
-    if (empresas.length === 0) {
-        container.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#64748b;">Nenhuma empresa encontrada. Clique em "Nova Empresa" para começar.</div>';
-        return;
-    }
-    
-    const coresStatus = { 'Lead': '#3b82f6', 'Em negociação': '#f59e0b', 'Cliente': '#10b981', 'Inativo': '#94a3b8' };
-    
-    container.innerHTML = empresas.map(e => {
-        const followups = e.followups || [];
-        const ultimoFollowup = followups.length > 0 ? followups.sort((a, b) => b.data.localeCompare(a.data))[0] : null;
-        const temAtraso = e.proximoFollowup && new Date(e.proximoFollowup + 'T00:00:00') < new Date().setHours(0,0,0,0);
-        const propostasVinculadas = (DB.propostas || []).filter(p => p.cliente === e.nome).length;
-        
-        return `
-        <div class="card" style="margin-bottom: 12px; border-left: 4px solid ${coresStatus[e.status] || '#94a3b8'}; cursor: pointer;" onclick="abrirModalEmpresa('${e.id}')">
-            <div style="padding: 14px 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 8px;">
-                    <div style="flex: 1;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <strong style="font-size: 14px;">🏢 ${e.nome || 'Sem nome'}</strong>
-                            <span style="font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 600; background: ${coresStatus[e.status]}20; color: ${coresStatus[e.status]};">
-                                ${e.status || 'Lead'}
-                            </span>
-                            ${temAtraso ? '<span style="font-size:10px;color:#ef4444;">⚠️ Follow-up atrasado</span>' : ''}
-                        </div>
-                        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
-                            📍 ${e.cidade || 'Sem localização'} | 🏭 ${e.segmento || 'Sem segmento'}
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 11px; color: #64748b;">
-                            👤 ${e.contatoNome || 'Sem contato'}
-                            ${e.contatoCargo ? `<br>💼 ${e.contatoCargo}` : ''}
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 15px; margin-top: 10px; font-size: 11px; color: #64748b; flex-wrap: wrap;">
-                    ${e.contatoEmail ? `<span>📧 ${e.contatoEmail}</span>` : ''}
-                    ${e.contatoTelefone ? `<span>📱 ${e.contatoTelefone}</span>` : ''}
-                    ${ultimoFollowup ? `<span>📅 Último follow-up: ${new Date(ultimoFollowup.data + 'T00:00:00').toLocaleDateString('pt-BR')}</span>` : '<span>📅 Nenhum follow-up</span>'}
-                    ${propostasVinculadas > 0 ? `<span style="color:#6366f1;font-weight:600;">📝 ${propostasVinculadas} proposta(s)</span>` : ''}
-                </div>
-                <div style="display: flex; gap: 6px; margin-top: 10px;" onclick="event.stopPropagation();">
-                    <button class="btn bsm bp" style="font-size:10px;" onclick="criarPropostaParaEmpresa('${e.nome}', '${e.id}')">📝 Nova Proposta</button>
-                    <button class="btn bsm" style="font-size:10px;" onclick="registrarFollowupRapido('${e.id}')">📅 Follow-up Hoje</button>
-                    <button class="btn bsm bdanger" style="font-size:10px;" onclick="deletarEmpresaCRM('${e.id}')">🗑️</button>
-                </div>
-            </div>
-        </div>`;
-    }).join('');
-}
-
-function criarPropostaParaEmpresa(nomeEmpresa, crmId) {
-    openModalProposta();
-    setTimeout(() => {
-        document.getElementById('prop-cliente').value = nomeEmpresa;
-    }, 200);
-    nav('propostas');
-}
-
-function registrarFollowupRapido(empresaId) {
-    const empresa = (DB.crm || []).find(e => e.id === empresaId);
-    if (!empresa) return;
-    
-    if (!empresa.followups) empresa.followups = [];
-    empresa.followups.push({
-        data: new Date().toISOString().split('T')[0],
-        nota: 'Follow-up realizado em ' + new Date().toLocaleDateString('pt-BR')
-    });
-    empresa.proximoFollowup = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
-    
-    salvarDB().then(() => {
-        alert('✅ Follow-up registrado! Próximo: ' + new Date(empresa.proximoFollowup + 'T00:00:00').toLocaleDateString('pt-BR'));
-        renderCRM();
-    });
-}
-
-async function deletarEmpresaCRM(id) {
-    if (!confirm('Excluir esta empresa do CRM?')) return;
-    if (!DB.crm) DB.crm = [];
-    DB.crm = DB.crm.filter(e => e.id !== id);
-    await salvarDB();
-}
-
-function gerarAlertasCRM() {
-    const hoje = new Date(); hoje.setHours(0,0,0,0);
-    const alertas = [];
-    
-    (DB.crm || []).forEach(empresa => {
-        if (empresa.proximoFollowup && new Date(empresa.proximoFollowup + 'T00:00:00') < hoje && empresa.status !== 'Inativo') {
-            alertas.push({
-                tipo: 'crm',
-                prioridade: 'alta',
-                projeto: empresa.nome,
-                projetoId: empresa.id,
-                mensagem: `📞 Follow-up atrasado para ${empresa.contatoNome || 'contato'} desde ${new Date(empresa.proximoFollowup + 'T00:00:00').toLocaleDateString('pt-BR')}`,
-                data: empresa.proximoFollowup
-            });
-        }
-    });
-    
-    return alertas;
-}
-    
 // ====================== MODO CLIENTE ======================
 var modoClienteAtivo = false;
 const SENHA_MODO_CLIENTE = '2026'; // Altere para sua senha
@@ -4485,15 +3981,7 @@ window.renderAlertas = renderAlertas;
 window.filtroAlertas = filtroAlertas;
 window.toggleModoCliente = toggleModoCliente;
 window.toggleEntregasProjeto = toggleEntregasProjeto;
-window.renderCRM = renderCRM;
-window.abrirModalEmpresa = abrirModalEmpresa;
-window.salvarEmpresaCRM = salvarEmpresaCRM;
-
-
-    
-// Não carrega automaticamente - aguarda login
-// window.onload = carregarDB;
-    
-  </script> 
+window.onload = carregarDB;
+  </script>
 </body>
 </html>
