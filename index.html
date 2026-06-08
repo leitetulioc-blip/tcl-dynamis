@@ -1578,13 +1578,13 @@ select {
             <i class="ti ti-search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
             <input type="text" id="crm-search" placeholder="Buscar empresa ou contato..." oninput="renderCRM()" style="padding-left: 32px; width: 100%;">
         </div>
-        <select onchange="renderCRM()" id="crm-status-filter">
-            <option value="">Todos os Status</option>
-            <option>Lead</option>
-            <option>Em negociação</option>
-            <option>Cliente</option>
-            <option>Inativo</option>
-        </select>
+       <select onchange="renderCRM()" id="crm-status-filter">
+    <option value="" selected>Todos os Status</option>
+    <option>Lead</option>
+    <option>Em negociação</option>
+    <option>Cliente</option>
+    <option>Inativo</option>
+</select>
         <select onchange="renderCRM()" id="crm-segmento-filter">
             <option value="">Todos os Segmentos</option>
             <option>Engenharia de Projetos</option>
@@ -2133,6 +2133,11 @@ async function carregarDB() {
     }
     renderizarTudo();
     atualizarBotaoModoCliente();
+// ✅ Garante que o filtro CRM inicie correto
+    setTimeout(() => {
+        const filtroStatus = document.getElementById('crm-status-filter');
+        if (filtroStatus) filtroStatus.value = '';
+    }, 500);
 }
 
 async function salvarDB() {
@@ -3905,12 +3910,16 @@ async function salvarEmpresaCRM() {
 }
 
 function renderCRM() {
-    const container = document.getElementById('crm-container');
-    if (!container) return;
-    const busca = (document.getElementById('crm-search')?.value || '').toLowerCase();
+    // ✅ Garante que o filtro comece em "Todos"
     const statusFilter = document.getElementById('crm-status-filter')?.value || '';
     const segmentoFilter = document.getElementById('crm-segmento-filter')?.value || '';
+    const busca = (document.getElementById('crm-search')?.value || '').toLowerCase();
+    
+    const container = document.getElementById('crm-container');
+    if (!container) return;
+    
     let empresas = DB.crm || [];
+    // ... resto da função
     if (busca) {
         empresas = empresas.filter(e => (e.nome||'').toLowerCase().includes(busca) || (e.contatoNome||'').toLowerCase().includes(busca) || (e.contatoEmail||'').toLowerCase().includes(busca) || (e.cidade||'').toLowerCase().includes(busca));
     }
