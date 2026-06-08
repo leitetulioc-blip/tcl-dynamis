@@ -2084,8 +2084,8 @@ window.addEventListener('DOMContentLoaded', function() {
           
 // ====================== AUTENTICAÇÃO ======================
 const USUARIO_AUTORIZADO = {
-    email: 'tulio@tcldynamis.com.br',  // Seu e-mail real
-    senha: 'TCL2026@seguro'            // Senha forte (letras, números, símbolos)
+    email: 'tulio@tcldynamis.com.br',
+    senha: 'TCL2026@seguro'
 };
 
 function verificarLogin() {
@@ -2094,9 +2094,23 @@ function verificarLogin() {
     const msg = document.getElementById('login-msg');
     
     if (email === USUARIO_AUTORIZADO.email && senha === USUARIO_AUTORIZADO.senha) {
+        // Verifica se Firebase está pronto
+        if (typeof firebase === 'undefined' || typeof dbFirebase === 'undefined') {
+            msg.style.display = 'block';
+            msg.textContent = '⏳ Carregando sistema... Aguarde e tente novamente.';
+            // Tenta novamente em 1 segundo
+            setTimeout(verificarLogin, 1000);
+            return;
+        }
         document.getElementById('login-screen').style.display = 'none';
         document.querySelector('.app').style.display = 'flex';
-        carregarDB();
+        try {
+            carregarDB();
+        } catch(e) {
+            console.error('Erro ao carregar:', e);
+            msg.style.display = 'block';
+            msg.textContent = '⚠️ Erro ao carregar dados. Recarregue a página.';
+        }
     } else {
         msg.style.display = 'block';
         msg.textContent = '❌ E-mail ou senha incorretos.';
@@ -2110,11 +2124,6 @@ document.addEventListener('keydown', function(e) {
         verificarLogin();
     }
 });
-
-
-
-
-
 
 
 
