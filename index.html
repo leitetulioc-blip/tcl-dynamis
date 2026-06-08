@@ -3876,21 +3876,31 @@ async function salvarEmpresaCRM() {
         dataCriacao: new Date().toISOString().split('T')[0]
     };
     
+    // Garante que DB.crm existe
     if (!DB.crm) DB.crm = [];
     
     const idx = DB.crm.findIndex(e => e.id === id);
     if (idx > -1) {
         empresa.followups = DB.crm[idx].followups || [];
-        empresa.dataCriacao = DB.crm[idx].dataCriacao;
         DB.crm[idx] = empresa;
     } else {
         DB.crm.push(empresa);
     }
     
     closeModal();
-    await salvarDB();
-    renderCRM(); // ✅ Força renderizar após salvar
-    console.log('✅ Empresa salva:', empresa.nome, '| Total:', DB.crm.length);
+    
+    // Força salvar no Firebase
+    try {
+        await dbFirebase.collection("sistema").doc("tcl_dynamis_dados").set(DB);
+        document.getElementById("svtxt").innerText = "Dados Sincronizados";
+        console.log('✅ CRM salvo no Firebase! Empresas:', DB.crm.length);
+    } catch(e) {
+        console.error('❌ Erro ao salvar:', e);
+        document.getElementById("svtxt").innerText = "Erro ao Sincronizar";
+    }
+    
+    renderCRM();
+    renderizarTudo();
 }
 
 function renderCRM() {
@@ -3973,8 +3983,18 @@ function registrarFollowupRapido(empresaId) {
 
 async function deletarEmpresaCRM(id) {
     if (!confirm('Excluir esta empresa?')) return;
-    DB.crm = (DB.crm || []).filter(e => e.id !== id);
-    await salvarDB();
+    if (!DB.crm) DB.crm = [];
+    DB.crm = DB.crm.filter(e => e.id !== id);
+    
+    try {
+        await dbFirebase.collection("sistema").doc("tcl_dynamis_dados").set(DB);
+        document.getElementById("svtxt").innerText = "Dados Sincronizados";
+    } catch(e) {
+        console.error('❌ Erro:', e);
+    }
+    
+    renderCRM();
+    renderizarTudo();
 }
 
 function gerarAlertasCRM() {
