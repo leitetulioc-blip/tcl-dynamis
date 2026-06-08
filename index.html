@@ -1059,6 +1059,35 @@ select {
   
 </head>
 <body>
+
+<!-- ==================== TELA DE LOGIN ==================== -->
+<div id="login-screen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1e293b,#0f172a);z-index:9999;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">
+    <div style="background:#ffffff;padding:40px;border-radius:16px;text-align:center;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+        <div style="font-size:40px;margin-bottom:10px;">🔐</div>
+        <h2 style="margin:0 0 5px 0;color:#1e293b;font-size:20px;">TCL Dynamis</h2>
+        <p style="color:#64748b;font-size:13px;margin:0 0 25px 0;">Sistema Integrado de Gestão</p>
+        
+        <div style="text-align:left;margin-bottom:16px;">
+            <label style="font-size:12px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">E-mail</label>
+            <input id="login-email" type="email" placeholder="seu@email.com" style="width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;box-sizing:border-box;">
+        </div>
+        
+        <div style="text-align:left;margin-bottom:20px;">
+            <label style="font-size:12px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">Senha</label>
+            <input id="login-senha" type="password" placeholder="••••••" style="width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;box-sizing:border-box;">
+        </div>
+        
+        <button onclick="verificarLogin()" style="width:100%;padding:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">
+            🔓 Entrar no Sistema
+        </button>
+        
+        <p id="login-msg" style="color:#ef4444;font-size:12px;margin-top:12px;display:none;"></p>
+        <p style="color:#94a3b8;font-size:10px;margin-top:20px;">TCL Dynamis Engenharia LTDA © 2026</p>
+    </div>
+</div>
+
+
+  
   <!-- Firebase -->
         <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -1072,7 +1101,7 @@ select {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 
-        <div class="app" role="application" aria-label="Sistema de Gestão TCL Dynamis">
+        <div class="app" role="application" aria-label="Sistema de Gestão TCL Dynamis" style="display:none;">
             
             <!-- ==================== SIDEBAR ==================== -->
             <aside class="sb" role="navigation" aria-label="Navegação principal">
@@ -1890,6 +1919,35 @@ select {
 // ============================================
 'use strict';
 
+// ====================== AUTENTICAÇÃO ======================
+const USUARIO_AUTORIZADO = {
+    email: 'tulio@tcldynamis.com.br',
+    senha: 'TCL2026@seguro'
+};
+
+function verificarLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const senha = document.getElementById('login-senha').value.trim();
+    const msg = document.getElementById('login-msg');
+    
+    if (email === USUARIO_AUTORIZADO.email && senha === USUARIO_AUTORIZADO.senha) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.querySelector('.app').style.display = 'flex';
+        carregarDB();
+    } else {
+        msg.style.display = 'block';
+        msg.textContent = '❌ E-mail ou senha incorretos.';
+        document.getElementById('login-senha').value = '';
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+        verificarLogin();
+    }
+});
+
+    
 // Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyADPZY7unD8J0vzGZlhuzT4hvy2WkC8Bhc",
@@ -3981,7 +4039,9 @@ window.renderAlertas = renderAlertas;
 window.filtroAlertas = filtroAlertas;
 window.toggleModoCliente = toggleModoCliente;
 window.toggleEntregasProjeto = toggleEntregasProjeto;
-window.onload = carregarDB;
+// Não carrega automaticamente - aguarda login
+// window.onload = carregarDB;
+    
   </script>
 </body>
 </html>
