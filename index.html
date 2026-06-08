@@ -1071,112 +1071,66 @@ inicio do html
         <div style="font-size:40px;margin-bottom:10px;">🔐</div>
         <h2 style="margin:0 0 5px 0;color:#1e293b;font-size:20px;">TCL Dynamis</h2>
         <p style="color:#64748b;font-size:13px;margin:0 0 25px 0;">Sistema Integrado de Gestão</p>
-        
         <div style="text-align:left;margin-bottom:16px;">
             <label style="font-size:12px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">E-mail</label>
             <input id="login-email" type="email" placeholder="seu@email.com" style="width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;box-sizing:border-box;">
         </div>
-        
         <div style="text-align:left;margin-bottom:20px;">
             <label style="font-size:12px;font-weight:600;color:#475569;display:block;margin-bottom:4px;">Senha</label>
             <input id="login-senha" type="password" placeholder="••••••" style="width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;box-sizing:border-box;">
         </div>
-        
-        <button onclick="verificarLogin()" style="width:100%;padding:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;">
-            🔓 Entrar no Sistema
-        </button>
-        
+        <button onclick="verificarLogin()" style="width:100%;padding:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">🔓 Entrar no Sistema</button>
         <p id="login-msg" style="color:#ef4444;font-size:12px;margin-top:12px;display:none;"></p>
         <p style="color:#94a3b8;font-size:10px;margin-top:20px;">TCL Dynamis Engenharia LTDA © 2026</p>
     </div>
 </div>
 
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<!-- Bibliotecas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
-
+<!-- Fontes -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 
 <div class="app" role="application" aria-label="Sistema de Gestão TCL Dynamis" style="display:none;">
-    
-    <aside class="sb">
-            
-            <!-- ==================== SIDEBAR ==================== -->
-            <aside class="sb" role="navigation" aria-label="Navegação principal">
-                <div class="logo">
-                    <div class="logo-n">TCL DYNAMIS ENGENHARIA LTDA</div>
-                    <div class="logo-s">Sistema Integrado de Gestão v3.5</div>
-                </div>
-                
-                <nav class="nav">
-                    <div class="ngrp" role="group" aria-label="Visão Geral">Visão Geral</div>
-                    <button class="ni on" onclick="nav('dashboard', this)" aria-current="page">
-                        <i class="ti ti-layout-dashboard" aria-hidden="true"></i>Dashboard
-                    </button>
-                    <button class="ni" onclick="nav('kanban', this)">
-                        <i class="ti ti-layout-kanban" aria-hidden="true"></i>Kanban
-                    </button>
-                    
-                    <div class="ngrp" role="group" aria-label="Operações">Operações</div>
-    <button class="ni" onclick="nav('propostas', this)">
-        <i class="ti ti-file-text" aria-hidden="true"></i>Propostas
-    </button>
-    <button class="ni" onclick="nav('projetos', this)">
-        <i class="ti ti-briefcase" aria-hidden="true"></i>Projetos
-    </button>
-                    <button class="ni" onclick="nav('financeiro', this)">
-                        <i class="ti ti-cash" aria-hidden="true"></i>Financeiro
-                    </button>
-                    <button class="ni" onclick="nav('terceirizados', this)">
-                        <i class="ti ti-users" aria-hidden="true"></i>Terceirizados
-                    </button>
-                    
-<button class="ni" onclick="nav('entregas', this)">
-    <i class="ti ti-checklist" aria-hidden="true"></i>Entregas Técnicas
-</button>
-
-<button class="ni" onclick="nav('crm', this)">
-    <i class="ti ti-building" aria-hidden="true"></i>CRM / Empresas
-</button>
-                    <div class="ngrp" role="group" aria-label="Sistema">Sistema</div>
-                    <button class="ni" onclick="nav('alertas', this)">
-                        <i class="ti ti-bell" aria-hidden="true"></i>Alertas
-                        <span class="badge-dot" id="bdot" style="display:none">0</span>
-                    </button>
-                    <button class="ni" onclick="nav('backup', this)">
-                        <i class="ti ti-database" aria-hidden="true"></i>Backup & Dados
-                    </button>
-                </nav>
-                
-                <div class="sbf">
-                    <div class="apill" id="apill" onclick="nav('alertas')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')nav('alertas')">
-                        <i class="ti ti-bell-ringing" aria-hidden="true"></i>
-                        <span class="apill-t" id="acount">0 alertas</span>
-                    </div>
-                    <div class="sv-status ok" id="svst" role="status" aria-live="polite">
-                        <i class="ti ti-cloud-check" aria-hidden="true"></i>
-                        <span id="svtxt">Dados salvos</span>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
-            <div class="main">
-                <header class="topbar">
-    <div class="tb-title" id="tbtitle">Dashboard</div>
-    <div class="tb-acts" id="tbacts">
-        <!-- Botão Modo Cliente -->
-        <button id="btn-modo-cliente" class="btn" style="background:#f59e0b;color:#fff;font-weight:600;font-size:12px;margin-right:8px;display:none;" 
-            onclick="toggleModoCliente()">
-            🔓 Ativar Modo Cliente
-        </button>
-    </div>
-</header>
-                
-                <div class="content">
+    <aside class="sb" role="navigation" aria-label="Navegação principal">
+        <div class="logo">
+            <div class="logo-n">TCL DYNAMIS ENGENHARIA LTDA</div>
+            <div class="logo-s">Sistema Integrado de Gestão v3.5</div>
+        </div>
+        <nav class="nav">
+            <div class="ngrp">Visão Geral</div>
+            <button class="ni on" onclick="nav('dashboard', this)"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+            <button class="ni" onclick="nav('kanban', this)"><i class="ti ti-layout-kanban"></i>Kanban</button>
+            <div class="ngrp">Operações</div>
+            <button class="ni" onclick="nav('propostas', this)"><i class="ti ti-file-text"></i>Propostas</button>
+            <button class="ni" onclick="nav('projetos', this)"><i class="ti ti-briefcase"></i>Projetos</button>
+            <button class="ni" onclick="nav('financeiro', this)"><i class="ti ti-cash"></i>Financeiro</button>
+            <button class="ni" onclick="nav('terceirizados', this)"><i class="ti ti-users"></i>Terceirizados</button>
+            <button class="ni" onclick="nav('entregas', this)"><i class="ti ti-checklist"></i>Entregas Técnicas</button>
+            <button class="ni" onclick="nav('crm', this)"><i class="ti ti-building"></i>CRM / Empresas</button>
+            <div class="ngrp">Sistema</div>
+            <button class="ni" onclick="nav('alertas', this)"><i class="ti ti-bell"></i>Alertas<span class="badge-dot" id="bdot" style="display:none">0</span></button>
+            <button class="ni" onclick="nav('backup', this)"><i class="ti ti-database"></i>Backup & Dados</button>
+        </nav>
+        <div class="sbf">
+            <div class="apill" id="apill" onclick="nav('alertas')"><i class="ti ti-bell-ringing"></i><span class="apill-t" id="acount">0 alertas</span></div>
+            <div class="sv-status ok" id="svst"><i class="ti ti-cloud-check"></i><span id="svtxt">Dados salvos</span></div>
+        </div>
+    </aside>
+    <div class="main">
+        <header class="topbar">
+            <div class="tb-title" id="tbtitle">Dashboard</div>
+            <div class="tb-acts" id="tbacts">
+                <button id="btn-modo-cliente" class="btn" style="background:#f59e0b;color:#fff;font-weight:600;font-size:12px;display:none;" onclick="toggleModoCliente()">🔓 Ativar Modo Cliente</button>
+            </div>
+        </header>
+        <div class="content">
+              
                     
                     <!-- ==================== PÁGINA DASHBOARD ==================== -->
                     <div id="page-dashboard" class="page on">
