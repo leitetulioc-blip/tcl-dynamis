@@ -2121,23 +2121,21 @@ async function carregarDB() {
             DB.financeiro = dadosNuvem.financeiro || [];
             DB.terceirizados = dadosNuvem.terceirizados || [];
             DB.propostas = dadosNuvem.propostas || [];
-          DB.crm = dadosNuvem.crm || [];
-            console.log("✅ Dados carregados:", DB.projetos.length, "projetos,", DB.financeiro.length, "financeiro,", DB.terceirizados.length, "terceirizados");
+            DB.crm = dadosNuvem.crm || [];
+            console.log("✅ Dados carregados:", DB.projetos.length, "projetos,", DB.financeiro.length, "financeiro,", DB.terceirizados.length, "terceirizados,", DB.crm.length, "CRM");
         } else {
             DB = JSON.parse(JSON.stringify(SEED_DATA));
+            DB.crm = [];
             console.log("📦 Nenhum dado, usando SEED_DATA");
         }
     } catch (error) {
         console.error("❌ Erro ao carregar:", error);
         DB = JSON.parse(JSON.stringify(SEED_DATA));
+        DB.crm = [];
     }
     renderizarTudo();
     atualizarBotaoModoCliente();
-// ✅ Garante que o filtro CRM inicie correto
-    setTimeout(() => {
-        const filtroStatus = document.getElementById('crm-status-filter');
-        if (filtroStatus) filtroStatus.value = '';
-    }, 500);
+    setTimeout(() => renderCRM(), 300);
 }
 
 async function salvarDB() {
