@@ -4070,16 +4070,50 @@ async function deletarEmpresaCRM(id) {
 
 function gerarAlertasCRM() {
     const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const seteDiasAtras = new Date(hoje); seteDiasAtras.setDate(seteDiasAtras.getDate() - 7);
     const alertas = [];
+    
     (DB.crm || []).forEach(empresa => {
+        // Alerta 1: próximo follow-up vencido
         if (empresa.proximoFollowup && new Date(empresa.proximoFollowup + 'T00:00:00') < hoje && empresa.status !== 'Inativo') {
             alertas.push({
-                tipo: 'crm', prioridade: 'alta', projeto: empresa.nome, projetoId: empresa.id,
-                mensagem: '📞 Follow-up atrasado para ' + (empresa.contatoNome || 'contato'),
+                tipo: 'crm',
+                prioridade: 'alta',
+                projeto: empresa.nome,
+                projetoId: empresa.id,
+                mensagem: `📞 Follow-up atrasado para ${empresa.contatoNome || 'contato'} desde ${new Date(empresa.proximoFollowup + 'T00:00:00').toLocaleDateString('pt-BR')}`,
                 data: empresa.proximoFollowup
             });
         }
+        
+        // Alerta 2: sem follow-up há mais de 30 dias (para empresas em negociação)
+        if (empresa.status === 'Em negociação' || empresa.status === 'Lead') {
+            const followups = empresa.followups || [];
+            if (followups.length === 0 && empresa.dataCriacao && new Date(empresa.dataCriacao + 'T00:00:00') < seteDiasAtras) {
+                alertas.push({
+                    tipo: 'crm',
+                    prioridade: 'media',
+                    projeto: empresa.nome,
+                    projetoId: empresa.id,
+                    mensagem: `⚠️ Nenhum follow-up registrado para ${empresa.nome} (cadastrado em ${new Date(empresa.dataCriacao + 'T00:00:00').toLocaleDateString('pt-BR')})`,
+                    data: empresa.dataCriacao
+                });
+            } else if (followups.length > 0) {
+                const ultimoFollowup = followups.sort((a, b) => b.data.localeCompare(a.data))[0];
+                if (new Date(ultimoFollowup.data + 'T00:00:00') < seteDiasAtras && !empresa.proximoFollowup) {
+                    alertas.push({
+                        tipo: 'crm',
+                        prioridade: 'alta',
+                        projeto: empresa.nome,
+                        projetoId: empresa.id,
+                        mensagem: `⚠️ Último follow-up de ${empresa.nome} foi em ${new Date(ultimoFollowup.data + 'T00:00:00').toLocaleDateString('pt-BR')}. Agende o próximo!`,
+                        data: ultimoFollowup.data
+                    });
+                }
+            }
+        }
     });
+    
     return alertas;
 }
     
