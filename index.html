@@ -1138,7 +1138,9 @@ select {
 </button>
                   <button class="ni" onclick="nav('crm', this)">
     <i class="ti ti-building" aria-hidden="true"></i>CRM / Empresas
+    <span class="badge-dot" id="crm-badge" style="display:none">0</span>
 </button>
+
 
                     <div class="ngrp" role="group" aria-label="Sistema">Sistema</div>
                     <button class="ni" onclick="nav('alertas', this)">
@@ -1188,6 +1190,33 @@ select {
                             </div>
                         </div>
 
+<!-- Card CRM / Follow-ups -->
+<div class="g2" style="margin-bottom: 16px;">
+    <div class="card" style="margin:0; padding: 16px; background: linear-gradient(135deg, #f8fafc, #f5f3ff); border-left: 5px solid #8b5cf6; cursor: pointer;" onclick="nav('crm')">
+        <div style="font-size: 13px; font-weight: 600; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.5px;">
+            🤝 CRM / Pipeline Comercial
+        </div>
+        <div style="display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
+            <div>
+                <div style="font-size: 22px; font-weight: 700; color: #3b82f6;" id="dash-crm-leads">0</div>
+                <div style="font-size: 11px; color: #64748b;">Leads</div>
+            </div>
+            <div>
+                <div style="font-size: 22px; font-weight: 700; color: #f59e0b;" id="dash-crm-negociacao">0</div>
+                <div style="font-size: 11px; color: #64748b;">Em Negociação</div>
+            </div>
+            <div>
+                <div style="font-size: 22px; font-weight: 700; color: #10b981;" id="dash-crm-clientes">0</div>
+                <div style="font-size: 11px; color: #64748b;">Clientes</div>
+            </div>
+            <div>
+                <div style="font-size: 22px; font-weight: 700; color: #ef4444;" id="dash-crm-atrasados">0</div>
+                <div style="font-size: 11px; color: #64748b;">⚠️ Follow-ups Atrasados</div>
+            </div>
+        </div>
+    </div>
+</div>
+                      
                         <!-- Gráficos -->
                         <div class="g2">
                             <div class="card" style="margin:0">
@@ -2136,6 +2165,19 @@ async function carregarDB() {
     renderizarTudo();
     atualizarBotaoModoCliente();
     setTimeout(() => renderCRM(), 300);
+
+// ✅ Alerta de follow-ups atrasados ao fazer login
+setTimeout(() => {
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const atrasados = (DB.crm || []).filter(e => 
+        e.proximoFollowup && new Date(e.proximoFollowup + 'T00:00:00') < hoje && e.status !== 'Inativo'
+    );
+    if (atrasados.length > 0) {
+        const nomes = atrasados.map(e => e.nome).join(', ');
+        alert('⚠️ Você tem ' + atrasados.length + ' follow-up(s) atrasado(s):\n' + nomes + '\n\nVá para o CRM para regularizar.');
+    }
+}, 1500);
+  
 }
 
 async function salvarDB() {
@@ -2331,6 +2373,16 @@ if (elRk) {
         }).join('');
     }
 }
+
+// Atualiza card do CRM no Dashboard
+if (DB.crm) {
+    document.getElementById('dash-crm-leads').textContent = DB.crm.filter(e => e.status === 'Lead').length;
+    document.getElementById('dash-crm-negociacao').textContent = DB.crm.filter(e => e.status === 'Em negociação').length;
+    document.getElementById('dash-crm-clientes').textContent = DB.crm.filter(e => e.status === 'Cliente').length;
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    document.getElementById('dash-crm-atrasados').textContent = DB.crm.filter(e => e.proximoFollowup && new Date(e.proximoFollowup + 'T00:00:00') < hoje && e.status !== 'Inativo').length;
+}
+  
 initCharts();
 }
 
@@ -3972,6 +4024,17 @@ function renderCRM() {
             </div>
         </div>`;
     }).join('');
+
+// Atualiza badge do menu CRM
+const followupsHoje = (DB.crm || []).filter(e => {
+    return e.proximoFollowup === new Date().toISOString().split('T')[0];
+}).length;
+const badge = document.getElementById('crm-badge');
+if (badge) {
+    badge.style.display = followupsHoje > 0 ? 'inline-block' : 'none';
+    badge.textContent = followupsHoje;
+}
+  
 }
 
 function criarPropostaParaEmpresa(nomeEmpresa, crmId) {
