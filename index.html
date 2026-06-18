@@ -3682,6 +3682,18 @@ function renderEntregas() {
                 ${renderDisciplinasEntregas(projeto)}
             </div>
         </div>`;
+
+ <!-- Botão Relatório -->
+            <div style="padding: 8px 16px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end;">
+                <button class="btn bsm" style="font-size: 10px;" onclick="event.stopPropagation(); gerarRelatorioCliente('${projeto.id}')">
+                    📄 Relatório para Cliente
+                </button>
+            </div>
+            
+            <div id="entregas-${projeto.id}" style="display: none; padding: 0 16px 16px 16px; border-top: 1px solid #e2e8f0;">
+                ${renderDisciplinasEntregas(projeto)}
+            </div>
+      
     });
     
     container.innerHTML = html || '<div class="card" style="text-align:center;padding:40px;color:#64748b;">Nenhum resultado para o filtro selecionado.</div>';
@@ -3838,6 +3850,75 @@ function atualizarObsEntrega(projetoId, disciplina, index, valor) {
     salvarDB();
 }
 
+function gerarRelatorioCliente(projetoId) {
+    const projeto = DB.projetos.find(p => p.id === projetoId);
+    if (!projeto) return;
+    
+    // Calcula progresso
+    let totalItens = 0, itensEntregues = 0;
+    Object.values(projeto.entregas || {}).forEach(disc => {
+        (disc.itens || []).forEach(item => {
+            totalItens++;
+            if (item.entregue) itensEntregues++;
+        });
+    });
+    const progresso = totalItens > 0 ? Math.round((itensEntregues / totalItens) * 100) : 0;
+    
+    let relatorio = '';
+    relatorio += '═══════════════════════════════════\n';
+    relatorio += '   RELATÓRIO DE ACOMPANHAMENTO\n';
+    relatorio += '   TCL Dynamis Engenharia\n';
+    relatorio += '═══════════════════════════════════\n\n';
+    relatorio += 'PROJETO: ' + (projeto.nome || projeto.prop || '-') + '\n';
+    relatorio += 'CLIENTE: ' + (projeto.cliente || '-') + '\n';
+    relatorio += 'DATA: ' + new Date().toLocaleDateString('pt-BR') + '\n';
+    relatorio += 'PROGRESSO: ' + progresso + '% concluído (' + itensEntregues + '/' + totalItens + ' itens)\n\n';
+    
+    relatorio += '═══════════════════════════════════\n';
+    relatorio += '   ENTREGAS POR DISCIPLINA\n';
+    relatorio += '═══════════════════════════════════\n\n';
+    
+    const disciplinas = projeto.disciplinas || Object.keys(projeto.entregas || {});
+    const proximasEntregas = [];
+    
+    disciplinas.forEach(function(disc) {
+        const dados = projeto.entregas?.[disc];
+        if (!dados || !dados.itens || dados.itens.length === 0) return;
+        
+        relatorio += '📐 ' + disc.toUpperCase() + '\n';
+        
+        dados.itens.forEach(function(item) {
+            if (item.entregue) {
+                relatorio += '✅ ' + item.desc + ' - Entregue em ' + new Date(item.dataReal + 'T00:00:00').toLocaleDateString('pt-BR') + '\n';
+            } else {
+                relatorio += '⏳ ' + item.desc + ' - Previsto para ' + (item.prev ? new Date(item.prev + 'T00:00:00').toLocaleDateString('pt-BR') : 'Não definido') + '\n';
+                if (item.prev) proximasEntregas.push({ disc: disc, desc: item.desc, prev: item.prev });
+            }
+        });
+        relatorio += '\n';
+    });
+    
+    if (proximasEntregas.length > 0) {
+        relatorio += '═══════════════════════════════════\n';
+        relatorio += '   PRÓXIMAS ENTREGAS\n';
+        relatorio += '═══════════════════════════════════\n\n';
+        proximasEntregas.sort(function(a, b) { return a.prev.localeCompare(b.prev); });
+        proximasEntregas.forEach(function(e) {
+            relatorio += new Date(e.prev + 'T00:00:00').toLocaleDateString('pt-BR') + ' - ' + e.desc + ' (' + e.disc + ')\n';
+        });
+        relatorio += '\n';
+    }
+    
+    relatorio += '═══════════════════════════════════\n';
+    relatorio += 'Emitido por: TCL Dynamis Engenharia\n';
+    relatorio += 'Contato: Túlio Leite | (31) 98220-9893\n';
+    relatorio += '═══════════════════════════════════\n';
+    
+    navigator.clipboard.writeText(relatorio).then(function() {
+        alert('✅ Relatório copiado! Cole no e-mail ou WhatsApp do cliente.');
+    });
+}
+    
 function toggleObsEntrega(projetoId, disciplina, index) {
     const div = document.getElementById(`obs-${projetoId}-${disciplina.replace(/[^a-zA-Z0-9]/g,'')}-${index}`);
     if (div) div.style.display = div.style.display === 'none' ? 'block' : 'none';
@@ -4727,6 +4808,7 @@ window.salvarEmpresaCRM = salvarEmpresaCRM;
     window.renderTemplates = renderTemplates;
 window.abrirModalTemplate = abrirModalTemplate;
 window.salvarTemplate = salvarTemplate;
+    window.gerarRelatorioCliente = gerarRelatorioCliente;
     
   </script>
 </body>
