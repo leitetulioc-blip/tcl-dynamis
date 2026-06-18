@@ -3686,10 +3686,10 @@ function renderEntregas() {
                 </button>
             </div>
             
-            <div id="entregas-${projeto.id}" style="display: none; padding: 0 16px 16px 16px; border-top: 1px solid #e2e8f0;">
+                        <div id="entregas-${projeto.id}" style="display: none; padding: 0 16px 16px 16px; border-top: 1px solid #e2e8f0;">
                 ${renderDisciplinasEntregas(projeto)}
             </div>
-      
+        </div>`; // ← FECHA o card aqui
     });
     
     container.innerHTML = html || '<div class="card" style="text-align:center;padding:40px;color:#64748b;">Nenhum resultado para o filtro selecionado.</div>';
