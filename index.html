@@ -1141,7 +1141,9 @@ select {
     <span class="badge-dot" id="crm-badge" style="display:none">0</span>
 </button>
 
-
+<button class="ni" onclick="nav('templates', this)">
+    <i class="ti ti-mail" aria-hidden="true"></i>Templates E-mail
+</button>
                     <div class="ngrp" role="group" aria-label="Sistema">Sistema</div>
                     <button class="ni" onclick="nav('alertas', this)">
                         <i class="ti ti-bell" aria-hidden="true"></i>Alertas
@@ -1630,6 +1632,16 @@ select {
     
     <div id="crm-container"></div>
 </div>
+
+<!-- ==================== PÁGINA TEMPLATES DE E-MAIL ==================== -->
+<div id="page-templates" class="page">
+    <div style="display: flex; gap: 10px; margin-bottom: 16px; align-items: center;">
+        <button class="btn bp" onclick="abrirModalTemplate()">
+            <i class="ti ti-plus"></i> Novo Template
+        </button>
+    </div>
+    <div id="templates-container"></div>
+</div>
                   
                     <!-- ==================== PÁGINA ALERTAS ==================== -->
 <div id="page-alertas" class="page">
@@ -2075,6 +2087,26 @@ select {
         </div>
     </div>
 </div>
+
+<!-- ==================== MODAL TEMPLATE E-MAIL ==================== -->
+<div class="modal" id="mtemplate" style="display:none;max-width:650px;">
+    <div class="mh">
+        <h3>📧 Template de E-mail</h3>
+        <button class="btn bic bsm" onclick="closeModal()">✕</button>
+    </div>
+    <div class="mb" style="max-height:75vh;overflow-y:auto;">
+        <input type="hidden" id="template-id">
+        <div class="fg"><label>Nome do Template *</label><input id="template-nome" placeholder="Ex: Primeiro Contato"></div>
+        <div class="fg"><label>Assunto *</label><input id="template-assunto" placeholder="Use {empresa} e {contato}"></div>
+        <div class="fg"><label>Corpo do E-mail *</label><textarea id="template-corpo" rows="8" placeholder="Escreva o corpo do e-mail..."></textarea></div>
+        <div style="font-size:11px;color:#64748b;">📌 Variáveis: <strong>{empresa}</strong>, <strong>{contato}</strong>, <strong>{cargo}</strong>, <strong>{cidade}</strong></div>
+        <div class="mf">
+            <button class="btn" onclick="closeModal()">Cancelar</button>
+            <button class="btn bp" onclick="salvarTemplate()">💾 Salvar</button>
+        </div>
+    </div>
+</div>
+  
   <script>
     // ============================================
 // TCL DYNAMIS - JAVASCRIPT COMPLETO E FUNCIONAL
@@ -2231,14 +2263,16 @@ function nav(page, el) {
     
     gerarBotoesAcao(page);
     
-    if (page === 'propostas') renderPropostas();
+        if (page === 'propostas') renderPropostas();
     else if (page === 'projetos') renderProjetos();
     else if (page === 'financeiro') renderFinanceiro();
     else if (page === 'terceirizados') renderTerceirizados();
     else if (page === 'dashboard') renderDashboard();
     else if (page === 'kanban') renderKanban();
     if (page === 'entregas') renderEntregas();
-     if (page === 'alertas') renderAlertas();
+    if (page === 'alertas') renderAlertas();
+    if (page === 'crm') renderCRM();
+   if (page === 'templates') renderTemplates();
 }
 
 function gerarBotoesAcao(page) {
@@ -4300,6 +4334,138 @@ function renderAlertas() {
     ` + container.innerHTML;
 }
 
+// ====================== TEMPLATES DE E-MAIL ======================
+if (!DB.templates) DB.templates = [];
+
+// Templates padrão (só cria se estiver vazio)
+if (DB.templates.length === 0) {
+    DB.templates = [
+        {
+            id: 'tpl_1', nome: 'Primeiro Contato',
+            assunto: 'Ideia para reduzir custos com projetos na {empresa}',
+            corpo: 'Olá {contato},\n\nUma pergunta rápida: vocês têm terceirizado projetos de engenharia ou feito tudo internamente?\n\nPergunto porque muitas empresas estão reduzindo custos terceirizando projetos complementares — e mantendo a equipe interna focada no core business.\n\nSe fizer sentido conversarmos sobre isso, posso mostrar como funciona em 10 minutos.\n\nAbraço,\nTúlio Leite\nTCL Dynamis Engenharia\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_2', nome: 'Follow-up Recuperação',
+            assunto: 'Ainda faz sentido? / {empresa}',
+            corpo: 'Olá {contato},\n\nMandei uma mensagem dias atrás sobre terceirização de projetos. Sei que a rotina é intensa.\n\nNão quero ser insistente — só saber se o assunto ainda faz sentido para vocês ou se deixo para um próximo momento.\n\nUm abraço,\nTúlio\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_3', nome: 'Follow-up Insistência',
+            assunto: 'Última tentativa :) / {empresa}',
+            corpo: 'Olá {contato},\n\nTentei contato algumas vezes sobre terceirização de projetos. Se não for o momento, tudo bem — respeito completamente.\n\nGuardo seu contato e, se um dia fizer sentido, estou à disposição.\n\nSucesso pra vocês!\nTúlio Leite\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_4', nome: 'Pós-Reunião',
+            assunto: 'Resumo da nossa conversa / {empresa}',
+            corpo: 'Olá {contato},\n\nFoi um prazer conversar com você hoje!\n\nConforme alinhamos, fico no aguardo das informações para preparar a proposta. Qualquer dúvida, pode me acionar.\n\nAbraço,\nTúlio Leite\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_5', nome: 'Proposta Enviada',
+            assunto: 'Proposta TCL Dynamis / {empresa}',
+            corpo: 'Olá {contato},\n\nConforme conversamos, segue a proposta em anexo.\n\nO prazo de validade é de 15 dias. Qualquer dúvida, estou à disposição.\n\nAtenciosamente,\nTúlio Leite\nTCL Dynamis Engenharia\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_6', nome: 'Follow-up Proposta',
+            assunto: 'Alguma dúvida sobre a proposta? / {empresa}',
+            corpo: 'Olá {contato},\n\nEnviei a proposta há alguns dias e queria saber se você teve oportunidade de analisar.\n\nPosso esclarecer qualquer dúvida ou ajustar algo se necessário.\n\nAtenciosamente,\nTúlio Leite\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_7', nome: 'Fechamento',
+            assunto: 'Próximos passos / {empresa}',
+            corpo: 'Olá {contato},\n\nÓtima notícia! Com a proposta aprovada, vamos aos próximos passos:\n\n1. Assinatura do contrato\n2. Definição das disciplinas\n3. Cronograma de entregas\n4. Início do projeto\n\nEstou à disposição. Vamos marcar uma call rápida?\n\nAbraço,\nTúlio Leite\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_8', nome: 'Indicação/Networking',
+            assunto: 'Trocando ideias / {empresa}',
+            corpo: 'Olá {contato},\n\nTudo bem? Estou expandindo minha atuação em projetos e lembrei de você.\n\nNão necessariamente para fecharmos algo agora, mas para trocarmos ideias sobre o mercado.\n\nSe souber de alguém que precise de projetos complementares, agradeço se puder indicar.\n\nVamos nos falando!\nTúlio Leite\n(31) 98220-9893'
+        }
+    ];
+}
+
+function abrirModalTemplate(id) {
+    document.getElementById('template-id').value = '';
+    document.getElementById('template-nome').value = '';
+    document.getElementById('template-assunto').value = '';
+    document.getElementById('template-corpo').value = '';
+    
+    if (id) {
+        const tpl = (DB.templates || []).find(t => t.id === id);
+        if (tpl) {
+            document.getElementById('template-id').value = tpl.id;
+            document.getElementById('template-nome').value = tpl.nome || '';
+            document.getElementById('template-assunto').value = tpl.assunto || '';
+            document.getElementById('template-corpo').value = tpl.corpo || '';
+        }
+    }
+    openModal('mtemplate');
+}
+
+async function salvarTemplate() {
+    const id = document.getElementById('template-id').value || 'tpl_' + Date.now();
+    const nome = document.getElementById('template-nome').value.trim();
+    const assunto = document.getElementById('template-assunto').value.trim();
+    const corpo = document.getElementById('template-corpo').value.trim();
+    
+    if (!nome || !assunto || !corpo) return alert('Preencha todos os campos!');
+    
+    const tpl = { id, nome, assunto, corpo };
+    if (!DB.templates) DB.templates = [];
+    
+    const idx = DB.templates.findIndex(t => t.id === id);
+    if (idx > -1) DB.templates[idx] = tpl;
+    else DB.templates.push(tpl);
+    
+    closeModal();
+    await salvarDB();
+    renderTemplates();
+}
+
+function renderTemplates() {
+    const container = document.getElementById('templates-container');
+    if (!container) return;
+    const templates = DB.templates || [];
+    
+    if (templates.length === 0) {
+        container.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#64748b;">Nenhum template cadastrado. Clique em "Novo Template".</div>';
+        return;
+    }
+    
+    container.innerHTML = templates.map(t => `
+        <div class="card" style="margin-bottom:12px;">
+            <div style="padding:14px 16px;">
+                <strong>📧 ${t.nome}</strong>
+                <div style="font-size:11px;color:#64748b;margin-top:4px;">Assunto: ${t.assunto}</div>
+                <div style="display:flex;gap:6px;margin-top:8px;">
+                    <button class="btn bsm bp" onclick="usarTemplate('${t.id}')">📋 Usar</button>
+                    <button class="btn bsm" onclick="abrirModalTemplate('${t.id}')">✏️</button>
+                    <button class="btn bsm bdanger" onclick="deletarTemplate('${t.id}')">🗑️</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function usarTemplate(templateId) {
+    const tpl = (DB.templates || []).find(t => t.id === templateId);
+    if (!tpl) return;
+    
+    let assunto = tpl.assunto;
+    let corpo = tpl.corpo;
+    
+    const textoCompleto = `Assunto: ${assunto}\n\n${corpo}`;
+    navigator.clipboard.writeText(textoCompleto).then(() => {
+        alert('✅ Template copiado! Cole no seu e-mail.');
+    });
+}
+
+async function deletarTemplate(id) {
+    if (!confirm('Excluir este template?')) return;
+    DB.templates = (DB.templates || []).filter(t => t.id !== id);
+    await salvarDB();
+    renderTemplates();
+}
+    
 // ====================== MODO CLIENTE ======================
 var modoClienteAtivo = false;
 const SENHA_MODO_CLIENTE = '2026'; // Altere para sua senha
@@ -4558,6 +4724,9 @@ window.toggleEntregasProjeto = toggleEntregasProjeto;
     window.renderCRM = renderCRM;
 window.abrirModalEmpresa = abrirModalEmpresa;
 window.salvarEmpresaCRM = salvarEmpresaCRM;
+    window.renderTemplates = renderTemplates;
+window.abrirModalTemplate = abrirModalTemplate;
+window.salvarTemplate = salvarTemplate;
     
   </script>
 </body>
