@@ -1,0 +1,2994 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TCL Dynamis - Sistema de Gestão</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+  <style>
+    /* ============================================
+   TCL DYNAMIS - SISTEMA DE GESTÃO v3.5
+   Folha de Estilos Principal
+   ============================================ */
+
+:root {
+    /* Cores Base */
+    --bg: #f8fafc;
+    --sb-bg: #0f172a;
+    --card-bg: #ffffff;
+    --tx1: #0f172a;
+    --tx2: #475569;
+    --tx3: #94a3b8;
+    --border: #e2e8f0;
+    
+    /* Cores Semânticas */
+    --bl: #0284c7;
+    --bll: #e0f2fe;
+    --blm: #38bdf8;
+    --gn: #16a34a;
+    --gnl: #dcfce7;
+    --gnm: #4ade80;
+    --amm: #eab308;
+    --rd: #dc2626;
+    --rdl: #fee2e2;
+    --rdm: #f87171;
+    
+    /* Layout */
+    --r: 8px;
+    --sidebar-width: 260px;
+    --topbar-height: 60px;
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+    
+    /* Transições */
+    --transition: 0.2s ease;
+}
+
+/* ============================================
+   RESET E CONFIGURAÇÕES GLOBAIS
+   ============================================ */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--tx1);
+    overflow-x: hidden;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* ============================================
+   LAYOUT PRINCIPAL
+   ============================================ */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+
+.sb {
+    width: var(--sidebar-width);
+    background: var(--sb-bg);
+    color: #fff;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.logo {
+    margin-bottom: 24px;
+}
+
+.logo-n {
+    font-weight: 700;
+    font-size: 13px;
+    color: #f8fafc;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logo-s {
+    font-size: 11px;
+    color: var(--tx3);
+    margin-top: 4px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.ngrp {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+    margin: 16px 0 4px 12px;
+    letter-spacing: 0.5px;
+}
+
+.ni {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 10px 12px;
+    border-radius: var(--r);
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all var(--transition);
+    text-decoration: none;
+}
+
+.ni:hover {
+    background: #1e293b;
+    color: #fff;
+}
+
+.ni.on,
+.ni[aria-current="page"] {
+    background: #1e293b;
+    color: #fff;
+}
+
+.ni i {
+    font-size: 18px;
+}
+
+.ni:focus-visible {
+    outline: 2px solid var(--blm);
+    outline-offset: 2px;
+}
+
+/* Badges */
+.badge-dot {
+    background: var(--rd);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    margin-left: auto;
+    font-weight: 700;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Sidebar Footer */
+.sbf {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.apill {
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 8px 12px;
+    border-radius: var(--r);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #e2e8f0;
+    transition: background var(--transition);
+}
+
+.apill:hover {
+    background: #273548;
+}
+
+.apill i {
+    color: var(--amm);
+}
+
+.apill-t {
+    font-size: 12px;
+}
+
+.sv-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--tx3);
+    padding-left: 4px;
+}
+
+.sv-status.ok i {
+    color: var(--gnm);
+}
+
+/* ============================================
+   CONTEÚDO PRINCIPAL
+   ============================================ */
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    min-width: 0;
+    margin-left: var(--sidebar-width);
+}
+
+/* Topbar */
+.topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--topbar-height);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.tb-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--tx1);
+}
+
+.tb-acts {
+    display: flex;
+    gap: 10px;
+}
+
+/* Content */
+.content {
+    padding: 24px;
+    flex: 1;
+}
+
+/* ============================================
+   PÁGINAS
+   ============================================ */
+
+.page {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.page.on {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   CARDS E GRIDS
+   ============================================ */
+
+.g2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.card-h {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-t {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--tx1);
+}
+
+/* ============================================
+   TABELAS
+   ============================================ */
+
+.tw {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+    min-width: 600px;
+}
+
+thead th {
+    background: #f8fafc;
+    padding: 12px 16px;
+    color: var(--tx2);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--tx2);
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.sum-row {
+    padding: 12px 16px;
+    background: #f8fafc;
+    font-size: 13px;
+    font-weight: 600;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ============================================
+   BOTÕES
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--r);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--tx2);
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn:hover {
+    background: #f8fafc;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--blm);
+    outline-offset: 2px;
+}
+
+.btn.bp {
+    background: var(--bl);
+    color: #fff;
+    border-color: var(--bl);
+}
+
+.btn.bp:hover {
+    background: #0274a9;
+}
+
+.btn.bdanger {
+    background: var(--rd);
+    color: #fff;
+    border-color: var(--rd);
+}
+
+.btn.bdanger:hover {
+    background: #b91c1c;
+}
+
+.btn.bic {
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.btn.bsm {
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+/* ============================================
+   FORMULÁRIOS
+   ============================================ */
+
+.fg {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.fg label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--tx2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+input,
+select,
+textarea {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 8px 12px;
+    outline: none;
+    font-size: 13px;
+    color: var(--tx1);
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    transition: border-color var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--blm);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+select {
+    cursor: pointer;
+    appearance: auto;
+}
+
+.fr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.fr3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+/* ============================================
+   FILTROS
+   ============================================ */
+
+.frow {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sbar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 0 12px;
+    gap: 8px;
+}
+
+.sbar input {
+    border: none;
+    padding: 8px 0;
+    width: 100%;
+    outline: none;
+    font-size: 13px;
+    background: transparent;
+}
+
+.sbar input:focus {
+    box-shadow: none;
+}
+
+.chip {
+    background: #e2e8f0;
+    color: var(--tx2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: all var(--transition);
+    display: inline-block;
+}
+
+.chip:hover {
+    background: #cbd5e1;
+}
+
+.chip.on {
+    background: var(--sb-bg);
+    color: #fff;
+}
+
+/* ============================================
+   MODAIS
+   ============================================ */
+
+.ov {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.modal {
+    background: #ffffff;
+    border-radius: var(--r);
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    animation: modalIn 0.2s ease-out;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.mh {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mh h3 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.mb {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.mf {
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* ============================================
+   KANBAN
+   ============================================ */
+
+.kb {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+    min-height: 400px;
+}
+
+.kb-col {
+    background: #f1f5f9;
+    border-radius: var(--r);
+    padding: 12px;
+    min-height: 200px;
+}
+
+.kb-col-h {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--tx2);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.kb-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 150px;
+}
+
+.kb-card {
+    background: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition);
+}
+
+.kb-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--blm);
+    box-shadow: var(--shadow-md);
+}
+
+.kb-card-t {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--tx1);
+}
+
+.kb-card-c {
+    font-size: 11px;
+    color: var(--tx2);
+    margin-bottom: 8px;
+}
+
+.kb-card-f {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+}
+
+/* ============================================
+   STATUS BADGES
+   ============================================ */
+
+.st {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.st.andamento {
+    background: var(--bll);
+    color: #0369a1;
+}
+
+.st.concluido {
+    background: var(--gnl);
+    color: #15803d;
+}
+
+.st.pendente {
+    background: #fef9c3;
+    color: #a16207;
+}
+
+.st.atrasado {
+    background: var(--rdl);
+    color: #b91c1c;
+}
+
+.st.aprovacao {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.st.cancelado {
+    background: var(--rdm);
+    color: #fff;
+}
+
+/* ============================================
+   COMPONENTES AUXILIARES
+   ============================================ */
+
+.stars-row {
+    display: flex;
+    gap: 4px;
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+.star-btn.on {
+    color: var(--amm);
+}
+
+.infonote {
+    background: var(--bll);
+    border: 1px solid var(--blm);
+    color: #0369a1;
+    padding: 10px;
+    border-radius: var(--r);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.sec {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 8px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+}
+
+.abox {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    border-radius: var(--r);
+    font-size: 12px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+}
+
+.abox.ok {
+    background: var(--gnl);
+    border-color: var(--gnm);
+    color: #166534;
+}
+
+.rk-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+}
+
+.rk-row:last-child {
+    border: none;
+}
+
+.t-rem {
+    color: var(--rd);
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.ftab {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+}
+
+.ftab.on {
+    background: var(--sb-bg);
+    color: #fff;
+}
+
+.hr {
+    margin: 15px 0;
+    border-top: 1px dashed #cbd5e0;
+}
+
+/* ============================================
+   LISTA DE TERCEIRIZADOS NO MODAL
+   ============================================ */
+
+#lista_terceirizados_projeto .allocated-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .kb {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sb {
+        width: 100%;
+        position: relative;
+        height: auto;
+        padding: 16px;
+    }
+    
+    .main {
+        margin-left: 0;
+    }
+    
+    .g2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .fr {
+        grid-template-columns: 1fr;
+    }
+    
+    .kb {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal {
+        max-width: 95vw;
+        max-height: 90vh;
+    }
+    
+    .topbar {
+        flex-direction: column;
+        height: auto;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .content {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .frow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .sbar {
+        max-width: 100% !important;
+    }
+}
+
+/* ============================================
+   ACESSIBILIDADE - REDUÇÃO DE MOVIMENTO
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   IMPRESSÃO
+   ============================================ */
+
+@media print {
+    .sb,
+    .topbar,
+    .modal,
+    .ov,
+    .btn {
+        display: none !important;
+    }
+    
+    .main {
+        margin-left: 0;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+    
+    .content {
+        padding: 0;
+    }
+}
+
+/* ============================================
+   UTILITÁRIOS
+   ============================================ */
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.mt-2 {
+    margin-top: 8px;
+}
+
+.mb-2 {
+    margin-bottom: 8px;
+}
+
+.grid {
+    display: grid;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Estilo do botão de editar proposta */
+.btn.bedit {
+    background: #f59e0b;
+    color: #fff;
+    border-color: #f59e0b;
+}
+.btn.bedit:hover {
+    background: #d97706;
+}
+
+/* Melhorias para o Kanban */
+.kb-card {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 8px !important;
+    padding: 12px !important;
+}
+
+.kb-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.kb-col-h strong {
+    min-width: 35px;
+    text-align: center;
+}
+
+/* Diferenciação visual entre propostas e projetos */
+.kb-card[style*="border-left: 4px solid #6366f1"] {
+    background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+}
+
+.kb-card[style*="border-left: 4px solid #10b981"] {
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.kb-card[style*="border-left: 4px solid #ef4444"] {
+    background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+}
+
+.kb-card[style*="border-left: 4px solid #f59e0b"] {
+    background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+}
+
+/* ============================================
+   v4 — ADIÇÕES E CORREÇÕES
+   ============================================ */
+.app{display:none}.app.on{display:flex}
+.hidden{display:none!important}
+.muted{color:var(--tx3);font-size:12px}
+.small{font-size:11px}.b{font-weight:700}.tr{text-align:right}.tc{text-align:center}
+.gn{color:var(--gn)}.rd{color:var(--rd)}.bl{color:var(--bl)}
+.mxw{max-width:220px}
+.ro{background:#f1f5f9;font-weight:600}
+.g2>.card{margin:0}
+.chart-box{padding:14px 16px;position:relative}
+
+/* Login */
+.login{position:fixed;inset:0;background:linear-gradient(135deg,#1e293b,#0f172a);z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-box{background:#fff;padding:40px;border-radius:16px;text-align:center;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.login-box .fg{text-align:left;margin-bottom:14px}
+.login-ico{font-size:40px;margin-bottom:10px}
+.login-box h2{margin:0 0 4px;color:#1e293b;font-size:20px}
+.login-sub{color:#64748b;font-size:13px;margin-bottom:24px}
+.login-btn{width:100%;justify-content:center;padding:12px;font-size:15px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none}
+.login-msg{color:#ef4444;font-size:12px;margin-top:12px;min-height:16px}
+.login-foot{color:#94a3b8;font-size:10px;margin-top:16px}
+
+/* Toasts e banner */
+#toasts{position:fixed;right:16px;bottom:16px;z-index:2000;display:flex;flex-direction:column;gap:8px;max-width:360px}
+.toast{background:#0f172a;color:#fff;padding:10px 14px;border-radius:8px;font-size:13px;box-shadow:var(--shadow-md);border-left:4px solid var(--blm);animation:fadeIn .2s}
+.toast.ok{border-color:var(--gnm)}.toast.warn{border-color:var(--amm)}.toast.err{border-color:var(--rdm)}
+.toast.click{cursor:pointer;text-decoration:underline}
+.banner{padding:10px 16px;font-size:12px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.banner.warn{background:#fffbeb;color:#92400e}.banner.err{background:var(--rdl);color:#991b1b}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--border);border-left:5px solid var(--bl);border-radius:var(--r);padding:14px 16px;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform var(--transition)}
+.kpi:hover{transform:translateY(-2px)}
+.kpi.gn{border-left-color:var(--gn)}.kpi.rd{border-left-color:var(--rd)}.kpi.am{border-left-color:#d97706}.kpi.pu{border-left-color:#8b5cf6}
+.kpi-t{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px}
+.kpi-v{font-size:22px;font-weight:700;margin-top:4px;color:var(--tx1)}
+.kpi-s{font-size:12px;color:#64748b;margin-top:2px}
+.crm-card{border-left:5px solid #8b5cf6;background:linear-gradient(135deg,#f8fafc,#f5f3ff);padding:16px;cursor:pointer}
+.crm-nums{display:flex;gap:24px;margin-top:10px;flex-wrap:wrap}
+.crm-nums b{display:block;font-size:22px}
+
+/* Barras e chips */
+.mini{height:5px;background:#e2e8f0;border-radius:4px;margin-top:5px;overflow:hidden}
+.mini i{display:block;height:100%;background:var(--bl)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chipcb{display:inline-flex;align-items:center;gap:6px;background:#f1f5f9;border:1px solid var(--border);border-radius:16px;padding:4px 10px;font-size:12px;cursor:pointer}
+.chipcb input{width:auto}
+.tag{background:var(--bll);color:var(--bl);padding:3px 8px;border-radius:4px;font-size:11px}
+.btn.bok{background:var(--gn);color:#fff;border-color:var(--gn)}
+.btn.bok:hover{background:#15803d}
+.lbl{font-size:12px;font-weight:600;display:block;margin-bottom:4px}
+
+/* Alocação */
+.aloc{border-top:1px dashed #cbd5e1;padding-top:12px;margin-top:6px}
+.aloc-add{display:flex;gap:6px;margin-bottom:8px}
+.aloc-add select{flex:2}.aloc-add input{flex:1}
+.aloc-lista{max-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.aloc-item{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;padding:6px 10px;border-radius:6px;font-size:12px}
+.sugestao{background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;padding:8px 12px;border-radius:6px;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+
+/* Kanban: 7 colunas com rolagem + arrastar */
+.kb{grid-template-columns:repeat(7,minmax(230px,1fr));overflow-x:auto;padding-bottom:8px}
+.kb-col.over{outline:2px dashed var(--bl);background:#e0f2fe}
+.kb-card.drag{opacity:.4}
+.kb-card[draggable=true]{cursor:grab}
+
+/* Entregas */
+.eitem{border-bottom:1px solid #f1f5f9}
+.erow{display:flex;align-items:center;gap:8px;padding:8px 0;flex-wrap:wrap}
+.erow input[type=checkbox]{width:18px;height:18px;cursor:pointer}
+.erow input[type=date]{width:140px;font-size:11px;padding:4px}
+.edesc{flex:1;min-width:150px;font-size:13px}
+.edesc.ok{text-decoration:line-through;color:#10b981}.edesc.late{color:#ef4444;font-weight:600}
+.eobs{padding:8px;margin:4px 0;background:#fffbeb;border-radius:4px}
+.eobs textarea{font-size:11px;border-color:#fcd34d}
+.eadd{display:flex;gap:8px;margin-top:10px}
+.eadd input[type=text]{flex:1;font-size:11px;padding:6px}.eadd input[type=date]{width:140px;font-size:11px;padding:6px}
+.edisc{margin-top:16px;padding:12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0}
+
+/* Parcelas no modal */
+.parc{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:6px;align-items:center;font-size:12px;margin-bottom:4px}
+.parc input{padding:4px 8px;font-size:12px}
+
+/* Painéis financeiros */
+.scroll-y{max-height:260px;overflow-y:auto}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;flex-wrap:wrap}
+.prow:last-child{border:none}
+
+/* Menu mobile */
+#btn-menu{display:none}
+.sb-ov{display:none}
+@media (max-width:768px){
+  .sb{position:fixed;width:260px;height:auto;transform:translateX(-100%);transition:transform .2s;padding:24px 16px}
+  .sb.open{transform:none}
+  #btn-menu{display:inline-flex}
+  .topbar{flex-direction:row;align-items:center}
+  .kb{grid-template-columns:repeat(7,80vw)}
+  .parc{grid-template-columns:1fr 1fr}
+}
+
+/* Filtros compactos (o CSS base deixava todo select com 100% de largura) */
+.frow select,.frow input[type=month]{width:auto;min-width:150px;flex:0 0 auto}
+.frow .sbar{flex:1 1 220px;min-width:200px}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.login-lembrar{display:flex;align-items:center;gap:8px;font-size:12px;color:#64748b;margin:-4px 0 14px;text-align:left}
+.login-lembrar input{width:auto}
+  </style>
+</head>
+<body>
+<!-- ==================== LOGIN ==================== -->
+<div id="login-screen" class="login">
+  <div class="login-box">
+    <div class="login-ico">🔐</div>
+    <h2>TCL Dynamis</h2>
+    <p class="login-sub">Sistema Integrado de Gestão</p>
+    <div class="fg"><label for="login-repo">Repositório (dono/nome)</label><input id="login-repo" autocomplete="off" placeholder="seu-usuario/tcl-dados"></div>
+    <div class="fg"><label for="login-token">Token de acesso do GitHub</label><input id="login-token" type="password" autocomplete="current-password" placeholder="github_pat_…"></div>
+    <label class="login-lembrar"><input type="checkbox" id="login-lembrar" checked> Lembrar neste dispositivo</label>
+    <button class="btn login-btn" id="btn-login">🔓 Entrar</button>
+    <p id="login-msg" class="login-msg" role="alert"></p>
+    <p class="login-foot">TCL Dynamis Engenharia LTDA © 2026</p>
+  </div>
+</div>
+
+<div id="toasts" aria-live="polite"></div>
+
+<!-- ==================== APLICAÇÃO ==================== -->
+<div class="app" id="app" role="application" aria-label="Sistema de Gestão TCL Dynamis">
+  <aside class="sb" id="sb" role="navigation" aria-label="Navegação principal">
+    <div>
+      <div class="logo">
+        <div class="logo-n">TCL DYNAMIS ENGENHARIA LTDA</div>
+        <div class="logo-s">Sistema Integrado de Gestão v4.0</div>
+      </div>
+      <nav class="nav">
+        <div class="ngrp">Visão Geral</div>
+        <button class="ni on" data-act="nav" data-page="dashboard"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+        <button class="ni" data-act="nav" data-page="kanban"><i class="ti ti-layout-kanban"></i>Kanban</button>
+        <div class="ngrp">Operações</div>
+        <button class="ni" data-act="nav" data-page="propostas"><i class="ti ti-file-text"></i>Propostas</button>
+        <button class="ni" data-act="nav" data-page="projetos"><i class="ti ti-briefcase"></i>Projetos</button>
+        <button class="ni" data-act="nav" data-page="financeiro"><i class="ti ti-cash"></i>Financeiro</button>
+        <button class="ni" data-act="nav" data-page="terceirizados"><i class="ti ti-users"></i>Terceirizados</button>
+        <button class="ni" data-act="nav" data-page="entregas"><i class="ti ti-checklist"></i>Entregas Técnicas</button>
+        <div class="ngrp">Comercial</div>
+        <button class="ni" data-act="nav" data-page="crm"><i class="ti ti-building"></i>CRM / Empresas<span class="badge-dot" id="crm-badge" style="display:none">0</span></button>
+        <button class="ni" data-act="nav" data-page="templates"><i class="ti ti-mail"></i>Templates E-mail</button>
+        <div class="ngrp">Sistema</div>
+        <button class="ni" data-act="nav" data-page="alertas"><i class="ti ti-bell"></i>Alertas<span class="badge-dot" id="bdot" style="display:none">0</span></button>
+        <button class="ni" data-act="nav" data-page="backup"><i class="ti ti-database"></i>Backup &amp; Dados</button>
+      </nav>
+    </div>
+    <div class="sbf">
+      <div class="apill" id="apill" data-act="nav" data-page="alertas" role="button" tabindex="0"><i class="ti ti-bell-ringing"></i><span class="apill-t" id="acount">0 alertas</span></div>
+      <div class="sv-status ok" id="svst" role="status" aria-live="polite"><i class="ti ti-cloud-check"></i><span id="svtxt">Carregando…</span></div>
+      <button class="btn bsm" data-act="sair" style="background:#1e293b;color:#94a3b8;border-color:#334155"><i class="ti ti-logout"></i> Sair</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="btn bic" id="btn-menu" data-act="menu" aria-label="Abrir menu"><i class="ti ti-menu-2"></i></button>
+        <div class="tb-title" id="tbtitle">Dashboard</div>
+      </div>
+      <div class="tb-acts" id="tbacts"></div>
+    </header>
+    <div id="banner" class="banner hidden"></div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div id="page-dashboard" class="page on">
+        <div class="kpis" id="kpis"></div>
+        <div class="card crm-card" data-act="nav" data-page="crm" style="margin-bottom:16px">
+          <div style="font-size:13px;font-weight:600;color:#7c3aed;text-transform:uppercase;letter-spacing:.5px">🤝 CRM / Pipeline Comercial</div>
+          <div class="crm-nums">
+            <div><b style="color:#3b82f6" id="dash-crm-leads">0</b><span class="small muted">Leads</span></div>
+            <div><b style="color:#f59e0b" id="dash-crm-negociacao">0</b><span class="small muted">Em Negociação</span></div>
+            <div><b style="color:#10b981" id="dash-crm-clientes">0</b><span class="small muted">Clientes</span></div>
+            <div><b style="color:#ef4444" id="dash-crm-atrasados">0</b><span class="small muted">⚠️ Follow-ups atrasados</span></div>
+          </div>
+        </div>
+        <div class="g2">
+          <div class="card"><div class="card-h"><span class="card-t">Fluxo de Caixa Operacional (Histórico Global)</span></div><div class="chart-box" style="height:240px"><canvas id="ch1" role="img" aria-label="Fluxo de caixa"></canvas></div></div>
+          <div class="card"><div class="card-h"><span class="card-t">Status do Portfólio de Projetos</span></div><div class="chart-box" style="height:240px"><canvas id="ch2" role="img" aria-label="Status dos projetos"></canvas></div></div>
+        </div>
+        <div class="g2">
+          <div class="card"><div class="card-h"><span class="card-t">Receitas x Custos por Mês (ano atual)</span></div><div class="chart-box" style="height:220px"><canvas id="ch4" role="img" aria-label="Receitas e custos mensais"></canvas></div></div>
+          <div class="card"><div class="card-h"><span class="card-t">Margem Operacional por Cliente</span></div><div class="chart-box" style="height:220px"><canvas id="ch3" role="img" aria-label="Margem por cliente"></canvas></div></div>
+        </div>
+        <div class="g2">
+          <div class="card">
+            <div class="card-h"><span class="card-t">Repasses a Pagar (terceirizados)</span><span id="pgto-total" class="b rd" style="font-size:13px"></span></div>
+            <div class="tw scroll-y"><table><thead><tr><th>Projeto</th><th>Terceirizado</th><th>Alocado</th><th>Pago</th><th>A pagar</th><th></th></tr></thead><tbody id="tpgto"></tbody></table></div>
+          </div>
+          <div class="card"><div class="card-h"><span class="card-t">Ranking de Terceirizados (valores repassados)</span></div><div style="padding:12px 16px" id="rk"></div></div>
+        </div>
+        <div class="g2">
+          <div class="card">
+            <div class="card-h"><span class="card-t">Cronograma Crítico — Atrasados e Próximos 30 Dias</span></div>
+            <div class="tw scroll-y"><table><thead><tr><th>Projeto</th><th>Cliente</th><th>Entrega</th><th>Prazo</th><th>Status</th></tr></thead><tbody id="tprox"></tbody></table></div>
+          </div>
+          <div class="card"><div class="card-h"><span class="card-t">Demanda por Disciplina Técnica</span></div><div class="chart-box" style="height:220px"><canvas id="ch5" role="img" aria-label="Demanda por disciplina"></canvas></div></div>
+        </div>
+      </div>
+
+      <!-- KANBAN -->
+      <div id="page-kanban" class="page">
+        <div class="frow">
+          <div class="sbar" style="flex:1;max-width:280px"><i class="ti ti-search"></i><input type="search" placeholder="Buscar..." id="ksearch" aria-label="Buscar no kanban"></div>
+          <select id="kfterc" aria-label="Terceirizado"></select>
+          <select id="kfcli" aria-label="Cliente"></select>
+          <select id="kfpgto" aria-label="Pagamento"></select>
+          <span class="muted">💡 Arraste os cards entre colunas para mudar o status.</span>
+        </div>
+        <div class="kb" id="kanban" role="region" aria-label="Quadro Kanban"></div>
+      </div>
+
+      <!-- PROPOSTAS -->
+      <div id="page-propostas" class="page">
+        <div class="card" style="background:linear-gradient(135deg,#f8fafc,#edf2f7);border-left:5px solid #6366f1">
+          <div class="card-h"><span class="card-t" style="color:#4338ca"><i class="ti ti-calculator"></i> Simulador de Formação de Preço (TCL Pricing)</span></div>
+          <div style="padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:flex-end">
+            <div class="fg" style="margin:0"><label>Soma dos Terceiros (R$)</label><input id="calc-custo" type="number" placeholder="Ex: 5000"></div>
+            <div class="fg" style="margin:0"><label>Impostos (%)</label><input id="calc-imposto" type="number" value="6"></div>
+            <div class="fg" style="margin:0"><label>Custos Fixos (%)</label><input id="calc-adm" type="number" value="5"></div>
+            <div class="fg" style="margin:0"><label>Margem de Lucro (%)</label><input id="calc-lucro" type="number" value="25"></div>
+            <div class="fg" style="margin:0;background:#fff;padding:6px 10px;border-radius:4px;border:1px solid #bee3f8"><span style="font-size:10px;font-weight:700;color:#2b6cb0">Sugestão de Venda</span><strong id="calc-resultado" style="font-size:15px;color:#2b6cb0">R$ 0,00</strong></div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="sbar" style="flex:1;max-width:300px"><i class="ti ti-search"></i><input type="search" placeholder="Buscar proposta..." id="propsearch" aria-label="Buscar proposta"></div>
+          <select id="propst" aria-label="Status"></select>
+        </div>
+        <div class="card">
+          <div class="tw"><table><thead><tr><th>Código</th><th>Cliente</th><th>Objeto</th><th>Valor</th><th>Prazo</th><th>Status</th><th>Data Envio</th><th class="tr">Ações</th></tr></thead><tbody id="tabela-propostas-corpo"></tbody></table></div>
+          <div class="sum-row" id="prop-sum"></div>
+        </div>
+      </div>
+
+      <!-- PROJETOS -->
+      <div id="page-projetos" class="page">
+        <div class="frow">
+          <div class="sbar" style="flex:1;max-width:300px"><i class="ti ti-search"></i><input type="search" placeholder="Projeto, proposta, cliente..." id="psearch" aria-label="Buscar projeto"></div>
+          <select id="pfst" aria-label="Status"></select>
+          <select id="pfpg" aria-label="Pagamento"></select>
+          <select id="pfcl" aria-label="Cliente"></select>
+        </div>
+        <div class="card">
+          <div class="tw"><table><thead><tr><th>Código</th><th>Cliente</th><th>Escopo</th><th>Valor Contratual</th><th>Terceiros</th><th>Margem</th><th>Prazo Final</th><th>Fase Física</th><th>Pagamento</th><th class="tr">Ações</th></tr></thead><tbody id="tabela-projetos-corpo"></tbody></table></div>
+          <div class="sum-row" id="proj-sum"></div>
+        </div>
+      </div>
+
+      <!-- FINANCEIRO -->
+      <div id="page-financeiro" class="page">
+        <div class="kpis">
+          <div class="kpi gn" style="cursor:default"><div class="kpi-t">Total Entradas (recebido)</div><div class="kpi-v gn" id="fin-entradas">R$ 0,00</div></div>
+          <div class="kpi rd" style="cursor:default"><div class="kpi-t">Total Saídas (repasses/custos)</div><div class="kpi-v rd" id="fin-saidas">R$ 0,00</div></div>
+          <div class="kpi" style="cursor:default"><div class="kpi-t">Saldo em Caixa</div><div class="kpi-v bl" id="fin-saldo">R$ 0,00</div></div>
+        </div>
+        <div class="g2">
+          <div class="card"><div class="card-h"><span class="card-t">📥 A Receber (parcelas dos contratos)</span><span id="fin-receber-total" class="b gn small"></span></div><div class="scroll-y" id="fin-receber"></div></div>
+          <div class="card"><div class="card-h"><span class="card-t">📤 A Repassar (terceirizados)</span><span id="fin-repassar-total" class="b rd small"></span></div><div class="scroll-y" id="fin-repassar"></div></div>
+        </div>
+        <div class="frow">
+          <span class="chip on" data-act="finChip" data-tipo="todos" role="button" tabindex="0">Todos</span>
+          <span class="chip" data-act="finChip" data-tipo="entrada" role="button" tabindex="0">Receitas</span>
+          <span class="chip" data-act="finChip" data-tipo="saida" role="button" tabindex="0">Custos</span>
+          <div class="sbar" style="max-width:200px"><i class="ti ti-search"></i><input type="search" placeholder="Buscar transação..." id="fsearch" aria-label="Buscar"></div>
+          <select id="ffcat" aria-label="Categoria"></select>
+          <input type="month" id="ffmes" aria-label="Mês" style="width:auto">
+          <select id="filtro_fin_proj" aria-label="Projeto" style="max-width:230px"></select>
+          <select id="filtro_fin_terc" aria-label="Terceirizado" style="max-width:200px"></select>
+        </div>
+        <div class="card">
+          <div class="tw"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Projeto</th><th>Fluxo</th><th>Valor</th><th class="tr">Ações</th></tr></thead><tbody id="tabela-financeiro-corpo"></tbody></table></div>
+          <div class="sum-row" id="fin-sum"></div>
+        </div>
+      </div>
+
+      <!-- TERCEIRIZADOS -->
+      <div id="page-terceirizados" class="page">
+        <div class="frow"><div class="sbar" style="flex:1;max-width:420px"><i class="ti ti-search"></i><input type="search" id="search-terc" placeholder="Buscar por nome, disciplina ou e-mail..." aria-label="Buscar terceirizado"></div></div>
+        <div class="card"><div class="tw"><table><thead><tr><th>Engenheiro / Técnico</th><th>Disciplina</th><th>Contato</th><th>Avaliação</th><th>Última alocação</th><th>Pago / A pagar</th><th class="tc">Ações</th></tr></thead><tbody id="tterc"></tbody></table></div></div>
+      </div>
+
+      <!-- ENTREGAS -->
+      <div id="page-entregas" class="page">
+        <div class="frow">
+          <span class="chip on" data-act="entChip" data-tipo="todos" role="button" tabindex="0">📋 Todos</span>
+          <span class="chip" data-act="entChip" data-tipo="pendentes" role="button" tabindex="0">⏳ Pendentes</span>
+          <span class="chip" data-act="entChip" data-tipo="atrasados" role="button" tabindex="0">⚠️ Atrasados</span>
+        </div>
+        <div id="entregas-container"></div>
+      </div>
+
+      <!-- CRM -->
+      <div id="page-crm" class="page">
+        <div class="kpis">
+          <div class="kpi" style="cursor:default"><div class="kpi-t">Total empresas</div><div class="kpi-v" id="crm-total">0</div></div>
+          <div class="kpi am" style="cursor:default"><div class="kpi-t">Leads</div><div class="kpi-v" id="crm-leads">0</div></div>
+          <div class="kpi pu" style="cursor:default"><div class="kpi-t">Em negociação</div><div class="kpi-v" id="crm-negociacao">0</div></div>
+          <div class="kpi gn" style="cursor:default"><div class="kpi-t">Clientes</div><div class="kpi-v" id="crm-clientes">0</div></div>
+          <div class="kpi rd" style="cursor:default"><div class="kpi-t">Follow-ups atrasados</div><div class="kpi-v" id="crm-followups">0</div></div>
+        </div>
+        <div class="frow">
+          <div class="sbar" style="flex:1;max-width:300px"><i class="ti ti-search"></i><input type="search" id="crm-search" placeholder="Buscar empresa ou contato..." aria-label="Buscar empresa"></div>
+          <select id="crm-status-filter" aria-label="Status"></select>
+          <select id="crm-segmento-filter" aria-label="Segmento"></select>
+        </div>
+        <div id="crm-container"></div>
+      </div>
+
+      <!-- TEMPLATES -->
+      <div id="page-templates" class="page">
+        <div class="infonote" style="margin-bottom:14px">Variáveis: <b>{empresa}</b>, <b>{contato}</b>, <b>{primeiro_nome}</b>, <b>{cargo}</b>, <b>{cidade}</b>. Use o botão <b>📧 E-mail</b> no CRM para preencher e abrir o template automaticamente.</div>
+        <div id="templates-container"></div>
+      </div>
+
+      <!-- ALERTAS -->
+      <div id="page-alertas" class="page">
+        <div class="frow">
+          <span class="chip on" data-act="alChip" data-tipo="todos" role="button" tabindex="0">🔔 Todos</span>
+          <span class="chip" data-act="alChip" data-tipo="atraso" role="button" tabindex="0">⚠️ Atrasados</span>
+          <span class="chip" data-act="alChip" data-tipo="prazo" role="button" tabindex="0">⏰ Prazos</span>
+          <span class="chip" data-act="alChip" data-tipo="pgto" role="button" tabindex="0">💰 Financeiro</span>
+          <span class="chip" data-act="alChip" data-tipo="comercial" role="button" tabindex="0">📞 Comercial</span>
+        </div>
+        <div id="alertas-container"></div>
+      </div>
+
+      <!-- BACKUP -->
+      <div id="page-backup" class="page">
+        <div class="abox ok" style="margin-bottom:18px"><i class="ti ti-shield-check"></i><div><strong>Dados no seu repositório GitHub</strong> com controle de versão, proteção contra sobrescrita entre dispositivos e backup diário automático.</div></div>
+        <div class="g2" style="max-width:900px">
+          <div class="card"><div class="card-h"><span class="card-t"><i class="ti ti-download"></i> Exportar (.json)</span></div><div style="padding:16px"><button class="btn bp" data-act="exportar">Baixar backup</button></div></div>
+          <div class="card"><div class="card-h"><span class="card-t"><i class="ti ti-upload"></i> Importar backup</span></div><div style="padding:16px"><label class="btn" style="cursor:pointer">Selecionar arquivo JSON<input type="file" accept=".json" id="bk-file" style="display:none"></label><p id="bk-msg" class="small" style="margin-top:8px"></p></div></div>
+          <div class="card"><div class="card-h"><span class="card-t"><i class="ti ti-table-export"></i> Exportar planilhas (.csv)</span></div><div style="padding:16px;display:flex;gap:7px;flex-wrap:wrap">
+            <button class="btn bsm" data-act="csv" data-t="projetos">Projetos</button><button class="btn bsm" data-act="csv" data-t="propostas">Propostas</button><button class="btn bsm" data-act="csv" data-t="financeiro">Financeiro</button><button class="btn bsm" data-act="csv" data-t="terceirizados">Terceirizados</button><button class="btn bsm" data-act="csv" data-t="crm">CRM</button></div></div>
+          <div class="card"><div class="card-h"><span class="card-t"><i class="ti ti-chart-bar"></i> Diagnóstico</span></div><div style="padding:16px;font-size:13px;color:var(--tx2);line-height:1.9" id="bk-stats"></div></div>
+        </div>
+        <div class="card" style="max-width:900px"><div class="card-h"><span class="card-t"><i class="ti ti-cloud-upload"></i> Backups na nuvem</span><button class="btn bsm bp" data-act="backupAgora">Criar agora</button></div><div class="scroll-y" id="bk-lista"><div class="muted" style="padding:14px">Carregando…</div></div></div>
+        <div class="card" style="max-width:900px;margin-top:14px;border-color:var(--rdm)"><div class="card-h" style="background:var(--rdl);color:var(--rd)"><span class="card-t"><i class="ti ti-alert-triangle"></i> Zona de perigo</span></div>
+          <div style="padding:16px;display:flex;align-items:center;justify-content:space-between;gap:10px"><p class="small muted">Apaga todos os dados do sistema. Um backup na nuvem é criado antes.</p><button class="btn bsm bdanger" data-act="resetTotal">Apagar tudo</button></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAIS ==================== -->
+<div class="ov" id="ov" aria-hidden="true"></div>
+
+<!-- PROJETO -->
+<div class="modal" id="mprojeto" style="display:none;max-width:680px" role="dialog" aria-modal="true" aria-labelledby="ptitle">
+  <div class="mh"><h3 id="ptitle">Acompanhamento do Projeto</h3><button class="btn bic bsm" data-act="fechar" aria-label="Fechar"><i class="ti ti-x"></i></button></div>
+  <div class="mb">
+    <input type="hidden" id="peid">
+    <div class="fr"><div class="fg"><label for="pprop">Código Proposta</label><input id="pprop" readonly class="ro"></div><div class="fg"><label for="pcliente">Cliente</label><input id="pcliente" readonly class="ro"></div></div>
+    <div class="fg"><label for="pnome">Objeto do Projeto</label><input id="pnome" readonly class="ro"></div>
+    <div class="fg"><label>Disciplinas</label><div id="pdisc" class="chips"></div></div>
+    <div id="aloc-projeto"></div>
+    <div class="fr3">
+      <div class="fg"><label for="pvalor">Valor do Contrato (R$)</label><input id="pvalor" type="number" step="0.01"></div>
+      <div class="fg"><label for="pcusto">Custo Terceiros (R$)</label><input id="pcusto" readonly class="ro rd"></div>
+      <div class="fg"><label for="pmargem">Margem (R$)</label><input id="pmargem" readonly class="ro"></div>
+    </div>
+    <div class="fr3">
+      <div class="fg"><label for="pinicio">Data de Início</label><input id="pinicio" type="date"></div>
+      <div class="fg"><label for="pentrega">Data Limite</label><input id="pentrega" type="date"></div>
+      <div class="fg"><label for="pemissao">Emissão/Conversão</label><input id="pemissao" type="date"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label for="pstatus">Fase Física</label><select id="pstatus"></select></div>
+      <div class="fg"><label for="ppgto" id="ppgto-l">Status Financeiro</label><select id="ppgto"></select></div>
+    </div>
+    <div class="fg"><label>Plano de recebimento (parcelas)</label><div id="pparcelas"></div></div>
+    <div class="fg"><label for="pobs">Observações / Andamento</label><textarea id="pobs" rows="2"></textarea></div>
+    <div class="mf"><button class="btn" data-act="fechar">Cancelar</button><button class="btn bp" data-act="salvarProjeto">Atualizar Projeto</button></div>
+  </div>
+</div>
+
+<!-- FINANCEIRO -->
+<div class="modal" id="mfinanceiro" style="display:none;max-width:580px" role="dialog" aria-modal="true" aria-labelledby="mfin-t">
+  <div class="mh"><h3 id="mfin-t"><i class="ti ti-cash-banknote"></i> Lançamento Financeiro</h3><button class="btn bic bsm" data-act="fechar" aria-label="Fechar"><i class="ti ti-x"></i></button></div>
+  <div class="mb">
+    <input type="hidden" id="feid">
+    <div class="fr"><div class="fg"><label for="ftipo">Fluxo de Caixa</label><select id="ftipo"><option value="entrada">Receita (Entrada / Cliente)</option><option value="saida">Custo (Saída / Despesa / Repasse)</option></select></div><div class="fg"><label for="fdata">Data</label><input id="fdata" type="date"></div></div>
+    <div class="fg"><label for="fdesc">Descrição</label><input id="fdesc" placeholder="Ex: Recebimento da 1ª medição"></div>
+    <div class="fr"><div class="fg"><label for="fcat">Categoria</label><select id="fcat"></select></div><div class="fg"><label for="fvalor">Valor (R$)</label><input id="fvalor" type="number" step="0.01" placeholder="7500.00"></div></div>
+    <div class="fg"><label for="fproj_vinculo">Projeto vinculado</label><select id="fproj_vinculo"></select></div>
+    <div class="fg"><label for="fterc_vinculo">Terceirizado (repasse)</label><select id="fterc_vinculo"></select></div>
+    <div class="fg"><label for="fobs">Notas internas</label><textarea id="fobs" rows="2"></textarea></div>
+    <div class="mf"><button class="btn" data-act="fechar">Cancelar</button><button class="btn bp" data-act="salvarFin"><i class="ti ti-device-floppy"></i> Salvar lançamento</button></div>
+  </div>
+</div>
+
+<!-- TERCEIRIZADO -->
+<div class="modal" id="mterceirizado" style="display:none;max-width:550px" role="dialog" aria-modal="true" aria-labelledby="mterc-t">
+  <div class="mh"><h3 id="mterc-t">Especialista</h3><button class="btn bic bsm" data-act="fechar" aria-label="Fechar"><i class="ti ti-x"></i></button></div>
+  <div class="mb">
+    <input type="hidden" id="teid">
+    <div class="fg"><label for="tnome">Nome completo</label><input id="tnome"></div>
+    <div class="fr"><div class="fg"><label for="tfone">Telefone / WhatsApp</label><input id="tfone" placeholder="(00) 00000-0000"></div><div class="fg"><label for="temail">E-mail</label><input id="temail" type="email"></div></div>
+    <div class="fr"><div class="fg"><label for="tdisc">Disciplina principal</label><select id="tdisc"></select></div><div class="fg"><label for="taval">Avaliação (1 a 5)</label><select id="taval"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div></div>
+    <div class="fg"><label for="tultimo">Última obra / alocação (opcional)</label><input id="tultimo"></div>
+    <div class="fg"><label for="tobs">Observações</label><textarea id="tobs" rows="2"></textarea></div>
+    <div class="mf"><button class="btn" data-act="fechar">Cancelar</button><button class="btn bp" data-act="salvarTerc">Gravar</button></div>
+  </div>
+</div>
+
+<!-- PROPOSTA -->
+<div class="modal" id="mproposta" style="display:none;max-width:800px" role="dialog" aria-modal="true" aria-labelledby="mprop-t">
+  <div class="mh"><h3 id="mprop-t">📄 Proposta Técnica Comercial</h3><button class="btn bic bsm" data-act="fechar" aria-label="Fechar"><i class="ti ti-x"></i></button></div>
+  <div class="mb">
+    <input type="hidden" id="propid">
+    <div class="fr"><div class="fg"><label for="prop-codigo">Código</label><input id="prop-codigo"></div><div class="fg"><label for="prop-cliente">Cliente</label><input id="prop-cliente" list="dl-clientes" placeholder="Razão social" autocomplete="off"><datalist id="dl-clientes"></datalist></div></div>
+    <div class="fr"><div class="fg"><label for="prop-cidade">Cidade/UF</label><input id="prop-cidade" placeholder="Ex: Nova Xavantina/MT"></div><div class="fg"><label for="prop-valor">Valor global (R$)</label><input id="prop-valor" type="number" step="0.01"></div></div>
+    <div id="prop-sugestao" class="sugestao hidden"></div>
+    <div class="fr3"><div class="fg"><label for="prop-prazo">Prazo (dias)</label><input id="prop-prazo" type="number"></div><div class="fg"><label for="prop-status">Status</label><select id="prop-status"></select></div><div class="fg"><label for="prop-data-envio">Data de envio</label><input id="prop-data-envio" type="date"></div></div>
+    <div class="fg"><label for="prop-data-criacao">Data de criação</label><input id="prop-data-criacao" type="date"></div>
+    <div class="fg"><label for="prop-objeto">Objeto do contrato</label><input id="prop-objeto" placeholder="Ex: Projeto executivo para galpão industrial 20x40m"></div>
+    <div class="fg"><label for="prop-escopo">Escopo técnico / entregáveis</label><textarea id="prop-escopo" rows="6" style="font-family:monospace;font-size:12px"></textarea></div>
+    <div class="fg"><label for="prop-premissas">Premissas técnicas</label><textarea id="prop-premissas" rows="4" style="font-family:monospace;font-size:12px"></textarea></div>
+    <div class="fg"><label for="prop-fora-escopo">Fora de escopo</label><textarea id="prop-fora-escopo" rows="4" style="font-family:monospace;font-size:12px"></textarea></div>
+    <div class="fg"><label for="prop-pagamento">Condições de pagamento <span class="muted">(os % viram parcelas automáticas ao converter)</span></label><textarea id="prop-pagamento" rows="2"></textarea></div>
+    <div id="aloc-proposta"></div>
+    <div style="border-top:2px solid #6366f1;padding-top:12px">
+      <button type="button" class="btn" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;width:100%;justify-content:center;font-weight:600" data-act="checklist">✨ Checklist de Blindagem Contratual</button>
+      <div id="checklist-proposta-container" class="hidden" style="margin-top:12px"></div>
+    </div>
+    <div style="border-top:1px solid #e2e8f0;padding-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" style="flex:1;background:#1a365d;color:#fff" data-act="propTexto">📝 Gerar texto</button>
+      <button class="btn bok" style="flex:1" data-act="propCopiar">📋 Copiar</button>
+      <button class="btn" style="flex:1;background:#b91c1c;color:#fff" data-act="propPDF">📄 Gerar PDF</button>
+      <button class="btn bp" style="flex:1" data-act="propConverter" id="btn-converter">✅ Converter em projeto</button>
+    </div>
+    <div id="proposta-texto-preview" class="hidden" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:15px;max-height:300px;overflow-y:auto"><pre id="proposta-texto-conteudo" style="font-size:11px;line-height:1.6;white-space:pre-wrap;font-family:monospace;margin:0"></pre></div>
+    <div class="mf"><button class="btn" data-act="fechar">Cancelar</button><button class="btn bp" data-act="salvarProposta">💾 Salvar proposta</button></div>
+  </div>
+</div>
+
+<!-- CRM -->
+<div class="modal" id="mcrm" style="display:none;max-width:650px" role="dialog" aria-modal="true" aria-labelledby="mcrm-t">
+  <div class="mh"><h3 id="mcrm-t">🏢 Cadastro de Empresa</h3><button class="btn bic bsm" data-act="fechar" aria-label="Fechar"><i class="ti ti-x"></i></button></div>
+  <div class="mb">
+    <input type="hidden" id="crm-id">
+    <div class="fr"><div class="fg"><label for="crm-nome">Nome da empresa *</label><input id="crm-nome"></div><div class="fg"><label for="crm-cnpj">CNPJ</label><input id="crm-cnpj" placeholder="00.000.000/0000-00"></div></div>
+    <div class="fr"><div class="fg"><label for="crm-cidade">Cidade/UF</label><input id="crm-cidade"></div><div class="fg"><label for="crm-segmento">Segmento</label><select id="crm-segmento"></select></div></div>
+    <div class="fr"><div class="fg"><label for="crm-site">Site</label><input id="crm-site"></div><div class="fg"><label for="crm-status">Status</label><select id="crm-status"></select></div></div>
+    <div class="sec">👤 Contato principal</div>
+    <div class="fr"><div class="fg"><label for="crm-contato-nome">Nome *</label><input id="crm-contato-nome"></div><div class="fg"><label for="crm-contato-cargo">Cargo</label><input id="crm-contato-cargo"></div></div>
+    <div class="fr"><div class="fg"><label for="crm-contato-email">E-mail *</label><input id="crm-contato-email" type="email"></div><div class="fg"><label for="crm-contato-telefone">Telefone/WhatsApp</label><input id="crm-contato-telefone"></div></div>
+    <div class="fg"><label for="crm-contato-linkedin">LinkedIn</label><input id="crm-contato-linkedin"></div>
+    <div class="fg"><label for="crm-obs">Observações</label><textarea id="crm-obs" rows="3"></textarea></div>
+    <div class="sec">📅 Follow-ups</div>
+    <div class="fg"><label for="crm-proximo">Próximo follow-up agendado</label><input id="crm-proximo" type="date"></div>
+    <div id="crm-followup-list" class="small muted"></div>
+    <div style="display:flex;gap:8px"><input type="date" id="crm-followup-data" style="flex:1"><input type="text" id="crm-followup-nota" placeholder="Nota do contato realizado..." style="flex:2"><button class="btn bsm bp" data-act="crmAddFollow">+ Registrar</button></div>
+    <div class="mf"><button class="btn" data-act="fechar">Cancelar</button><button class="btn bp" data-act="salvarEmpresa">💾 Salvar empresa</button></div>
+  </div>
+</div>
+
+<!-- TEMPLATE -->
+<div class="modal" id="mtemplate" style="display:none;max-width:650px" role="dialog" aria-modal="true" aria-labelledby="mtpl-t">
+  <div class="mh"><h3 id="mtpl-t">📧 Template de E-mail</h3><button class="btn bic bsm" data-act="fechar" aria-label="Fechar"><i class="ti ti-x"></i></button></div>
+  <div class="mb">
+    <input type="hidden" id="template-id">
+    <div class="fg"><label for="template-nome">Nome *</label><input id="template-nome"></div>
+    <div class="fg"><label for="template-assunto">Assunto *</label><input id="template-assunto" placeholder="Use {empresa} e {contato}"></div>
+    <div class="fg"><label for="template-corpo">Corpo *</label><textarea id="template-corpo" rows="9"></textarea></div>
+    <div class="small muted">Variáveis: {empresa} {contato} {primeiro_nome} {cargo} {cidade}</div>
+    <div class="mf"><button class="btn" data-act="fechar">Cancelar</button><button class="btn bp" data-act="salvarTemplate">💾 Salvar</button></div>
+  </div>
+</div>
+
+<!-- E-MAIL CRM -->
+<div class="modal" id="memail" style="display:none;max-width:680px" role="dialog" aria-modal="true" aria-labelledby="mem-t">
+  <div class="mh"><h3 id="mem-t">📧 Enviar e-mail</h3><button class="btn bic bsm" data-act="fechar" aria-label="Fechar"><i class="ti ti-x"></i></button></div>
+  <div class="mb">
+    <input type="hidden" id="em-empresa">
+    <div class="fr"><div class="fg"><label for="em-template">Template</label><select id="em-template"></select></div><div class="fg"><label for="em-para">Para</label><input id="em-para" type="email"></div></div>
+    <div class="fg"><label for="em-assunto">Assunto</label><input id="em-assunto"></div>
+    <div class="fg"><label for="em-corpo">Mensagem</label><textarea id="em-corpo" rows="10"></textarea></div>
+    <label class="chipcb" style="width:fit-content"><input type="checkbox" id="em-follow" checked> Registrar follow-up e agendar o próximo em <input type="number" id="em-dias" value="5" min="1" style="width:56px;padding:2px 6px"> dias</label>
+    <div class="mf"><button class="btn" data-act="fechar">Cancelar</button><button class="btn" data-act="emCopiar">📋 Copiar</button><button class="btn bp" data-act="emAbrir">✉️ Abrir no e-mail</button></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+<script>
+/* =====================================================================
+   TCL DYNAMIS — Sistema de Gestão v4.0
+   1 Config · 2 Utilitários · 3 Auth · 4 Dados/Nuvem · 5 Domínio/Automações
+   6 Navegação · 7 Páginas · 8 CRM/Alertas/Backup · 9 Modo Cliente · 10 Init
+   ===================================================================== */
+'use strict';
+
+/* ============================ 1. CONFIG ============================ */
+const CFG = {
+  empresa: { nome: 'TCL DYNAMIS ENGENHARIA LTDA', resp: 'Túlio Leite', fone: '(31) 98220-9893', doc: 'GRC-PMO-2026' },
+  // Dados e backups ficam no seu repositório GitHub (privado). A branch é a padrão do repositório.
+  github: { arquivo: 'dados/tcl_dynamis_dados.json', pastaBackups: 'backups' },
+  senhaModoCliente: '2026',
+  diasFollowupProposta: 5, diasFollowupRapido: 7, diasPropostaSemResposta: 7, validadePropostaDias: 15,
+  backupsMantidos: 20, limiteDocBytes: 5000000
+};
+
+const DISCIPLINAS = ['Mecânica', 'Estrutura metálica', 'Arquitetura', 'Tubulação', 'Civil', 'Elétrica', 'Automação', 'Hidráulica'];
+const ST_PROJ = ['Pendente', 'Em andamento', 'Aguardando aprovação', 'Concluído', 'Cancelado'];
+const ST_ATIVOS = ['Pendente', 'Em andamento', 'Aguardando aprovação'];
+const ST_PGTO = ['Pendente', 'Parcial', 'Pago', 'Atrasado'];
+const ST_PROP = ['Em elaboração', 'Enviada', 'Aprovada', 'Recusada'];
+const ST_CRM = ['Lead', 'Em negociação', 'Cliente', 'Inativo'];
+const SEGMENTOS = ['Engenharia de Projetos', 'Construção Civil', 'Mineração', 'Indústria', 'Energia', 'Outros'];
+const CAT_FIN = [['Honorário', 'Honorário Técnico'], ['Pagamento terceirizado', 'Pagamento Terceirizado (Repasse)'], ['Imposto / Taxa', 'Imposto / Taxa de ART'], ['Reembolso', 'Reembolso Logístico'], ['Adiantamento', 'Adiantamento de Projeto'], ['Outros', 'Outras Despesas Operacionais']];
+const CLS_PROJ = { 'Pendente': 'pendente', 'Em andamento': 'andamento', 'Aguardando aprovação': 'aprovacao', 'Concluído': 'concluido', 'Cancelado': 'cancelado' };
+const CLS_PGTO = { 'Pendente': 'pendente', 'Parcial': 'andamento', 'Pago': 'concluido', 'Atrasado': 'atrasado' };
+const CLS_PROP = { 'Em elaboração': 'andamento', 'Enviada': 'pendente', 'Aprovada': 'concluido', 'Recusada': 'atrasado' };
+const COR_CRM = { 'Lead': '#3b82f6', 'Em negociação': '#f59e0b', 'Cliente': '#10b981', 'Inativo': '#94a3b8' };
+
+const SEED_DATA = {
+  terceirizados: [
+    { id: 't1', nome: 'Carlos Silva', fone: '(31) 98888-1111', email: 'carlos@eng.com', disc: 'Elétrica', aval: 5, ultimo: '', obs: '' },
+    { id: 't2', nome: 'Mariana Costa', fone: '(31) 97777-2222', email: 'mariana@metalica.com', disc: 'Estrutura metálica', aval: 4, ultimo: '', obs: '' },
+    { id: 't3', nome: 'Roberto Souza', fone: '(11) 96666-3333', email: 'roberto@civil.com', disc: 'Civil', aval: 5, ultimo: '', obs: '' }
+  ]
+};
+
+/* ========================== 2. UTILITÁRIOS ========================== */
+const $ = id => document.getElementById(id);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clone = o => JSON.parse(JSON.stringify(o));
+const uid = p => p + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const num = v => { const n = typeof v === 'number' ? v : parseFloat(String(v ?? '').replace(',', '.')); return isFinite(n) ? n : 0; };
+const numBR = s => { s = String(s ?? '').trim(); if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.'); const n = parseFloat(s); return isFinite(n) ? n : 0; };
+const _brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+const moeda = v => _brl.format(num(v));
+const soma = (arr, fn) => arr.reduce((s, x) => s + num(fn(x)), 0);
+const val = id => ($(id) ? $(id).value : '');
+const setv = (id, v) => { const e = $(id); if (e) e.value = v ?? ''; };
+const opts = (lista, vazio) => (vazio !== undefined ? `<option value="">${esc(vazio)}</option>` : '') + lista.map(x => Array.isArray(x) ? `<option value="${esc(x[0])}">${esc(x[1])}</option>` : `<option>${esc(x)}</option>`).join('');
+const badge = (cls, txt) => `<span class="st ${cls || ''}">${esc(txt || '-')}</span>`;
+const slug = s => String(s).replace(/[^a-zA-Z0-9]/g, '');
+
+// Datas (sempre no fuso local — toISOString() usa UTC e erra o dia à noite no Brasil)
+const pad = n => String(n).padStart(2, '0');
+const isoDe = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const hojeISO = () => isoDe(new Date());
+const dtISO = iso => { if (!iso) return null; const d = new Date(iso + 'T00:00:00'); return isNaN(d) ? null : d; };
+const addDias = (iso, n) => { const d = dtISO(iso) || new Date(); d.setDate(d.getDate() + n); return isoDe(d); };
+const fmtData = iso => { const d = dtISO(iso); return d ? d.toLocaleDateString('pt-BR') : '-'; };
+const diasEntre = (a, b) => Math.round((dtISO(b) - dtISO(a)) / 86400000);
+const diasParaHoje = iso => dtISO(iso) ? diasEntre(hojeISO(), iso) : null;
+
+function toast(msg, tipo = 'info', ms = 3800, acao) {
+  const c = $('toasts'); if (!c) return;
+  const el = document.createElement('div');
+  el.className = 'toast ' + tipo + (acao ? ' click' : '');
+  el.textContent = msg;
+  if (acao) el.onclick = () => { acao(); el.remove(); };
+  c.appendChild(el);
+  setTimeout(() => el.remove(), ms);
+}
+
+function copiarTexto(txt) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(txt);
+  return new Promise((ok, falha) => {
+    const t = document.createElement('textarea'); t.value = txt; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try { document.execCommand('copy') ? ok() : falha(); } catch (e) { falha(e); }
+    t.remove();
+  });
+}
+
+function baixarArquivo(nome, conteudo, tipo) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([conteudo], { type: tipo }));
+  a.download = nome; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+
+const _scripts = {};
+function carregarScript(url) {
+  if (!_scripts[url]) _scripts[url] = new Promise((ok, falha) => {
+    const s = document.createElement('script'); s.src = url; s.onload = ok; s.onerror = () => { delete _scripts[url]; falha(new Error('Falha ao carregar ' + url)); };
+    document.head.appendChild(s);
+  });
+  return _scripts[url];
+}
+
+const debounce = (fn, ms = 200) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+const TEMPLATES_PADRAO = [
+        {
+            id: 'tpl_1', nome: 'Primeiro Contato',
+            assunto: 'Ideia para reduzir custos com projetos na {empresa}',
+            corpo: 'Olá {contato},\n\nUma pergunta rápida: vocês têm terceirizado projetos de engenharia ou feito tudo internamente?\n\nPergunto porque muitas empresas estão reduzindo custos terceirizando projetos complementares — e mantendo a equipe interna focada no core business.\n\nSe fizer sentido conversarmos sobre isso, posso mostrar como funciona em 10 minutos.\n\nAbraço,\nTúlio Leite\nTCL Dynamis Engenharia\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_2', nome: 'Follow-up Recuperação',
+            assunto: 'Ainda faz sentido? / {empresa}',
+            corpo: 'Olá {contato},\n\nMandei uma mensagem dias atrás sobre terceirização de projetos. Sei que a rotina é intensa.\n\nNão quero ser insistente — só saber se o assunto ainda faz sentido para vocês ou se deixo para um próximo momento.\n\nUm abraço,\nTúlio\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_3', nome: 'Follow-up Insistência',
+            assunto: 'Última tentativa :) / {empresa}',
+            corpo: 'Olá {contato},\n\nTentei contato algumas vezes sobre terceirização de projetos. Se não for o momento, tudo bem — respeito completamente.\n\nGuardo seu contato e, se um dia fizer sentido, estou à disposição.\n\nSucesso pra vocês!\nTúlio Leite\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_4', nome: 'Pós-Reunião',
+            assunto: 'Resumo da nossa conversa / {empresa}',
+            corpo: 'Olá {contato},\n\nFoi um prazer conversar com você hoje!\n\nConforme alinhamos, fico no aguardo das informações para preparar a proposta. Qualquer dúvida, pode me acionar.\n\nAbraço,\nTúlio Leite\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_5', nome: 'Proposta Enviada',
+            assunto: 'Proposta TCL Dynamis / {empresa}',
+            corpo: 'Olá {contato},\n\nConforme conversamos, segue a proposta em anexo.\n\nO prazo de validade é de 15 dias. Qualquer dúvida, estou à disposição.\n\nAtenciosamente,\nTúlio Leite\nTCL Dynamis Engenharia\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_6', nome: 'Follow-up Proposta',
+            assunto: 'Alguma dúvida sobre a proposta? / {empresa}',
+            corpo: 'Olá {contato},\n\nEnviei a proposta há alguns dias e queria saber se você teve oportunidade de analisar.\n\nPosso esclarecer qualquer dúvida ou ajustar algo se necessário.\n\nAtenciosamente,\nTúlio Leite\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_7', nome: 'Fechamento',
+            assunto: 'Próximos passos / {empresa}',
+            corpo: 'Olá {contato},\n\nÓtima notícia! Com a proposta aprovada, vamos aos próximos passos:\n\n1. Assinatura do contrato\n2. Definição das disciplinas\n3. Cronograma de entregas\n4. Início do projeto\n\nEstou à disposição. Vamos marcar uma call rápida?\n\nAbraço,\nTúlio Leite\n(31) 98220-9893'
+        },
+        {
+            id: 'tpl_8', nome: 'Indicação/Networking',
+            assunto: 'Trocando ideias / {empresa}',
+            corpo: 'Olá {contato},\n\nTudo bem? Estou expandindo minha atuação em projetos e lembrei de você.\n\nNão necessariamente para fecharmos algo agora, mas para trocarmos ideias sobre o mercado.\n\nSe souber de alguém que precise de projetos complementares, agradeço se puder indicar.\n\nVamos nos falando!\nTúlio Leite\n(31) 98220-9893'
+        }
+];
+/* ============================ 3. ACESSO (GitHub) ============================
+   Os dados ficam em um arquivo JSON dentro de um repositório PRIVADO seu.
+   O "login" é um token do GitHub (fine-grained, só esse repositório, Contents: Read and write). */
+const GH = { repo: '', token: '', sha: null, branch: '' };
+const LS_GH = 'tcl_gh_acesso';
+let usuarioAtual = '', sessaoAtiva = false;
+
+const b64enc = t => { let b = ''; new TextEncoder().encode(t).forEach(x => b += String.fromCharCode(x)); return btoa(b); };
+const b64dec = t => new TextDecoder().decode(Uint8Array.from(atob(t.replace(/\s/g, '')), c => c.charCodeAt(0)));
+const ghUrl = c => 'https://api.github.com/repos/' + GH.repo + c;
+const caminhoUrl = p => p.split('/').map(encodeURIComponent).join('/');
+
+async function ghReq(url, { method = 'GET', body, raw } = {}) {
+  const headers = { Authorization: 'Bearer ' + GH.token, Accept: raw ? 'application/vnd.github.raw+json' : 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+  if (body) headers['Content-Type'] = 'application/json';
+  const r = await fetch(url, { method, headers, cache: 'no-store', body: body ? JSON.stringify(body) : undefined });
+  if (!r.ok) { const e = new Error('GitHub ' + r.status); e.status = r.status; try { e.detalhe = (await r.json()).message; } catch (x) { } throw e; }
+  return raw ? r.text() : r.status === 204 ? null : r.json();
+}
+const ghRef = () => '?ref=' + encodeURIComponent(GH.branch) + '&_=' + Date.now();
+async function ghLer(path) {
+  try {
+    const j = await ghReq(ghUrl('/contents/' + caminhoUrl(path) + ghRef()));
+    const texto = j.content ? b64dec(j.content) : await ghReq(ghUrl('/contents/' + caminhoUrl(path) + ghRef()), { raw: true }); // >1 MB
+    return { sha: j.sha, texto };
+  } catch (e) { if (e.status === 404) return null; throw e; }
+}
+async function ghGravar(path, texto, sha, msg) {
+  try {
+    const j = await ghReq(ghUrl('/contents/' + caminhoUrl(path)), { method: 'PUT', body: Object.assign({ message: msg, content: b64enc(texto), branch: GH.branch }, sha ? { sha } : {}) });
+    return j.content.sha;
+  } catch (e) { if (e.status === 409 || e.status === 422) e.conflito = true; throw e; }
+}
+async function ghApagar(path, sha, msg) { await ghReq(ghUrl('/contents/' + caminhoUrl(path)), { method: 'DELETE', body: { message: msg, sha, branch: GH.branch } }); }
+async function ghListar(dir) {
+  try { const j = await ghReq(ghUrl('/contents/' + caminhoUrl(dir) + ghRef())); return Array.isArray(j) ? j : []; }
+  catch (e) { if (e.status === 404) return []; throw e; }
+}
+const erroGH = e => e.status === 401 ? 'token inválido ou expirado' : e.status === 403 ? 'sem permissão (ou limite de requisições)' : e.status === 404 ? 'repositório/arquivo não encontrado' : (e.detalhe || e.message);
+
+async function entrarGitHub(repo, token, lembrar) {
+  GH.repo = repo; GH.token = token;
+  const info = await ghReq(ghUrl(''));
+  if (info.permissions && !info.permissions.push) { const e = new Error('somente leitura'); e.status = 403; e.detalhe = 'o token precisa de Contents: Read and write'; throw e; }
+  GH.branch = info.default_branch || 'main';
+  let nome = info.owner && info.owner.login || repo.split('/')[0];
+  try { nome = (await ghReq('https://api.github.com/user')).login || nome; } catch (e) { }
+  if (lembrar) { try { localStorage.setItem(LS_GH, JSON.stringify({ repo, token })); } catch (e) { } }
+  iniciarSessao(nome, !info.private);
+}
+async function verificarLogin() {
+  const repo = val('login-repo').trim().replace(/^https?:\/\/github\.com\//i, '').replace(/\.git$/i, '').replace(/\/$/, ''), token = val('login-token').trim();
+  const msg = $('login-msg'); msg.textContent = '';
+  if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) { msg.textContent = 'Informe o repositório no formato dono/nome.'; return; }
+  if (!token) { msg.textContent = 'Informe o token de acesso.'; return; }
+  const btn = $('btn-login'); btn.disabled = true;
+  try { await entrarGitHub(repo, token, $('login-lembrar').checked); }
+  catch (e) { msg.textContent = '❌ ' + erroGH(e); setv('login-token', ''); }
+  finally { btn.disabled = false; }
+}
+function tentarSessaoSalva() {
+  let a; try { a = JSON.parse(localStorage.getItem(LS_GH) || 'null'); } catch (e) { }
+  if (!a || !a.repo || !a.token) return;
+  entrarGitHub(a.repo, a.token, false).catch(e => { if (e.status === 401) { try { localStorage.removeItem(LS_GH); } catch (x) { } } $('login-msg').textContent = '❌ ' + erroGH(e); });
+}
+const MSG_PUBLICO = '⚠️ O repositório é PÚBLICO: qualquer pessoa pode ler seus dados. Torne-o privado em Settings → Danger Zone → Change visibility.';
+
+function iniciarSessao(email, publico) {
+  if (sessaoAtiva) return;
+  sessaoAtiva = true; usuarioAtual = email; GH.publico = !!publico;
+  $('login-screen').style.display = 'none';
+  $('app').classList.add('on');
+  carregarDB();
+}
+
+function banner(html, tipo, acaoTxt, acao) {
+  const b = $('banner'); if (!b) return;
+  if (!html) { b.classList.add('hidden'); return; }
+  b.className = 'banner ' + (tipo || 'warn');
+  b.innerHTML = `<span>${esc(html)}</span>` + (acaoTxt ? `<button class="btn bsm" data-act="${acao}">${esc(acaoTxt)}</button>` : '');
+}
+
+/* ============================ 4. DADOS / NUVEM ============================ */
+function novoDB() { return { projetos: [], financeiro: [], terceirizados: [], propostas: [], crm: [], templates: null, meta: { versao: 0 } }; }
+let DB = novoDB();
+let versaoLocal = 0, podeSalvar = false, modoClienteAtivo = false;
+
+function normalizarDB(d) {
+  const n = Object.assign(novoDB(), d || {});
+  ['projetos', 'financeiro', 'terceirizados', 'propostas', 'crm'].forEach(k => { if (!Array.isArray(n[k])) n[k] = []; });
+  if (!Array.isArray(n.templates)) n.templates = clone(TEMPLATES_PADRAO);
+  n.meta = Object.assign({ versao: 0 }, n.meta || {});
+  n.projetos.forEach(p => {
+    if (!Array.isArray(p.terceirizados_alocados)) p.terceirizados_alocados = Array.isArray(p.tercs) ? p.tercs : [];
+    p.prop = p.prop || p.proposta || '';
+    if (!p.entregas || typeof p.entregas !== 'object') p.entregas = {};
+    Object.values(p.entregas).forEach(dsc => { if (!Array.isArray(dsc.itens)) dsc.itens = []; dsc.itens.forEach(i => { if (!i.id) i.id = uid('e'); }); });
+    if (!Array.isArray(p.disciplinas)) p.disciplinas = Object.keys(p.entregas);
+    if (!Array.isArray(p.parcelas)) p.parcelas = [];
+  });
+  n.financeiro.forEach(f => { f.tipo = String(f.tipo || '').toLowerCase(); f.cat = f.cat || f.categoria || 'Outros'; f.projeto = f.projeto || ''; f.terc = f.terc || ''; if (!f.id) f.id = uid('f'); });
+  n.crm.forEach(e => { if (!Array.isArray(e.followups)) e.followups = []; });
+  return n;
+}
+
+function setSync(estado) {
+  const t = { ok: ['Dados sincronizados', 'ti-cloud-check'], saving: ['Salvando…', 'ti-cloud-upload'], erro: ['Erro ao sincronizar', 'ti-cloud-off'], load: ['Carregando…', 'ti-cloud'], off: ['Somente leitura', 'ti-lock'] }[estado];
+  const el = $('svst'); if (!el) return;
+  el.querySelector('i').className = 'ti ' + t[1]; $('svtxt').textContent = t[0];
+}
+
+async function carregarDB() {
+  setSync('load');
+  try {
+    const r = await ghLer(CFG.github.arquivo);
+    GH.sha = r ? r.sha : null;
+    DB = normalizarDB(r ? JSON.parse(r.texto) : clone(SEED_DATA));
+    versaoLocal = DB.meta.versao || 0;
+    podeSalvar = true; setSync('ok'); banner(GH.publico ? MSG_PUBLICO : '', 'warn');
+  } catch (err) {
+    // IMPORTANTE: nunca cair em dados de exemplo e depois sobrescrever a nuvem.
+    console.error('Falha ao carregar:', err);
+    DB = normalizarDB({}); podeSalvar = false; setSync('off');
+    const perm = err && err.status ? ' (' + erroGH(err) + ')' : '';
+    banner('Não foi possível carregar os dados do GitHub' + perm + '. Para proteger seus dados, nada será salvo até a conexão voltar.', 'err', 'Tentar novamente', 'recarregar');
+  }
+  recalcularAutomacoes();
+  nav(paginaAtual || 'dashboard');
+  if (podeSalvar) { backupDiarioAutomatico(); resumoDoDia(); }
+}
+
+let _salvando = null, _repetir = false, _novaVersao = 0, _avisouTamanho = false;
+function salvarDB() {
+  if (modoClienteAtivo) { renderAtual(); return Promise.resolve(); }
+  if (!podeSalvar) { toast('Dados não carregados da nuvem — alteração NÃO foi salva. Recarregue a página.', 'err', 6000); return Promise.resolve(); }
+  recalcularAutomacoes();
+  renderAtual();
+  if (_salvando) { _repetir = true; return _salvando; }
+  _salvando = (async () => { do { _repetir = false; await gravarNuvem(); } while (_repetir && podeSalvar); })().finally(() => { _salvando = null; });
+  return _salvando;
+}
+
+async function gravarNuvem() {
+  setSync('saving');
+  try {
+    _novaVersao = versaoLocal + 1;
+    const payload = clone(DB);
+    payload.meta = Object.assign({}, payload.meta, { versao: _novaVersao, atualizadoEm: new Date().toISOString(), atualizadoPor: usuarioAtual });
+    GH.sha = await ghGravar(CFG.github.arquivo, JSON.stringify(payload, null, 1), GH.sha, 'TCL Dynamis: dados v' + _novaVersao + ' (' + usuarioAtual + ')');
+    versaoLocal = _novaVersao; DB.meta.versao = versaoLocal; setSync('ok');
+    const tam = JSON.stringify(DB).length;
+    if (tam > CFG.limiteDocBytes && !_avisouTamanho) { _avisouTamanho = true; toast('⚠️ Base grande (acima de 5 MB). Considere arquivar projetos antigos.', 'warn', 8000); }
+  } catch (e) {
+    setSync('erro');
+    if (e.conflito) { podeSalvar = false; resolverConflito(); }
+    else { console.error(e); toast('Erro ao salvar no GitHub: ' + erroGH(e), 'err', 6000); }
+  }
+}
+
+function resolverConflito() {
+  const recarregar = confirm('⚠️ Estes dados foram alterados em outro dispositivo ou aba.\n\nOK = recarregar os dados mais recentes da nuvem (as últimas alterações desta tela serão descartadas).\nCancelar = manter esta tela e sobrescrever a nuvem (a versão da nuvem vira backup).');
+  if (recarregar) { carregarDB(); return; }
+  (async () => {
+    try {
+      const r = await ghLer(CFG.github.arquivo);
+      if (r) { try { await criarBackupNuvem(JSON.parse(r.texto), 'conflito'); } catch (e) { console.warn(e); } GH.sha = r.sha; versaoLocal = (JSON.parse(r.texto).meta || {}).versao || 0; }
+      podeSalvar = true; salvarDB();
+    } catch (e) { toast('Falha ao resolver o conflito: ' + erroGH(e), 'err', 6000); }
+  })();
+}
+
+/* --- Backups no GitHub (pasta "backups/", um arquivo por backup) --- */
+const idBackup = n => n.replace(/\.json$/, '');
+const dataBackup = id => { const m = id.match(/_(\d{13})$/); return m ? new Date(+m[1]).toISOString() : id.slice(0, 10) + 'T00:00:00'; };
+async function criarBackupNuvem(dados, rotulo) {
+  const id = rotulo ? rotulo + '_' + Date.now() : hojeISO();
+  await ghGravar(CFG.github.pastaBackups + '/' + id + '.json', JSON.stringify({ criadoEm: new Date().toISOString(), rotulo: rotulo || 'diario', versao: (dados.meta || {}).versao || 0, dados }), null, 'Backup ' + id);
+  return id;
+}
+let backupNuvemErro = '';
+async function listaBackups() { return (await ghListar(CFG.github.pastaBackups)).filter(f => /\.json$/.test(f.name)).sort((a, b) => dataBackup(idBackup(b.name)).localeCompare(dataBackup(idBackup(a.name)))); }
+async function backupDiarioAutomatico() {
+  if (modoClienteAtivo || !podeSalvar) return;
+  try {
+    const l = await listaBackups();
+    if (!l.some(f => f.name === hojeISO() + '.json')) { await criarBackupNuvem(clone(DB)); await podarBackups(); }
+    backupNuvemErro = '';
+  } catch (e) { backupNuvemErro = erroGH(e); console.warn('Backup indisponível:', e); }
+}
+async function podarBackups() {
+  const l = await listaBackups();
+  for (const f of l.slice(CFG.backupsMantidos)) await ghApagar(f.path, f.sha, 'Remove backup antigo ' + idBackup(f.name));
+}
+
+/* ===================== 5. DOMÍNIO E AUTOMAÇÕES ===================== */
+const projPorId = id => DB.projetos.find(p => p.id === id);
+const tercPorId = id => DB.terceirizados.find(t => t.id === id);
+const nomeTerc = (id, fb) => (tercPorId(id) || {}).nome || fb || 'Especialista';
+const ehAtivo = p => ST_ATIVOS.includes(p.status);
+const custoProjeto = p => { const a = p.terceirizados_alocados || []; return a.length ? soma(a, t => t.custo) : num(p.custo); };
+const somaFin = tipo => soma(DB.financeiro.filter(f => f.tipo === tipo), f => f.valor);
+const precoVenda = (custo, imp, adm, lucro) => { const t = (imp + adm + lucro) / 100; return t < 1 ? custo / (1 - t) : 0; };
+
+function totaisEntregas(p) {
+  let total = 0, ok = 0, atrasados = 0; const h = hojeISO();
+  Object.values(p.entregas || {}).forEach(d => (d.itens || []).forEach(i => { total++; if (i.entregue) ok++; else if (i.prev && i.prev < h) atrasados++; }));
+  return { total, ok, atrasados, pct: total ? Math.round(ok / total * 100) : 0 };
+}
+
+function novoLancamento(o) {
+  const p = projPorId(o.projeto), t = tercPorId(o.terc);
+  return Object.assign({
+    id: uid('f'), desc: '', valor: 0, tipo: 'entrada', data: hojeISO(), cat: 'Outros', obs: '', projeto: '', terc: '', dataCriacao: new Date().toISOString()
+  }, o, {
+    categoria: o.cat || 'Outros',
+    projNome: p ? p.nome || '' : '', projetoNome: p ? p.nome || '' : '', projCodigo: p ? p.prop || '' : '', tercNome: t ? t.nome : ''
+  });
+}
+
+/* --- Parcelas de recebimento (geradas a partir de "25% sinal + 40% ... + 35% final") --- */
+function parseCondicoes(txt) {
+  const re = /(\d+(?:[.,]\d+)?)\s*%\s*(.*?)(?=\s*(?:[+;,\n]|\d+(?:[.,]\d+)?\s*%|$))/g;
+  const out = []; let m;
+  while ((m = re.exec(txt || ''))) out.push({ pct: numBR(m[1]), rot: (m[2] || '').replace(/^\s*(de|na|no|em|do|da)\s+/i, '').trim() || 'Parcela' });
+  const s = soma(out, x => x.pct);
+  return out.length && Math.abs(s - 100) < 0.5 ? out : [{ pct: 100, rot: 'Pagamento único' }];
+}
+function gerarParcelas(p, texto) {
+  const cond = parseCondicoes(texto), valor = num(p.valor), ini = p.dataInicio || hojeISO(), fim = p.entrega || addDias(ini, 90), n = cond.length;
+  let acum = 0;
+  return cond.map((c, i) => {
+    const v = i === n - 1 ? Math.round((valor - acum) * 100) / 100 : Math.round(valor * c.pct) / 100; acum += v;
+    const venc = n === 1 ? fim : addDias(ini, Math.round(diasEntre(ini, fim) * i / (n - 1)));
+    return { id: uid('par'), desc: `${i + 1}/${n} — ${c.rot}`, pct: c.pct, valor: v, venc, status: 'Previsto', dataReceb: '', lancId: '' };
+  });
+}
+function statusPgtoAuto(p) {
+  const par = p.parcelas || []; if (!par.length) return null;
+  const rec = par.filter(x => x.status === 'Recebido').length, h = hojeISO();
+  const atrasada = par.some(x => x.status !== 'Recebido' && x.venc && x.venc < h);
+  if (rec === par.length) return 'Pago';
+  if (atrasada) return 'Atrasado';
+  return rec > 0 ? 'Parcial' : 'Pendente';
+}
+function recalcularAutomacoes() {
+  DB.projetos.forEach(p => {
+    const a = statusPgtoAuto(p); if (a) p.pgto = a;
+    if ((p.terceirizados_alocados || []).length) p.custo = custoProjeto(p);
+  });
+}
+function parcelasAReceber() {
+  const h = hojeISO(), out = [];
+  DB.projetos.forEach(p => { if (p.status === 'Cancelado') return; (p.parcelas || []).forEach(pa => { if (pa.status !== 'Recebido') out.push({ proj: p, parc: pa, atrasada: !!pa.venc && pa.venc < h }); }); });
+  return out.sort((a, b) => (a.parc.venc || '9').localeCompare(b.parc.venc || '9'));
+}
+const projetosSemPlano = () => DB.projetos.filter(p => p.status !== 'Cancelado' && num(p.valor) > 0 && !(p.parcelas || []).length && p.pgto !== 'Pago');
+
+/* --- Repasses a terceirizados (alocado − pago nos lançamentos vinculados) --- */
+function repassesPendentes() {
+  const out = [];
+  DB.projetos.forEach(p => {
+    if (p.status === 'Cancelado') return;
+    (p.terceirizados_alocados || []).forEach(a => {
+      const alocado = num(a.custo); if (alocado <= 0) return;
+      const pago = soma(DB.financeiro.filter(f => f.tipo === 'saida' && f.projeto === p.id && f.terc === a.id), f => f.valor);
+      out.push({ proj: p, tercId: a.id, nome: nomeTerc(a.id, a.nome), alocado, pago, pend: a.quitado ? 0 : Math.max(0, alocado - pago) });
+    });
+  });
+  return out;
+}
+const pagoTerc = t => { const n = (t.nome || '').toLowerCase(); return soma(DB.financeiro.filter(f => f.tipo === 'saida' && (f.terc === t.id || (!f.terc && n && (f.desc || '').toLowerCase().includes(n)))), f => f.valor); };
+
+function baixarParcela(projId, parcId, semLanc) {
+  const p = projPorId(projId), pa = p && p.parcelas.find(x => x.id === parcId);
+  if (!pa || pa.status === 'Recebido') return;
+  if (semLanc) { if (!confirm('Marcar esta parcela como já recebida (sem criar lançamento financeiro)?')) return; }
+  else {
+    if (!confirm(`Registrar recebimento de ${moeda(pa.valor)} (${pa.desc}) em ${fmtData(hojeISO())}?`)) return;
+    const l = novoLancamento({ tipo: 'entrada', desc: `Recebimento ${pa.desc} — ${p.prop} ${p.cliente || ''}`.trim(), valor: pa.valor, cat: 'Honorário', projeto: p.id });
+    DB.financeiro.push(l); pa.lancId = l.id;
+  }
+  pa.status = 'Recebido'; pa.dataReceb = hojeISO();
+  toast('Recebimento registrado.', 'ok'); salvarDB();
+}
+function baixarRepasse(projId, tercId, semLanc) {
+  const r = repassesPendentes().find(x => x.proj.id === projId && x.tercId === tercId); if (!r) return;
+  if (semLanc) {
+    if (!confirm(`Marcar o repasse de ${r.nome} como já quitado (sem criar lançamento)?`)) return;
+    r.proj.terceirizados_alocados.find(x => x.id === tercId).quitado = true; salvarDB(); return;
+  }
+  const v = prompt(`Valor do repasse para ${r.nome} (pendente ${moeda(r.pend)}):`, String(r.pend).replace('.', ','));
+  if (v === null) return;
+  const valor = numBR(v); if (valor <= 0) return toast('Valor inválido.', 'err');
+  DB.financeiro.push(novoLancamento({ tipo: 'saida', desc: `Repasse ${r.nome} — ${r.proj.prop}`.trim(), valor, cat: 'Pagamento terceirizado', projeto: projId, terc: tercId }));
+  toast('Repasse lançado.', 'ok'); salvarDB();
+}
+function gerarPlano(projId) {
+  const p = projPorId(projId); if (!p) return;
+  const pr = DB.propostas.find(x => x.id === p.propostaId || x.codigo === p.prop);
+  p.parcelas = gerarParcelas(p, pr ? pr.pagamento : '');
+  toast(`${p.parcelas.length} parcela(s) geradas para ${p.prop}.`, 'ok'); salvarDB();
+}
+
+/* --- Entregas: status do projeto acompanha o andamento --- */
+function aposMudarEntrega(p) {
+  const t = totaisEntregas(p);
+  if (t.ok > 0 && p.status === 'Pendente') { p.status = 'Em andamento'; toast('Projeto movido para "Em andamento".', 'ok'); }
+  if (t.total > 0 && t.pct === 100 && ['Pendente', 'Em andamento'].includes(p.status)) { p.status = 'Aguardando aprovação'; toast('Todas as entregas concluídas → "Aguardando aprovação".', 'ok'); }
+  else if (t.pct < 100 && p.status === 'Aguardando aprovação') p.status = 'Em andamento';
+}
+function mudarStatusProjeto(p, novo) {
+  if (!p || p.status === novo) return;
+  if (novo === 'Concluído') {
+    const t = totaisEntregas(p);
+    if (t.total > t.ok && !confirm('Existem entregas pendentes. Concluir o projeto mesmo assim?')) return;
+    p.dataConclusao = hojeISO();
+  }
+  p.status = novo; salvarDB();
+}
+
+/* --- CRM x Propostas --- */
+const crmDaEmpresa = nome => { const n = (nome || '').trim().toLowerCase(); return n ? DB.crm.find(e => (e.nome || '').trim().toLowerCase() === n) : null; };
+function sincronizarCRMProposta(prop, anterior) {
+  if (!prop.cliente) return;
+  let e = crmDaEmpresa(prop.cliente);
+  if (!e) {
+    e = { id: uid('crm'), nome: prop.cliente.trim(), cnpj: '', cidade: prop.cidade || '', segmento: 'Outros', site: '', status: 'Em negociação', contatoNome: '(a definir)', contatoEmail: '', contatoCargo: '', contatoTelefone: '', contatoLinkedin: '', obs: 'Criada automaticamente a partir da proposta ' + (prop.codigo || ''), followups: [], proximoFollowup: '', dataCriacao: hojeISO() };
+    DB.crm.push(e); toast(`Empresa "${e.nome}" adicionada ao CRM.`, 'ok');
+  }
+  if (prop.status === 'Aprovada') e.status = 'Cliente';
+  else if (['Enviada', 'Em elaboração'].includes(prop.status) && e.status === 'Lead') e.status = 'Em negociação';
+  if (prop.status === 'Enviada' && anterior !== 'Enviada' && !e.proximoFollowup) e.proximoFollowup = addDias(hojeISO(), CFG.diasFollowupProposta);
+}
+function mudarStatusProposta(p, novo) {
+  if (!p || p.status === novo) return;
+  const ant = p.status; p.status = novo;
+  if (novo === 'Enviada' && !p.dataEnvio) p.dataEnvio = hojeISO();
+  sincronizarCRMProposta(p, ant);
+  if (novo === 'Aprovada' && !p.projetoId) toast('Proposta aprovada! Clique aqui para converter em projeto.', 'ok', 9000, () => abrirProposta(p.id));
+  salvarDB();
+}
+function codigoProposta() {
+  const ano = new Date().getFullYear(); let max = 0;
+  DB.propostas.forEach(p => { const m = /^PROP-(\d{4})-(\d+)$/.exec(p.codigo || ''); if (m && +m[1] === ano) max = Math.max(max, +m[2]); });
+  return `PROP-${ano}-${pad(max + 1)}`;
+}
+
+/* --- Alertas (um único gerador, usado por badges, dashboard e página) --- */
+function gerarAlertas() {
+  const A = [], h = hojeISO(), em7 = addDias(h, 7), em15 = addDias(h, 15);
+  const add = (tipo, prioridade, titulo, mensagem, data, destino) => A.push({ tipo, prioridade, titulo, mensagem, data: data || '', destino });
+  DB.projetos.forEach(p => {
+    const nome = p.nome || p.prop || 'Sem nome';
+    if (ehAtivo(p)) {
+      Object.entries(p.entregas || {}).forEach(([disc, d]) => (d.itens || []).forEach(i => {
+        if (i.entregue || !i.prev) return;
+        if (i.prev < h) add('atraso', 'alta', nome, `⚠️ ${i.desc} (${disc}) atrasado desde ${fmtData(i.prev)}`, i.prev, { page: 'entregas', id: p.id });
+        else if (i.prev <= em7) add('prazo', 'media', nome, `⏰ ${i.desc} (${disc}) — ${diasParaHoje(i.prev)} dia(s)`, i.prev, { page: 'entregas', id: p.id });
+      }));
+      if (p.entrega && p.entrega >= h && p.entrega <= em15) { const d = diasParaHoje(p.entrega); add('prazo', d <= 7 ? 'alta' : 'media', nome, `📅 Prazo final do projeto em ${d} dia(s) — ${fmtData(p.entrega)}`, p.entrega, { page: 'entregas', id: p.id }); }
+      if (p.entrega && p.entrega < h) add('atraso', 'alta', nome, `🚨 Prazo final vencido em ${fmtData(p.entrega)}`, p.entrega, { page: 'entregas', id: p.id });
+    }
+  });
+  parcelasAReceber().forEach(({ proj, parc, atrasada }) => {
+    if (atrasada) add('pgto', 'alta', proj.nome || proj.prop, `💸 Parcela vencida: ${parc.desc} — ${moeda(parc.valor)} (venc. ${fmtData(parc.venc)})`, parc.venc, { page: 'financeiro' });
+    else if (parc.venc && parc.venc <= em7) add('pgto', 'media', proj.nome || proj.prop, `💰 Parcela a vencer: ${parc.desc} — ${moeda(parc.valor)} em ${diasParaHoje(parc.venc)} dia(s)`, parc.venc, { page: 'financeiro' });
+  });
+  repassesPendentes().forEach(r => {
+    if (r.pend <= 0) return;
+    if (r.proj.status === 'Concluído' || r.proj.pgto === 'Pago') add('pgto', 'alta', r.proj.nome || r.proj.prop, `📤 Repasse pendente para ${r.nome}: ${moeda(r.pend)}${r.proj.pgto === 'Pago' ? ' (cliente já pagou)' : ' (projeto concluído)'}`, r.proj.entrega, { page: 'financeiro' });
+  });
+  DB.propostas.forEach(p => {
+    if (p.status === 'Enviada' && p.dataEnvio) { const d = -diasParaHoje(p.dataEnvio); if (d >= CFG.diasPropostaSemResposta) add('comercial', 'media', p.cliente || p.codigo, `📨 Proposta ${p.codigo} enviada há ${d} dias sem resposta`, p.dataEnvio, { page: 'propostas', id: p.id }); }
+  });
+  DB.crm.forEach(e => {
+    if (e.status === 'Inativo') return;
+    if (e.proximoFollowup && e.proximoFollowup < h) add('comercial', 'alta', e.nome, `📞 Follow-up atrasado (${e.contatoNome || 'contato'}) desde ${fmtData(e.proximoFollowup)}`, e.proximoFollowup, { page: 'crm', id: e.id });
+    else if (!e.proximoFollowup && ['Lead', 'Em negociação'].includes(e.status)) {
+      const ult = (e.followups || []).map(f => f.data).sort().pop() || e.dataCriacao;
+      if (ult && ult < addDias(h, -7)) add('comercial', 'media', e.nome, `⚠️ Sem follow-up agendado (último contato: ${fmtData(ult)})`, ult, { page: 'crm', id: e.id });
+    }
+  });
+  return A.sort((a, b) => (a.prioridade === b.prioridade ? a.data.localeCompare(b.data) : a.prioridade === 'alta' ? -1 : 1));
+}
+function resumoDoDia() {
+  const urg = gerarAlertas().filter(a => a.prioridade === 'alta').length;
+  if (urg) toast(`⚠️ ${urg} alerta(s) urgente(s) hoje — clique para ver`, 'warn', 9000, () => nav('alertas'));
+}
+/* ============================ 6. NAVEGAÇÃO / UI ============================ */
+const AC = {};                       // registro de ações (data-act / data-chg)
+const MODAL = { prop: null, proj: null, crm: null };
+let paginaAtual = 'dashboard';
+
+const PAGINAS = {
+  dashboard: { t: 'Dashboard', r: () => renderDashboard() },
+  kanban: { t: 'Kanban', r: () => renderKanban() },
+  propostas: { t: 'Propostas Comerciais', r: () => renderPropostas(), a: [['Nova Proposta', 'novaProposta']] },
+  projetos: { t: 'Projetos em Execução', r: () => renderProjetos() },
+  financeiro: { t: 'Financeiro', r: () => renderFinanceiro(), a: [['Nova Transação', 'novaTransacao']] },
+  terceirizados: { t: 'Terceirizados', r: () => renderTerceirizados(), a: [['Novo Especialista', 'novoTerc']] },
+  entregas: { t: 'Entregas Técnicas', r: () => renderEntregas() },
+  crm: { t: 'CRM / Empresas', r: () => renderCRM(), a: [['Nova Empresa', 'novaEmpresa']] },
+  templates: { t: 'Templates de E-mail', r: () => renderTemplates(), a: [['Novo Template', 'novoTemplate']] },
+  alertas: { t: 'Alertas', r: () => renderAlertas() },
+  backup: { t: 'Backup & Dados', r: () => renderBackup() }
+};
+
+function nav(page) {
+  if (modoClienteAtivo && page !== 'entregas') { toast('🔒 Modo Cliente ativo: apenas Entregas Técnicas.', 'warn'); return; }
+  if (!PAGINAS[page]) return;
+  paginaAtual = page;
+  $$('.page').forEach(p => p.classList.toggle('on', p.id === 'page-' + page));
+  $$('.ni').forEach(b => { const on = b.dataset.page === page; b.classList.toggle('on', on); on ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'); });
+  $('tbtitle').textContent = PAGINAS[page].t;
+  montarTopbar();
+  renderAtual();
+  $('sb').classList.remove('open');
+  window.scrollTo(0, 0);
+}
+
+function renderAtual() {
+  try { PAGINAS[paginaAtual].r(); } catch (e) { console.error('Erro ao renderizar', paginaAtual, e); toast('Erro ao desenhar a tela: ' + e.message, 'err', 6000); }
+  try { atualizarBadges(); } catch (e) { console.error(e); }
+}
+
+function montarTopbar() {
+  const acoes = modoClienteAtivo ? [] : (PAGINAS[paginaAtual].a || []);
+  $('tbacts').innerHTML = acoes.map(([t, act]) => `<button class="btn bp" data-act="${act}"><i class="ti ti-plus"></i> ${esc(t)}</button>`).join('') +
+    `<button class="btn" data-act="modoCliente" style="background:${modoClienteAtivo ? '#ef4444' : '#f59e0b'};color:#fff;font-weight:600;font-size:12px">${modoClienteAtivo ? '🔒 Sair Modo Cliente' : '🔓 Ativar Modo Cliente'}</button>`;
+  $$('.ni').forEach(b => b.classList.toggle('hidden', modoClienteAtivo && b.dataset.page !== 'entregas'));
+  $$('.ngrp').forEach(g => g.classList.toggle('hidden', modoClienteAtivo));
+  $('apill').classList.toggle('hidden', modoClienteAtivo);
+}
+
+function atualizarBadges() {
+  const al = gerarAlertas(), urg = al.filter(a => a.prioridade === 'alta').length, h = hojeISO();
+  const b = $('bdot'); b.style.display = urg ? 'inline-block' : 'none'; b.textContent = urg;
+  $('acount').textContent = urg + ' alerta(s)';
+  const f = DB.crm.filter(e => e.proximoFollowup && e.proximoFollowup <= h && e.status !== 'Inativo').length;
+  const c = $('crm-badge'); c.style.display = f ? 'inline-block' : 'none'; c.textContent = f;
+}
+
+/* Modais */
+function abrirModal(id) {
+  $('ov').style.display = 'flex'; $('ov').setAttribute('aria-hidden', 'false');
+  const m = $(id); m.style.display = 'block';
+  setTimeout(() => { const i = m.querySelector('input:not([type=hidden]):not([readonly]):not([type=checkbox]),select,textarea'); if (i) i.focus(); }, 50);
+}
+function fecharModal() {
+  $('ov').style.display = 'none'; $('ov').setAttribute('aria-hidden', 'true');
+  $$('.modal').forEach(m => m.style.display = 'none');
+  MODAL.prop = MODAL.proj = MODAL.crm = null;
+}
+const modalAberto = () => $$('.modal').some(m => m.style.display === 'block');
+
+/* Ações genéricas */
+Object.assign(AC, {
+  nav: d => nav(d.page),
+  fechar: () => fecharModal(),
+  menu: () => $('sb').classList.toggle('open'),
+  sair: () => { if (!confirm('Sair do sistema?')) return; try { localStorage.removeItem(LS_GH); } catch (e) { } location.reload(); },
+  recarregar: () => carregarDB(),
+  modoCliente: () => toggleModoCliente()
+});
+
+function preencherSelects() {
+  const set = (id, h) => { const e = $(id); if (e) e.innerHTML = h; };
+  set('propst', opts(ST_PROP, 'Todos status')); set('prop-status', opts(ST_PROP));
+  set('pfst', opts(ST_PROJ, 'Todos status')); set('pstatus', opts(ST_PROJ));
+  set('pfpg', opts(ST_PGTO, 'Todos pagamentos')); set('kfpgto', opts(ST_PGTO, 'Todos pagamentos')); set('ppgto', opts(ST_PGTO));
+  set('ffcat', opts(CAT_FIN, 'Todas categorias')); set('fcat', opts(CAT_FIN));
+  set('tdisc', opts(DISCIPLINAS));
+  set('crm-status-filter', opts(ST_CRM, 'Todos os status')); set('crm-status', opts(ST_CRM));
+  set('crm-segmento-filter', opts(SEGMENTOS, 'Todos os segmentos')); set('crm-segmento', opts(SEGMENTOS));
+}
+/* mantém a seleção atual ao repopular selects dinâmicos */
+function repopular(id, html) { const e = $(id); if (!e) return; const v = e.value; e.innerHTML = html; if ([...e.options].some(o => o.value === v)) e.value = v; }
+const clientesConhecidos = () => [...new Set([...DB.crm.map(e => e.nome), ...DB.propostas.map(p => p.cliente), ...DB.projetos.map(p => p.cliente)].filter(Boolean))].sort((a, b) => a.localeCompare(b));
+
+/* ============================ 7. PÁGINAS ============================ */
+/* ---------- Dashboard ---------- */
+const _charts = {}; let _dlReg = false;
+function grafico(id, cfg) {
+  if (typeof Chart === 'undefined') return;
+  if (window.ChartDataLabels && !_dlReg) { Chart.register(window.ChartDataLabels); _dlReg = true; }
+  const c = $(id); if (!c) return;
+  if (_charts[id]) _charts[id].destroy();
+  try { _charts[id] = new Chart(c, cfg); } catch (e) { console.error('Gráfico', id, e); }
+}
+const moedaCurta = v => 'R$ ' + (Math.abs(v) >= 1000 ? (v / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' mil' : v);
+const kpi = (cls, t, v, s, page) => `<div class="kpi ${cls}" data-act="nav" data-page="${page}"><div class="kpi-t">${esc(t)}</div><div class="kpi-v">${v}</div><div class="kpi-s">${s}</div></div>`;
+
+function renderDashboard() {
+  const h = hojeISO(), rec = somaFin('entrada'), cst = somaFin('saida');
+  const parc = parcelasAReceber(), aReceber = soma(parc, x => x.parc.valor), venc = parc.filter(x => x.atrasada).length;
+  const rep = repassesPendentes().filter(r => r.pend > 0).sort((a, b) => b.pend - a.pend), aRep = soma(rep, r => r.pend);
+  const rua = DB.propostas.filter(p => ['Em elaboração', 'Enviada'].includes(p.status));
+  const urg = gerarAlertas().filter(a => a.prioridade === 'alta').length;
+  $('kpis').innerHTML = [
+    kpi('gn', 'Receita realizada', moeda(rec), `Saldo em caixa: ${moeda(rec - cst)}`, 'financeiro'),
+    kpi('', 'A receber', moeda(aReceber), venc ? `⚠️ ${venc} parcela(s) vencida(s)` : `${parc.length} parcela(s) previstas`, 'financeiro'),
+    kpi('rd', 'A repassar (terceiros)', moeda(aRep), `${rep.length} repasse(s) pendente(s)`, 'financeiro'),
+    kpi('am', 'Propostas em negociação', rua.length, `Potencial: ${moeda(soma(rua, p => p.valor))}`, 'propostas'),
+    kpi('pu', 'Projetos ativos', DB.projetos.filter(ehAtivo).length, `${DB.projetos.length} no total`, 'projetos'),
+    kpi(urg ? 'rd' : 'gn', 'Alertas urgentes', urg, urg ? 'Requer atenção' : 'Tudo em dia', 'alertas')
+  ].join('');
+
+  const pr = DB.crm; const hoje = h;
+  $('dash-crm-leads').textContent = pr.filter(e => e.status === 'Lead').length;
+  $('dash-crm-negociacao').textContent = pr.filter(e => e.status === 'Em negociação').length;
+  $('dash-crm-clientes').textContent = pr.filter(e => e.status === 'Cliente').length;
+  $('dash-crm-atrasados').textContent = pr.filter(e => e.proximoFollowup && e.proximoFollowup < hoje && e.status !== 'Inativo').length;
+
+  $('pgto-total').textContent = 'Total: ' + moeda(aRep);
+  $('tpgto').innerHTML = rep.map(r => `<tr><td><strong>${esc(r.proj.prop)}</strong><br><small>${esc(r.proj.cliente || '')}</small></td><td>${esc(r.nome)}</td><td>${moeda(r.alocado)}</td><td>${moeda(r.pago)}</td><td class="rd b">${moeda(r.pend)}</td><td><button class="btn bsm bok" data-act="pagarRepasse" data-p="${esc(r.proj.id)}" data-t="${esc(r.tercId)}">Pagar</button></td></tr>`).join('') || '<tr><td colspan="6" class="muted">Nenhum repasse pendente.</td></tr>';
+
+  const prox = DB.projetos.filter(p => ehAtivo(p) && p.entrega && diasParaHoje(p.entrega) <= 30).sort((a, b) => a.entrega.localeCompare(b.entrega));
+  $('tprox').innerHTML = prox.map(p => { const d = diasParaHoje(p.entrega); return `<tr><td><strong>${esc(p.nome || p.prop)}</strong></td><td>${esc(p.cliente || '-')}</td><td>${fmtData(p.entrega)}</td><td class="${d < 0 ? 'rd' : d <= 7 ? 'rd' : ''} b">${d < 0 ? `Atrasado ${-d}d` : d === 0 ? 'Hoje' : d + ' dias'}</td><td>${badge(CLS_PROJ[p.status], p.status)}</td></tr>`; }).join('') || '<tr><td colspan="5" class="muted">Nenhuma entrega crítica.</td></tr>';
+
+  const rk = DB.terceirizados.map(t => ({ t, v: pagoTerc(t) })).filter(x => x.v > 0).sort((a, b) => b.v - a.v).slice(0, 5);
+  $('rk').innerHTML = rk.map((x, i) => `<div class="rk-row"><span>${['🥇', '🥈', '🥉'][i] || '📌'} <strong>${esc(x.t.nome)}</strong> <small>(${esc(x.t.disc)})</small></span><strong>${moeda(x.v)}</strong></div>`).join('') || '<div class="muted">Nenhum pagamento registrado ainda.</div>';
+
+  desenharGraficos(rec, cst);
+}
+
+function desenharGraficos(rec, cst) {
+  const base = { responsive: true, maintainAspectRatio: false };
+  grafico('ch1', { type: 'bar', data: { labels: ['Receitas', 'Custos', 'Resultado'], datasets: [{ data: [rec, cst, rec - cst], backgroundColor: ['#2563eb', '#eab308', '#16a34a'], borderRadius: 6 }] },
+    options: { ...base, layout: { padding: { top: 28 } }, plugins: { legend: { display: false }, datalabels: { display: true, anchor: 'end', align: 'top', formatter: v => moeda(v), font: { weight: 'bold', size: 10 }, color: '#1e293b' }, tooltip: { callbacks: { label: c => moeda(c.parsed.y) } } }, scales: { y: { ticks: { callback: moedaCurta, font: { size: 9 } }, grid: { display: false } }, x: { grid: { display: false } } } } });
+
+  const cores = ['#facc15', '#0284c7', '#a78bfa', '#4ade80', '#dc2626'];
+  grafico('ch2', { type: 'doughnut', data: { labels: ST_PROJ, datasets: [{ data: ST_PROJ.map(s => DB.projetos.filter(p => p.status === s).length), backgroundColor: cores, borderWidth: 2, borderColor: '#fff' }] },
+    options: { ...base, cutout: '62%', plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } }, datalabels: { display: ctx => ctx.dataset.data[ctx.dataIndex] > 0, color: '#fff', font: { weight: 'bold', size: 11 } } } } });
+
+  const porCli = {};
+  DB.projetos.filter(p => p.status !== 'Cancelado').forEach(p => { const c = p.cliente || 'Sem cliente'; porCli[c] = (porCli[c] || 0) + num(p.valor) - custoProjeto(p); });
+  const top = Object.entries(porCli).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  grafico('ch3', { type: 'bar', data: { labels: top.length ? top.map(x => x[0].slice(0, 22)) : ['Sem dados'], datasets: [{ data: top.length ? top.map(x => x[1]) : [0], backgroundColor: ['#a855f7', '#7c3aed', '#6366f1', '#8b5cf6', '#9333ea', '#6d28d9'], borderRadius: 6 }] },
+    options: { ...base, indexAxis: 'y', layout: { padding: { right: 70 } }, plugins: { legend: { display: false }, datalabels: { display: true, anchor: 'end', align: 'right', formatter: v => v ? moeda(v) : '', font: { weight: '600', size: 10 }, color: '#1e293b' } }, scales: { x: { grid: { display: false }, ticks: { callback: moedaCurta } }, y: { grid: { display: false } } } } });
+
+  const ano = String(new Date().getFullYear()), mr = Array(12).fill(0), mc = Array(12).fill(0);
+  DB.financeiro.forEach(f => { if ((f.data || '').slice(0, 4) !== ano) return; const m = +f.data.slice(5, 7) - 1; if (m >= 0 && m < 12) (f.tipo === 'entrada' ? mr : mc)[m] += num(f.valor); });
+  grafico('ch4', { type: 'line', data: { labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], datasets: [
+    { label: 'Receitas', data: mr, borderColor: '#06b6d4', backgroundColor: 'rgba(6,182,212,.1)', fill: true, tension: .35, borderWidth: 2 },
+    { label: 'Custos', data: mc, borderColor: '#eab308', tension: .35, borderWidth: 2 }] },
+    options: { ...base, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }, datalabels: { display: false }, tooltip: { callbacks: { label: c => c.dataset.label + ': ' + moeda(c.parsed.y) } } }, scales: { y: { ticks: { callback: moedaCurta }, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } } });
+
+  grafico('ch5', { type: 'radar', data: { labels: DISCIPLINAS.map(d => d.slice(0, 3)), datasets: [{ label: 'Projetos', data: DISCIPLINAS.map(d => DB.projetos.filter(p => (p.disciplinas || []).includes(d)).length), backgroundColor: 'rgba(99,102,241,.2)', borderColor: '#6366f1', pointBackgroundColor: '#6366f1', borderWidth: 2 }] },
+    options: { ...base, plugins: { legend: { display: false }, datalabels: { display: ctx => ctx.dataset.data[ctx.dataIndex] > 0, font: { weight: 'bold', size: 10 }, color: '#6366f1' } }, scales: { r: { beginAtZero: true, ticks: { stepSize: 1, showLabelBackdrop: false, font: { size: 10 } }, pointLabels: { font: { size: 11, weight: '600' } } } } } });
+}
+AC.pagarRepasse = d => baixarRepasse(d.p, d.t);
+
+/* ---------- Kanban (com arrastar e soltar) ---------- */
+const COLS_KB = [
+  { id: 'em_elaboracao', t: '📝 Propostas em elaboração', tipo: 'proposta', st: 'Em elaboração' },
+  { id: 'enviada', t: '📤 Enviadas / aguardando', tipo: 'proposta', st: 'Enviada' },
+  { id: 'aprovada', t: '✅ Aprovadas (a converter)', tipo: 'proposta', st: 'Aprovada' },
+  { id: 'Pendente', t: '⏳ Projetos pendentes', tipo: 'projeto' },
+  { id: 'Em andamento', t: '🏗️ Em andamento', tipo: 'projeto' },
+  { id: 'Aguardando aprovação', t: '🔍 Aguardando aprovação', tipo: 'projeto' },
+  { id: 'Concluído', t: '🏁 Concluídos', tipo: 'projeto' }
+];
+function renderKanban() {
+  repopular('kfterc', opts(DB.terceirizados.map(t => [t.id, `${t.nome} (${t.disc})`]), 'Todos terceirizados'));
+  repopular('kfcli', opts(clientesConhecidos(), 'Todos clientes'));
+  const s = val('ksearch').toLowerCase(), fcli = val('kfcli'), fpg = val('kfpgto'), fter = val('kfterc');
+  $('kanban').innerHTML = COLS_KB.map(col => {
+    let cards;
+    if (col.tipo === 'proposta') {
+      let L = DB.propostas.filter(p => p.status === col.st && (col.st !== 'Aprovada' || !p.projetoId));
+      if (s) L = L.filter(p => `${p.codigo} ${p.cliente} ${p.objeto}`.toLowerCase().includes(s));
+      if (fcli) L = L.filter(p => p.cliente === fcli);
+      cards = L.map(p => `<div class="kb-card" draggable="true" data-tipo="proposta" data-id="${esc(p.id)}" data-act="abrirProposta" style="border-left:4px solid #6366f1">
+        <div class="kb-card-t" style="display:flex;justify-content:space-between"><span style="color:#6366f1">📄 ${esc(p.codigo || 'Sem código')}</span><span class="tag" style="background:#e0e7ff;color:#4338ca">PROPOSTA</span></div>
+        <div class="kb-card-c b" style="font-size:13px;margin:6px 0">${esc(p.cliente || 'Sem cliente')}</div>
+        <div class="small muted" style="margin-bottom:6px">${esc(p.objeto || '')}</div>
+        <div class="kb-card-f"><strong style="color:#6366f1">${moeda(p.valor)}</strong><span class="muted">⏰ ${esc(p.prazo || '-')} dias</span></div>
+        ${p.dataEnvio ? `<div class="small gn" style="margin-top:4px">📤 Enviada em ${fmtData(p.dataEnvio)}</div>` : ''}</div>`);
+    } else {
+      let L = DB.projetos.filter(p => p.status === col.id);
+      if (s) L = L.filter(p => `${p.prop} ${p.cliente} ${p.nome}`.toLowerCase().includes(s));
+      if (fcli) L = L.filter(p => p.cliente === fcli);
+      if (fpg) L = L.filter(p => p.pgto === fpg);
+      if (fter) L = L.filter(p => (p.terceirizados_alocados || []).some(t => t.id === fter));
+      cards = L.map(p => {
+        const d = p.entrega ? diasParaHoje(p.entrega) : null, t = totaisEntregas(p), cor = p.pgto === 'Pago' ? '#10b981' : p.pgto === 'Atrasado' ? '#ef4444' : '#f59e0b';
+        return `<div class="kb-card" draggable="true" data-tipo="projeto" data-id="${esc(p.id)}" data-act="editarProjeto" style="border-left:4px solid ${cor}">
+        <div class="kb-card-t" style="display:flex;justify-content:space-between"><span>🏗️ ${esc(p.prop || 'Sem código')}</span>${badge(CLS_PGTO[p.pgto], p.pgto)}</div>
+        <div class="kb-card-c b" style="font-size:13px;margin:6px 0">${esc(p.cliente || 'Sem cliente')}</div>
+        <div class="small muted" style="margin-bottom:6px">${esc(p.nome || '')}</div>
+        <div class="mini"><i style="width:${t.pct}%"></i></div>
+        <div class="kb-card-f" style="margin-top:6px"><strong>${moeda(p.valor)}</strong><span class="muted">${d === null ? '📅 Sem prazo' : d < 0 ? '⚠️ Atrasado' : '⏰ ' + d + ' dias'} · ${t.pct}%</span></div></div>`;
+      });
+    }
+    const roxo = col.tipo === 'proposta';
+    return `<div class="kb-col" data-col="${esc(col.id)}" data-tipo="${col.tipo}"><div class="kb-col-h"><span>${col.t}</span><strong style="background:${roxo ? '#e0e7ff' : '#dbeafe'};color:${roxo ? '#4338ca' : '#1e40af'};padding:2px 10px;border-radius:12px;font-size:13px">${cards.length}</strong></div><div class="kb-cards">${cards.join('') || '<div class="muted tc" style="padding:20px">Nenhum item</div>'}</div></div>`;
+  }).join('');
+}
+function iniciarKanbanDnD() {
+  const kb = $('kanban');
+  kb.addEventListener('dragstart', e => { const c = e.target.closest('.kb-card'); if (!c) return; e.dataTransfer.setData('text/plain', c.dataset.tipo + '|' + c.dataset.id); e.dataTransfer.effectAllowed = 'move'; c.classList.add('drag'); });
+  kb.addEventListener('dragend', () => { $$('.kb-card.drag').forEach(c => c.classList.remove('drag')); $$('.kb-col.over').forEach(c => c.classList.remove('over')); });
+  kb.addEventListener('dragover', e => { const col = e.target.closest('.kb-col'); if (col) { e.preventDefault(); $$('.kb-col.over').forEach(c => c !== col && c.classList.remove('over')); col.classList.add('over'); } });
+  kb.addEventListener('drop', e => {
+    e.preventDefault(); const col = e.target.closest('.kb-col'); if (!col) return;
+    const [tipo, id] = (e.dataTransfer.getData('text/plain') || '').split('|');
+    if (tipo !== col.dataset.tipo) return toast('Propostas e projetos têm colunas separadas.', 'warn');
+    if (tipo === 'proposta') mudarStatusProposta(DB.propostas.find(p => p.id === id), COLS_KB.find(c => c.id === col.dataset.col).st);
+    else mudarStatusProjeto(projPorId(id), col.dataset.col);
+  });
+}
+/* ---------- Alocação de terceirizados (reutilizada em Proposta e Projeto) ---------- */
+const alocLista = ctx => (ctx === 'prop' ? MODAL.prop : MODAL.proj).terceirizados_alocados;
+function htmlAlocacao(ctx) {
+  return `<div class="aloc"><label class="lbl"><i class="ti ti-users"></i> Alocar especialista técnico</label>
+    <div class="aloc-add"><select id="${ctx}-aloc-sel" aria-label="Especialista"></select><input id="${ctx}-aloc-custo" type="number" min="0" step="0.01" placeholder="Custo R$" aria-label="Custo"><button type="button" class="btn bp bsm" data-act="alocAdd" data-ctx="${ctx}">Vincular</button></div>
+    <div id="${ctx}-aloc-lista" class="aloc-lista"></div>
+    <div class="fg"><label>Custo consolidado de terceiros (R$)</label><input id="${ctx}-aloc-total" readonly class="ro rd"></div></div>`;
+}
+function alocRender(ctx) {
+  $(ctx + '-aloc-sel').innerHTML = '<option value="">— Selecione um especialista —</option>' + DB.terceirizados.map(t => `<option value="${esc(t.id)}">${esc(t.nome)} (${esc(t.disc)})</option>`).join('');
+  const L = alocLista(ctx);
+  $(ctx + '-aloc-lista').innerHTML = L.length ? L.map((a, i) => `<div class="aloc-item"><span><strong>${esc(nomeTerc(a.id, a.nome))}</strong> <small>${esc((tercPorId(a.id) || {}).disc || '')}</small></span><span class="rd">${moeda(a.custo)}</span><button type="button" class="btn bsm bdanger" data-act="alocDel" data-ctx="${ctx}" data-i="${i}" aria-label="Remover"><i class="ti ti-trash"></i></button></div>`).join('') : '<div class="muted">Nenhum alocado.</div>';
+  $(ctx + '-aloc-total').value = soma(L, a => a.custo);
+  if (ctx === 'prop') atualizarSugestao(); else atualizarMargemModal();
+}
+AC.alocAdd = d => {
+  const id = val(d.ctx + '-aloc-sel'), custo = num(val(d.ctx + '-aloc-custo')), L = alocLista(d.ctx);
+  if (!id) return toast('Selecione um especialista.', 'warn');
+  if (L.some(x => x.id === id)) return toast('Especialista já alocado.', 'warn');
+  L.push({ id, custo, nome: nomeTerc(id) }); setv(d.ctx + '-aloc-custo', ''); alocRender(d.ctx);
+};
+AC.alocDel = d => { alocLista(d.ctx).splice(+d.i, 1); alocRender(d.ctx); };
+
+/* ---------- Propostas ---------- */
+function calcularPrecoVenda() {
+  const c = num(val('calc-custo')), pv = precoVenda(c, num(val('calc-imposto')), num(val('calc-adm')), num(val('calc-lucro')));
+  $('calc-resultado').textContent = c === 0 ? 'Aguardando dados...' : moeda(pv);
+}
+function atualizarSugestao() {
+  const el = $('prop-sugestao'); if (!el || !MODAL.prop) return;
+  const custo = soma(MODAL.prop.terceirizados_alocados, t => t.custo);
+  if (custo <= 0) { el.classList.add('hidden'); return; }
+  const imp = num(val('calc-imposto')), adm = num(val('calc-adm')), lu = num(val('calc-lucro')), pv = precoVenda(custo, imp, adm, lu);
+  el.classList.remove('hidden');
+  el.innerHTML = `<span>💡 Preço sugerido (impostos ${imp}% + fixos ${adm}% + lucro ${lu}%): <b>${moeda(pv)}</b></span><button type="button" class="btn bsm bp" data-act="aplicarSugestao" data-v="${pv.toFixed(2)}">Aplicar</button>`;
+}
+AC.aplicarSugestao = d => setv('prop-valor', d.v);
+
+function renderPropostas() {
+  const s = val('propsearch').toLowerCase(), fst = val('propst');
+  let L = DB.propostas.slice().sort((a, b) => (b.dataCriacao || '').localeCompare(a.dataCriacao || ''));
+  if (s) L = L.filter(p => `${p.codigo} ${p.cliente} ${p.objeto}`.toLowerCase().includes(s));
+  if (fst) L = L.filter(p => p.status === fst);
+  $('tabela-propostas-corpo').innerHTML = L.map(p => {
+    const conv = p.projetoId && projPorId(p.projetoId);
+    return `<tr><td><strong>${esc(p.codigo || '-')}</strong></td><td>${esc(p.cliente || '-')}</td><td class="small mxw">${esc(p.objeto || '-')}</td><td>${moeda(p.valor)}</td><td>${esc(p.prazo || '-')} dias</td><td>${badge(CLS_PROP[p.status], p.status)}${conv ? ' <span title="Projeto criado">🔗</span>' : ''}</td><td>${fmtData(p.dataEnvio)}</td>
+      <td class="tr"><button class="btn bsm bedit" data-act="abrirProposta" data-id="${esc(p.id)}" aria-label="Editar"><i class="ti ti-edit"></i></button>
+      ${p.status === 'Aprovada' && !conv ? `<button class="btn bsm bok" data-act="converterRapido" data-id="${esc(p.id)}" title="Converter em projeto"><i class="ti ti-arrow-right"></i> Projeto</button>` : ''}
+      <button class="btn bsm bdanger" data-act="deletarProposta" data-id="${esc(p.id)}" aria-label="Excluir"><i class="ti ti-trash"></i></button></td></tr>`;
+  }).join('') || '<tr><td colspan="8" class="tc muted" style="padding:24px">Nenhuma proposta.</td></tr>';
+  $('prop-sum').innerHTML = `<div>${L.length} proposta(s)</div><div>Valor total: <strong>${moeda(soma(L, p => p.valor))}</strong></div>`;
+}
+
+const CHECKLIST = [
+  ['📋 O cliente possui ART/RRT anterior?', 'Se NÃO, avaliar acréscimo de ~15%.'], ['🏗️ O local possui infraestrutura?', 'Local remoto exige diárias.'],
+  ['💰 O valor cobre todos os custos?', 'Definir reembolsos.'], ['⏰ O prazo considera o tempo de aprovação do cliente?', 'Atraso do cliente não altera prazo.'],
+  ['📄 ART em nome da TCL?', 'Taxa adicional.'], ['🔍 Existe memorial descritivo formal?', 'Sem TR, validar escopo por e-mail.'],
+  ['🛡️ Seguro RC profissional?', '~1,5% do contrato.'], ['⚖️ Contrato global ou H/H?', 'H/H exige controle de horas.']
+];
+function renderChecklist() {
+  const c = $('checklist-proposta-container'), R = MODAL.prop.checklist || {};
+  c.classList.remove('hidden');
+  c.innerHTML = '<div class="infonote" style="margin-bottom:10px"><strong>⚠️ Checklist de blindagem</strong> — respostas ficam salvas na proposta.</div>' +
+    CHECKLIST.map(([q, imp], i) => `<div style="background:#fff;border:1px solid #e2e8f0;padding:10px;border-radius:6px;margin-bottom:8px"><p class="b small">${i + 1}. ${q}</p><p class="small muted">💡 ${imp}</p><div style="display:flex;gap:12px;font-size:11px">${[['sim', '✅ Sim'], ['nao', '❌ Não'], ['pendente', '❓ Verificar']].map(([v, l]) => `<label><input type="radio" name="check_${i}" value="${v}" data-chg="checkResp" data-i="${i}" ${R[i] === v ? 'checked' : ''} style="width:auto"> ${l}</label>`).join('')}</div></div>`).join('') + '<div id="check-resumo" class="small b"></div>';
+  resumoChecklist();
+}
+function resumoChecklist() {
+  const R = MODAL.prop.checklist || {}, nao = CHECKLIST.filter((_, i) => R[i] === 'nao'), pend = CHECKLIST.filter((_, i) => R[i] === 'pendente' || !R[i]).length;
+  const e = $('check-resumo'); if (e) e.innerHTML = (nao.length ? `<span class="rd">⚠️ ${nao.length} ponto(s) de atenção: ${nao.map(x => esc(x[1])).join(' · ')}</span><br>` : '') + `<span class="muted">${pend} item(ns) sem resposta</span>`;
+}
+AC.checkResp = (d, el) => { MODAL.prop.checklist[+d.i] = el.value; resumoChecklist(); };
+AC.checklist = () => renderChecklist();
+
+function abrirProposta(id) {
+  const p = id ? DB.propostas.find(x => x.id === id) : null;
+  MODAL.prop = { terceirizados_alocados: clone(p ? p.terceirizados_alocados || [] : []), checklist: clone((p && p.checklist) || {}) };
+  setv('propid', p ? p.id : '');
+  setv('prop-codigo', p ? p.codigo : codigoProposta()); setv('prop-cliente', p ? p.cliente : ''); setv('prop-cidade', p ? p.cidade : '');
+  setv('prop-valor', p ? p.valor : ''); setv('prop-prazo', p ? p.prazo : '90'); setv('prop-status', p ? p.status : 'Em elaboração');
+  setv('prop-objeto', p ? p.objeto : ''); setv('prop-escopo', p ? p.escopo : ''); setv('prop-premissas', p ? p.premissas : ''); setv('prop-fora-escopo', p ? p.foraEscopo : '');
+  setv('prop-pagamento', p ? p.pagamento : '25% sinal + 40% intermediário + 35% final');
+  setv('prop-data-envio', p ? p.dataEnvio : ''); setv('prop-data-criacao', p ? p.dataCriacao : hojeISO());
+  $('dl-clientes').innerHTML = clientesConhecidos().map(c => `<option value="${esc(c)}">`).join('');
+  $('aloc-proposta').innerHTML = htmlAlocacao('prop'); alocRender('prop');
+  $('checklist-proposta-container').classList.add('hidden'); $('proposta-texto-preview').classList.add('hidden');
+  if (p && Object.keys(MODAL.prop.checklist).length) renderChecklist();
+  $('btn-converter').textContent = p && p.projetoId && projPorId(p.projetoId) ? '🔗 Abrir projeto' : '✅ Converter em projeto';
+  abrirModal('mproposta');
+}
+AC.abrirProposta = d => abrirProposta(d.id);
+AC.novaProposta = () => abrirProposta();
+
+function lerFormProposta() {
+  return {
+    id: val('propid') || uid('prop'), codigo: val('prop-codigo').trim(), cliente: val('prop-cliente').trim(), cidade: val('prop-cidade').trim(),
+    valor: num(val('prop-valor')), prazo: val('prop-prazo'), status: val('prop-status'), objeto: val('prop-objeto').trim(),
+    escopo: val('prop-escopo'), premissas: val('prop-premissas'), foraEscopo: val('prop-fora-escopo'), pagamento: val('prop-pagamento'),
+    terceirizados_alocados: clone(MODAL.prop.terceirizados_alocados), custoTerceirizados: soma(MODAL.prop.terceirizados_alocados, t => t.custo),
+    dataEnvio: val('prop-data-envio'), dataCriacao: val('prop-data-criacao'), checklist: clone(MODAL.prop.checklist)
+  };
+}
+function gravarPropostaDoForm() {
+  const n = lerFormProposta();
+  if (!n.cliente || !n.objeto) { toast('Preencha Cliente e Objeto.', 'warn'); return null; }
+  if (DB.propostas.some(p => p.codigo === n.codigo && p.id !== n.id) && !confirm(`Já existe outra proposta com o código ${n.codigo}. Salvar mesmo assim?`)) return null;
+  const ex = DB.propostas.find(p => p.id === n.id), ant = ex ? ex.status : null;
+  if (n.status === 'Enviada' && !n.dataEnvio) { n.dataEnvio = hojeISO(); setv('prop-data-envio', n.dataEnvio); }
+  let p;
+  if (ex) p = Object.assign(ex, n); else { p = n; DB.propostas.push(p); }
+  setv('propid', p.id);
+  sincronizarCRMProposta(p, ant);
+  return p;
+}
+AC.salvarProposta = async () => { const p = gravarPropostaDoForm(); if (!p) return; fecharModal(); await salvarDB(); };
+AC.deletarProposta = d => {
+  const p = DB.propostas.find(x => x.id === d.id); if (!p) return;
+  if (!confirm(`Excluir a proposta ${p.codigo}?` + (p.projetoId ? '\n\nO projeto já criado a partir dela NÃO será excluído.' : ''))) return;
+  DB.propostas = DB.propostas.filter(x => x.id !== d.id); salvarDB();
+};
+
+const MAPA_DISC = { 'mecânica': 'Mecânica', 'mecanica': 'Mecânica', 'estrutura metálica': 'Estrutura metálica', 'estrutura metalica': 'Estrutura metálica', 'arquitetura': 'Arquitetura', 'arquitetônico': 'Arquitetura', 'arquitetonico': 'Arquitetura', 'tubulação': 'Tubulação', 'tubulacao': 'Tubulação', 'civil': 'Civil', 'fundação': 'Civil', 'fundacao': 'Civil', 'elétrica': 'Elétrica', 'eletrica': 'Elétrica', 'automação': 'Automação', 'automacao': 'Automação', 'hidráulica': 'Hidráulica', 'hidraulica': 'Hidráulica' };
+function detectarDisciplinas(p) {
+  const found = new Set(), esco = ((p.escopo || '') + ' ' + (p.objeto || '')).toLowerCase();
+  Object.entries(MAPA_DISC).forEach(([k, v]) => { if (esco.includes(k)) found.add(v); });
+  (p.terceirizados_alocados || []).forEach(a => { const t = tercPorId(a.id); if (t && t.disc) found.add(t.disc); });
+  return DISCIPLINAS.filter(d => found.has(d)).concat([...found].filter(d => !DISCIPLINAS.includes(d)));
+}
+const entregaPadrao = (d, prev) => ({ itens: [{ id: uid('e'), desc: 'Entrega Final - ' + d, prev: prev || '', entregue: false, dataReal: '', obs: 'Item gerado automaticamente. Edite conforme necessário.' }] });
+
+function converterProposta(p) {
+  if (p.projetoId && projPorId(p.projetoId)) { fecharModal(); nav('projetos'); abrirProjeto(p.projetoId); return; }
+  if (p.status !== 'Aprovada' && !confirm('Proposta não está Aprovada. Converter mesmo assim?')) return;
+  const disc = detectarDisciplinas(p), ini = hojeISO();
+  const proj = {
+    id: uid('p'), prop: p.codigo, proposta: p.codigo, propostaId: p.id, cliente: p.cliente, nome: p.objeto, valor: p.valor,
+    entrega: addDias(ini, num(p.prazo) || 90), dataInicio: ini, dataEmissao: ini, status: 'Pendente', pgto: 'Pendente',
+    custo: p.custoTerceirizados || 0, terceirizados_alocados: clone(p.terceirizados_alocados || []), disciplinas: disc, cidade: p.cidade, prazo_dias: p.prazo,
+    escopo_detalhado: p.escopo, premissas: p.premissas, fora_escopo: p.foraEscopo, obs: 'Convertido da proposta ' + p.codigo, entregas: {}, obsEntregas: '', parcelas: []
+  };
+  disc.forEach(d => { proj.entregas[d] = entregaPadrao(d, proj.entrega); });
+  proj.parcelas = gerarParcelas(proj, p.pagamento);
+  DB.projetos.push(proj); p.projetoId = proj.id; p.status = 'Aprovada';
+  sincronizarCRMProposta(p, 'Aprovada');
+  fecharModal();
+  salvarDB().then(() => {
+    toast(`Projeto criado: ${disc.length} disciplina(s) e ${proj.parcelas.length} parcela(s) de recebimento geradas.`, 'ok', 6000);
+    nav('projetos');
+    if (!disc.length) { toast('Defina as disciplinas do projeto.', 'warn'); abrirProjeto(proj.id); }
+  });
+}
+AC.propConverter = () => { const p = gravarPropostaDoForm(); if (p) converterProposta(p); };
+AC.converterRapido = d => converterProposta(DB.propostas.find(x => x.id === d.id));
+
+function textoProposta() {
+  const p = lerFormProposta(), hoje = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+  return `PROPOSTA TÉCNICA COMERCIAL - ${p.codigo}\n${CFG.empresa.nome}\n${'='.repeat(60)}\n\n1. SUMÁRIO\n${p.objeto}${p.cidade ? ', em ' + p.cidade : ''}.\n\n2. ESCOPO\n${p.escopo}\n\n3. PREMISSAS\n${p.premissas}\n\n4. FORA DE ESCOPO\n${p.foraEscopo}\n\n5. PRAZO: ${p.prazo} dias\n6. VALOR: ${moeda(p.valor)}\n7. CONDIÇÕES DE PAGAMENTO: ${p.pagamento}\n8. VALIDADE DA PROPOSTA: ${CFG.validadePropostaDias} dias\n\nEmitido em: ${hoje}\n${CFG.empresa.resp} | ${CFG.empresa.fone}`;
+}
+AC.propTexto = () => { $('proposta-texto-conteudo').textContent = textoProposta(); $('proposta-texto-preview').classList.remove('hidden'); };
+AC.propCopiar = () => copiarTexto(textoProposta()).then(() => toast('Texto da proposta copiado.', 'ok')).catch(() => toast('Não foi possível copiar.', 'err'));
+
+function htmlPDFProposta(p) {
+  const parc = gerarParcelas({ valor: p.valor }, p.pagamento);
+  const sec = (t, c) => c && c.trim() ? `<h3 style="font-size:13px;color:#1a365d;margin:18px 0 6px;border-bottom:1px solid #e2e8f0;padding-bottom:3px">${t}</h3><div style="font-size:11.5px;white-space:pre-wrap">${esc(c)}</div>` : '';
+  return `<div style="padding:10px 20px;font-family:Inter,Arial,sans-serif;color:#1e293b;line-height:1.5;background:#fff;width:754px">
+    <div style="display:flex;justify-content:space-between;border-bottom:2px solid #2b6cb0;padding-bottom:14px;margin-bottom:20px"><div><h1 style="margin:0;font-size:20px;color:#1a365d">${esc(CFG.empresa.nome)}</h1><p style="margin:2px 0 0;font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase">Documento Técnico-Comercial — ${esc(CFG.empresa.doc)}</p></div><div><span style="font-size:12px;font-weight:700;color:#fff;background:#1a365d;padding:6px 14px;border-radius:4px;font-family:monospace">${esc(p.codigo)}</span></div></div>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #2b6cb0;padding:14px;margin-bottom:10px;font-size:12px"><div><b>Contratante:</b> ${esc(p.cliente)}</div><div><b>Localidade:</b> ${esc(p.cidade || '—')}</div><div><b>Objeto:</b> ${esc(p.objeto)}</div><div><b>Data:</b> ${new Date().toLocaleDateString('pt-BR')}</div></div>
+    ${sec('1. Escopo técnico e entregáveis', p.escopo)}${sec('2. Premissas técnicas', p.premissas)}${sec('3. Fora de escopo', p.foraEscopo)}
+    <h3 style="font-size:13px;color:#1a365d;margin:18px 0 6px;border-bottom:1px solid #e2e8f0;padding-bottom:3px">4. Prazo e investimento</h3>
+    <div style="font-size:12px">Prazo de execução: <b>${esc(p.prazo)} dias</b> · Valor global: <b>${moeda(p.valor)}</b></div>
+    <table style="width:100%;border-collapse:collapse;font-size:11.5px;margin-top:8px;min-width:0"><tr style="background:#f1f5f9"><th style="text-align:left;padding:6px;border:1px solid #e2e8f0">Parcela</th><th style="padding:6px;border:1px solid #e2e8f0">%</th><th style="text-align:right;padding:6px;border:1px solid #e2e8f0">Valor</th></tr>${parc.map(x => `<tr><td style="padding:6px;border:1px solid #e2e8f0">${esc(x.desc)}</td><td style="padding:6px;border:1px solid #e2e8f0;text-align:center">${x.pct}%</td><td style="padding:6px;border:1px solid #e2e8f0;text-align:right">${moeda(x.valor)}</td></tr>`).join('')}</table>
+    <p style="font-size:10.5px;color:#64748b;margin-top:8px">Validade da proposta: ${CFG.validadePropostaDias} dias.</p>
+    <div style="margin-top:50px;font-size:12px"><div style="border-top:1px solid #1e293b;width:260px;padding-top:4px"><b>${esc(CFG.empresa.resp)}</b><br>${esc(CFG.empresa.nome)}<br>${esc(CFG.empresa.fone)}</div></div></div>`;
+}
+AC.propPDF = async () => {
+  const p = lerFormProposta(); if (!p.cliente || !p.objeto) return toast('Preencha Cliente e Objeto.', 'warn');
+  toast('Gerando PDF…');
+  try { await carregarScript('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js'); } catch (e) { return toast('Não foi possível carregar o gerador de PDF (verifique a internet).', 'err'); }
+  const w = document.createElement('div'); w.style.cssText = 'position:fixed;left:-9999px;top:0;width:794px'; w.innerHTML = htmlPDFProposta(p); document.body.appendChild(w);
+  try { await html2pdf().set({ margin: [10, 8, 12, 8], filename: `${p.codigo || 'proposta'}.pdf`, image: { type: 'jpeg', quality: .95 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).from(w.firstElementChild).save(); toast('PDF gerado.', 'ok'); }
+  catch (e) { console.error(e); toast('Erro ao gerar o PDF.', 'err'); } finally { w.remove(); }
+};
+
+/* ---------- Projetos ---------- */
+function renderProjetos() {
+  repopular('pfcl', opts(clientesConhecidos(), 'Todos clientes'));
+  const s = val('psearch').toLowerCase(), fst = val('pfst'), fpg = val('pfpg'), fcl = val('pfcl');
+  const L = DB.projetos.filter(p => (!s || `${p.prop} ${p.cliente} ${p.nome}`.toLowerCase().includes(s)) && (!fst || p.status === fst) && (!fpg || p.pgto === fpg) && (!fcl || p.cliente === fcl));
+  $('tabela-projetos-corpo').innerHTML = L.map(p => {
+    const vB = num(p.valor), vT = custoProjeto(p), m = vB - vT, t = totaisEntregas(p);
+    return `<tr><td><strong>${esc(p.prop || '-')}</strong></td><td>${esc(p.cliente || '-')}</td><td class="small mxw">${esc(p.nome || '-')}</td><td>${moeda(vB)}</td><td>${moeda(vT)}</td><td class="${m >= 0 ? 'gn' : 'rd'} b">${moeda(m)} <small>(${vB ? Math.round(m / vB * 100) : 0}%)</small></td><td>${fmtData(p.entrega)}</td>
+      <td>${badge(CLS_PROJ[p.status], p.status)}<div class="mini" title="${t.pct}% das entregas"><i style="width:${t.pct}%"></i></div></td><td>${badge(CLS_PGTO[p.pgto], p.pgto)}</td>
+      <td class="tr"><button class="btn bsm bedit" data-act="editarProjeto" data-id="${esc(p.id)}" aria-label="Editar"><i class="ti ti-edit"></i></button> <button class="btn bsm bdanger" data-act="deletarProjeto" data-id="${esc(p.id)}" aria-label="Excluir"><i class="ti ti-trash"></i></button></td></tr>`;
+  }).join('') || '<tr><td colspan="10" class="tc muted" style="padding:24px">Nenhum projeto. Projetos nascem de propostas aprovadas.</td></tr>';
+  const B = soma(L, p => p.valor), T = soma(L, custoProjeto);
+  $('proj-sum').innerHTML = `<div>${L.length} projeto(s)</div><div>Bruto: <strong>${moeda(B)}</strong> | Terceiros: <strong>${moeda(T)}</strong> | Margem: <strong>${moeda(B - T)}</strong></div>`;
+}
+
+function atualizarMargemModal() {
+  if (!MODAL.proj) return;
+  const custo = soma(MODAL.proj.terceirizados_alocados, t => t.custo);
+  setv('pcusto', moeda(custo)); setv('pmargem', moeda(num(val('pvalor')) - custo));
+  atualizarSomaParcelas();
+}
+function atualizarSomaParcelas() {
+  const e = $('parc-soma'); if (!e || !MODAL.proj) return;
+  const s = soma(MODAL.proj.parcelas || [], x => x.valor), dif = Math.round((num(val('pvalor')) - s) * 100) / 100;
+  e.innerHTML = dif === 0 ? `Soma das parcelas: ${moeda(s)} ✔` : `<span class="rd">Soma das parcelas: ${moeda(s)} — diferença de ${moeda(dif)} em relação ao contrato</span>`;
+}
+function renderParcelasModal() {
+  const P = MODAL.proj, L = P.parcelas || [];
+  $('pparcelas').innerHTML = (L.length ? L.map((pa, i) => { const rec = pa.status === 'Recebido'; return `<div class="parc"><span>${esc(pa.desc)} <small class="muted">(${pa.pct}%)</small></span><input type="number" step="0.01" value="${pa.valor}" data-chg="parcCampo" data-i="${i}" data-c="valor" ${rec ? 'disabled' : ''} aria-label="Valor"><input type="date" value="${esc(pa.venc || '')}" data-chg="parcCampo" data-i="${i}" data-c="venc" ${rec ? 'disabled' : ''} aria-label="Vencimento">${badge(rec ? 'concluido' : 'pendente', pa.status)}</div>`; }).join('') + '<div class="small muted" id="parc-soma"></div>' : '<div class="muted">Sem plano de recebimento — o status financeiro é manual.</div>') +
+    `<button type="button" class="btn bsm" data-act="regerarParcelas" style="margin-top:6px">${L.length ? '🔄 Regerar' : '⚡ Gerar'} parcelas a partir das condições de pagamento</button>`;
+  $('ppgto').disabled = L.length > 0; $('ppgto-l').textContent = 'Status Financeiro' + (L.length ? ' (automático)' : '');
+  if (L.length) $('ppgto').value = statusPgtoAuto(P) || P.pgto;
+  atualizarSomaParcelas();
+}
+AC.parcCampo = (d, el) => { const pa = MODAL.proj.parcelas[+d.i]; pa[d.c] = d.c === 'valor' ? num(el.value) : el.value; $('ppgto').value = statusPgtoAuto(MODAL.proj) || MODAL.proj.pgto; atualizarSomaParcelas(); };
+AC.regerarParcelas = () => {
+  const P = MODAL.proj; if ((P.parcelas || []).some(x => x.status === 'Recebido')) return toast('Há parcelas já recebidas — não é possível regerar o plano.', 'warn');
+  const pr = DB.propostas.find(x => x.id === P.propostaId || x.codigo === P.prop);
+  const txt = prompt('Condições de pagamento (use porcentagens que somem 100%):', pr ? pr.pagamento : '30% na assinatura + 70% na entrega');
+  if (txt === null) return;
+  P.valor = num(val('pvalor')); P.dataInicio = val('pinicio') || P.dataInicio; P.entrega = val('pentrega') || P.entrega;
+  P.parcelas = gerarParcelas(P, txt); renderParcelasModal();
+};
+
+function abrirProjeto(id) {
+  const p = projPorId(id); if (!p) return;
+  MODAL.proj = clone(p);
+  setv('peid', p.id); setv('pprop', p.prop); setv('pcliente', p.cliente); setv('pnome', p.nome); setv('pvalor', p.valor || 0);
+  setv('pinicio', p.dataInicio); setv('pentrega', p.entrega); setv('pemissao', p.dataEmissao); setv('pstatus', p.status || 'Pendente'); setv('ppgto', p.pgto || 'Pendente'); setv('pobs', p.obs);
+  const todas = [...new Set([...DISCIPLINAS, ...(p.disciplinas || [])])];
+  $('pdisc').innerHTML = todas.map(d => `<label class="chipcb"><input type="checkbox" value="${esc(d)}" ${(p.disciplinas || []).includes(d) ? 'checked' : ''}>${esc(d)}</label>`).join('');
+  $('aloc-projeto').innerHTML = htmlAlocacao('proj'); alocRender('proj');
+  renderParcelasModal();
+  abrirModal('mprojeto');
+}
+AC.editarProjeto = d => abrirProjeto(d.id);
+AC.salvarProjeto = () => {
+  const P = MODAL.proj; if (!P) return; const p = projPorId(P.id); if (!p) return;
+  const novo = val('pstatus');
+  if (novo === 'Concluído' && p.status !== 'Concluído') {
+    const t = totaisEntregas(p);
+    if (t.total > t.ok && !confirm('Existem entregas pendentes. Concluir o projeto mesmo assim?')) return;
+    p.dataConclusao = hojeISO();
+  }
+  p.valor = num(val('pvalor')); p.dataInicio = val('pinicio'); p.entrega = val('pentrega'); p.dataEmissao = val('pemissao'); p.status = novo; p.obs = val('pobs');
+  p.terceirizados_alocados = P.terceirizados_alocados; p.parcelas = P.parcelas || [];
+  if (!p.parcelas.length) p.pgto = val('ppgto');
+  p.disciplinas = $$('#pdisc input:checked').map(i => i.value);
+  p.disciplinas.forEach(d => { if (!p.entregas[d]) p.entregas[d] = entregaPadrao(d, p.entrega); });
+  fecharModal(); salvarDB();
+};
+AC.deletarProjeto = d => {
+  const p = projPorId(d.id); if (!p || !confirm(`Excluir o projeto ${p.prop}?\n\nLançamentos financeiros vinculados NÃO serão apagados.`)) return;
+  DB.projetos = DB.projetos.filter(x => x.id !== d.id);
+  DB.propostas.forEach(x => { if (x.projetoId === d.id) x.projetoId = ''; });
+  salvarDB();
+};
+AC.gerarPlano = d => gerarPlano(d.p);
+/* ---------- Financeiro ---------- */
+let finTipo = 'todos';
+AC.finChip = (d, el) => { $$('#page-financeiro .chip').forEach(c => c.classList.remove('on')); el.classList.add('on'); finTipo = d.tipo; renderFinanceiro(); };
+AC.receberParcela = d => baixarParcela(d.p, d.i);
+AC.parcelaQuitada = d => baixarParcela(d.p, d.i, true);
+AC.repasseQuitado = d => baixarRepasse(d.p, d.t, true);
+const rotuloProj = p => `${p.prop || 's/ código'} - ${p.nome || ''} (${p.cliente || ''})`;
+
+function renderFinanceiro() {
+  repopular('filtro_fin_proj', opts(DB.projetos.map(p => [p.id, rotuloProj(p)]), '— Todos os projetos —'));
+  repopular('filtro_fin_terc', opts(DB.terceirizados.map(t => [t.id, `${t.nome} - ${t.disc}`]), '— Todos os terceirizados —'));
+  const E = somaFin('entrada'), S = somaFin('saida');
+  $('fin-entradas').textContent = moeda(E); $('fin-saidas').textContent = moeda(S); $('fin-saldo').textContent = moeda(E - S);
+
+  const par = parcelasAReceber(), sem = projetosSemPlano();
+  $('fin-receber-total').textContent = moeda(soma(par, x => x.parc.valor));
+  $('fin-receber').innerHTML = par.map(({ proj, parc, atrasada }) => `<div class="prow"><span><b>${esc(proj.prop)}</b> ${esc(proj.cliente || '')}<br><small>${esc(parc.desc)} · venc. ${fmtData(parc.venc)} ${atrasada ? '<span class="rd b">⚠️ vencida</span>' : ''}</small></span><span class="b gn">${moeda(parc.valor)}</span><span><button class="btn bsm bok" data-act="receberParcela" data-p="${esc(proj.id)}" data-i="${esc(parc.id)}">Receber</button> <button class="btn bsm" data-act="parcelaQuitada" data-p="${esc(proj.id)}" data-i="${esc(parc.id)}" title="Já recebido antes (não cria lançamento)">✔</button></span></div>`).join('') +
+    sem.map(p => `<div class="prow"><span><b>${esc(p.prop)}</b> ${esc(p.cliente || '')}<br><small class="muted">Sem plano de recebimento (${moeda(p.valor)})</small></span><button class="btn bsm bp" data-act="gerarPlano" data-p="${esc(p.id)}">⚡ Gerar parcelas</button></div>`).join('') || '<div class="muted" style="padding:14px">Nada a receber. 🎉</div>';
+
+  const rep = repassesPendentes().filter(r => r.pend > 0).sort((a, b) => b.pend - a.pend);
+  $('fin-repassar-total').textContent = moeda(soma(rep, r => r.pend));
+  $('fin-repassar').innerHTML = rep.map(r => `<div class="prow"><span><b>${esc(r.nome)}</b> — ${esc(r.proj.prop)}<br><small class="muted">Alocado ${moeda(r.alocado)} · pago ${moeda(r.pago)}</small></span><span class="b rd">${moeda(r.pend)}</span><span><button class="btn bsm bok" data-act="pagarRepasse" data-p="${esc(r.proj.id)}" data-t="${esc(r.tercId)}">Pagar</button> <button class="btn bsm" data-act="repasseQuitado" data-p="${esc(r.proj.id)}" data-t="${esc(r.tercId)}" title="Já pago antes (não cria lançamento)">✔</button></span></div>`).join('') || '<div class="muted" style="padding:14px">Nenhum repasse pendente.</div>';
+
+  const s = val('fsearch').toLowerCase(), cat = val('ffcat'), mes = val('ffmes'), fp = val('filtro_fin_proj'), ft = val('filtro_fin_terc');
+  const L = DB.financeiro.filter(f => (finTipo === 'todos' || f.tipo === finTipo) && (!s || `${f.desc} ${f.tercNome || ''}`.toLowerCase().includes(s)) && (!cat || f.cat === cat) && (!mes || (f.data || '').startsWith(mes)) && (!fp || f.projeto === fp) && (!ft || f.terc === ft))
+    .sort((a, b) => (b.data || '').localeCompare(a.data || ''));
+  $('tabela-financeiro-corpo').innerHTML = L.map(f => {
+    const ent = f.tipo === 'entrada', p = projPorId(f.projeto);
+    return `<tr><td>${fmtData(f.data)}</td><td><strong>${esc(f.desc || '-')}</strong>${f.terc ? `<br><small class="muted">👷 ${esc(nomeTerc(f.terc, f.tercNome))}</small>` : ''}</td><td>${esc(f.cat || 'Outros')}</td><td>${esc(p ? p.prop || p.nome : f.projNome || f.projetoNome || 'Geral')}</td>
+      <td><span class="st" style="background:${ent ? 'var(--gnl)' : 'var(--rdl)'};color:${ent ? 'var(--gn)' : 'var(--rd)'}">${ent ? 'RECEITA' : 'CUSTO'}</span></td><td class="b ${ent ? 'gn' : 'rd'}">${ent ? '+' : '−'} ${moeda(f.valor)}</td>
+      <td class="tr"><button class="btn bsm bedit" data-act="editarFin" data-id="${esc(f.id)}" aria-label="Editar"><i class="ti ti-edit"></i></button> <button class="btn bsm bdanger" data-act="deletarFin" data-id="${esc(f.id)}" aria-label="Excluir"><i class="ti ti-trash"></i></button></td></tr>`;
+  }).join('') || '<tr><td colspan="7" class="tc muted" style="padding:24px">Nenhum lançamento.</td></tr>';
+  const e = soma(L.filter(f => f.tipo === 'entrada'), f => f.valor), sd = soma(L.filter(f => f.tipo === 'saida'), f => f.valor);
+  $('fin-sum').innerHTML = `<div>${L.length} lançamento(s) filtrado(s)</div><div><strong>Receitas:</strong> ${moeda(e)} | <strong>Custos:</strong> ${moeda(sd)} | <strong>Saldo:</strong> ${moeda(e - sd)}</div>`;
+}
+
+function abrirModalFin(f) {
+  setv('feid', f ? f.id : ''); setv('fdesc', f ? f.desc : ''); setv('fvalor', f ? f.valor : ''); setv('fdata', f ? f.data : hojeISO()); setv('fobs', f ? f.obs : '');
+  setv('ftipo', f ? f.tipo : 'entrada'); setv('fcat', f ? f.cat || 'Outros' : 'Honorário');
+  $('fproj_vinculo').innerHTML = opts(DB.projetos.map(p => [p.id, rotuloProj(p)]), '— Sem projeto (geral) —');
+  $('fterc_vinculo').innerHTML = opts(DB.terceirizados.map(t => [t.id, `${t.nome} - ${t.disc}`]), '— Sem repasse (custo interno) —');
+  setv('fproj_vinculo', f ? f.projeto : ''); setv('fterc_vinculo', f ? f.terc : '');
+  abrirModal('mfinanceiro');
+}
+AC.novaTransacao = () => abrirModalFin();
+AC.editarFin = d => abrirModalFin(DB.financeiro.find(f => f.id === d.id));
+AC.salvarFin = () => {
+  const id = val('feid'), desc = val('fdesc').trim(), valor = num(val('fvalor'));
+  if (!desc || valor <= 0) return toast('Preencha a descrição e um valor maior que zero.', 'warn');
+  const dados = { desc, valor, tipo: val('ftipo'), data: val('fdata') || hojeISO(), cat: val('fcat'), projeto: val('fproj_vinculo'), terc: val('fterc_vinculo'), obs: val('fobs') };
+  const ex = id && DB.financeiro.find(f => f.id === id);
+  if (ex) Object.assign(ex, novoLancamento({ ...ex, ...dados, id })); else DB.financeiro.push(novoLancamento(dados));
+  fecharModal(); salvarDB();
+};
+AC.deletarFin = d => {
+  if (!confirm('Excluir este lançamento?')) return;
+  DB.financeiro = DB.financeiro.filter(f => f.id !== d.id);
+  DB.projetos.forEach(p => (p.parcelas || []).forEach(pa => { if (pa.lancId === d.id) { pa.status = 'Previsto'; pa.lancId = ''; pa.dataReceb = ''; } }));
+  salvarDB();
+};
+
+/* ---------- Terceirizados ---------- */
+const soDigitos = s => String(s || '').replace(/\D/g, '');
+function linkWhats(fone) { let d = soDigitos(fone); if (d.length < 10) return ''; if (!d.startsWith('55')) d = '55' + d; return 'https://wa.me/' + d; }
+const projetosDoTerc = id => DB.projetos.filter(p => (p.terceirizados_alocados || []).some(a => a.id === id));
+
+function renderTerceirizados() {
+  const s = val('search-terc').toLowerCase();
+  const L = DB.terceirizados.filter(t => !s || `${t.nome} ${t.disc} ${t.email}`.toLowerCase().includes(s));
+  const pend = {}; repassesPendentes().forEach(r => { pend[r.tercId] = (pend[r.tercId] || 0) + r.pend; });
+  $('tterc').innerHTML = L.map(t => {
+    const ps = projetosDoTerc(t.id).sort((a, b) => (b.dataInicio || '').localeCompare(a.dataInicio || '')), wa = linkWhats(t.fone);
+    return `<tr><td><strong>${esc(t.nome || '-')}</strong>${ps.length ? `<br><small class="muted">📊 ${ps.length} projeto(s)</small>` : ''}</td><td><span class="tag">${esc(t.disc || '-')}</span></td>
+      <td>${esc(t.fone || '-')} ${wa ? `<a href="${wa}" target="_blank" rel="noopener" title="WhatsApp">💬</a>` : ''}<br><small>${t.email ? `<a href="mailto:${esc(t.email)}">${esc(t.email)}</a>` : '-'}</small></td>
+      <td><span style="color:var(--amm)">${'★'.repeat(num(t.aval) || 5)}</span></td><td>${esc(ps[0] ? `${ps[0].prop} — ${ps[0].nome || ''}` : t.ultimo || 'Nenhuma')}</td>
+      <td><span class="gn">${moeda(pagoTerc(t))}</span><br><small class="${pend[t.id] > 0 ? 'rd b' : 'muted'}">${pend[t.id] > 0 ? 'A pagar ' + moeda(pend[t.id]) : 'Em dia'}</small></td>
+      <td class="tc"><button class="btn bsm bedit" data-act="editarTerc" data-id="${esc(t.id)}" aria-label="Editar"><i class="ti ti-edit"></i></button> <button class="btn bsm bdanger" data-act="deletarTerc" data-id="${esc(t.id)}" aria-label="Excluir"><i class="ti ti-trash"></i></button></td></tr>`;
+  }).join('') || '<tr><td colspan="7" class="tc muted" style="padding:24px">Nenhum especialista encontrado.</td></tr>';
+}
+function abrirTerc(t) {
+  setv('teid', t ? t.id : ''); setv('tnome', t ? t.nome : ''); setv('tfone', t ? t.fone : ''); setv('temail', t ? t.email : '');
+  setv('tdisc', t ? t.disc : DISCIPLINAS[0]); setv('taval', t ? t.aval || 5 : 5); setv('tultimo', t ? t.ultimo : ''); setv('tobs', t ? t.obs : '');
+  $('mterc-t').textContent = t ? 'Editar especialista' : 'Novo especialista'; abrirModal('mterceirizado');
+}
+AC.novoTerc = () => abrirTerc();
+AC.editarTerc = d => abrirTerc(tercPorId(d.id));
+AC.salvarTerc = () => {
+  const nome = val('tnome').trim(); if (!nome) return toast('Nome é obrigatório.', 'warn');
+  const id = val('teid') || uid('t'), ex = tercPorId(id);
+  const t = Object.assign(ex || {}, { id, nome, fone: val('tfone'), email: val('temail').trim(), disc: val('tdisc'), aval: parseInt(val('taval')) || 5, ultimo: val('tultimo'), obs: val('tobs') });
+  if (!ex) DB.terceirizados.push(t);
+  fecharModal(); salvarDB();
+};
+AC.deletarTerc = d => {
+  const t = tercPorId(d.id), n = projetosDoTerc(d.id).length;
+  if (!t || !confirm(`Excluir ${t.nome}?` + (n ? `\n\nEle(a) está alocado(a) em ${n} projeto(s); as alocações continuam, com o nome preservado.` : ''))) return;
+  DB.terceirizados = DB.terceirizados.filter(x => x.id !== d.id); salvarDB();
+};
+
+/* ---------- Entregas técnicas ---------- */
+let entFiltro = 'todos'; const entAbertas = new Set();
+AC.entChip = (d, el) => { $$('#page-entregas .chip').forEach(c => c.classList.remove('on')); el.classList.add('on'); entFiltro = d.tipo; renderEntregas(); };
+AC.entToggle = d => { entAbertas.has(d.id) ? entAbertas.delete(d.id) : entAbertas.add(d.id); renderEntregas(); };
+const entItem = (pid, disc, iid) => { const p = projPorId(pid), dsc = p && p.entregas[disc], i = dsc && dsc.itens.find(x => x.id === iid); return { p, dsc, i }; };
+
+function renderEntregas() {
+  const box = $('entregas-container'), ativos = DB.projetos.filter(ehAtivo);
+  if (!ativos.length) { box.innerHTML = '<div class="card tc muted" style="padding:40px">Nenhum projeto ativo com entregas para gerenciar.</div>'; return; }
+  const html = ativos.map(p => {
+    const t = totaisEntregas(p);
+    if ((entFiltro === 'pendentes' && t.pct === 100) || (entFiltro === 'atrasados' && !t.atrasados)) return '';
+    const cor = t.atrasados ? '#ef4444' : t.pct === 100 ? '#10b981' : '#3b82f6', aberto = entAbertas.has(p.id), disc = p.disciplinas || [];
+    return `<div class="card" style="border-left:4px solid ${cor}">
+      <div style="padding:16px;cursor:pointer" data-act="entToggle" data-id="${esc(p.id)}">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div><strong style="font-size:15px">${aberto ? '▾' : '▸'} 🏗️ ${esc(p.prop || '-')} - ${esc(p.nome || 'Sem nome')}</strong><div class="small muted" style="margin-top:4px">${esc(p.cliente || 'Sem cliente')} | Disciplinas: ${esc(disc.join(', ') || 'Nenhuma')} | Prazo: ${p.entrega ? fmtData(p.entrega) : 'Não definido'}</div></div>
+          <div class="tr"><div class="b" style="font-size:13px;color:${cor}">${t.pct}% concluído (${t.ok}/${t.total})</div>${t.atrasados ? `<span class="small rd b">⚠️ ${t.atrasados} item(ns) atrasado(s)</span>` : ''}</div>
+        </div>
+        <div class="mini" style="height:8px;margin-top:10px"><i style="width:${t.pct}%;background:${cor}"></i></div>
+      </div>
+      <div style="padding:8px 16px;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end"><button class="btn bsm" data-act="relatorio" data-id="${esc(p.id)}">📄 Relatório para cliente</button></div>
+      ${aberto ? `<div style="padding:0 16px 16px;border-top:1px solid #e2e8f0">${htmlDisciplinas(p)}</div>` : ''}</div>`;
+  }).join('');
+  box.innerHTML = html || '<div class="card tc muted" style="padding:40px">Nenhum resultado para o filtro selecionado.</div>';
+}
+
+function htmlDisciplinas(p) {
+  const h = hojeISO(), discs = p.disciplinas && p.disciplinas.length ? p.disciplinas : Object.keys(p.entregas);
+  let out = discs.map(disc => {
+    const dsc = p.entregas[disc] || (p.entregas[disc] = { itens: [] });
+    const resp = (p.terceirizados_alocados || []).map(a => tercPorId(a.id)).filter(t => t && t.disc === disc).map(t => t.nome).join(', ') || 'Não alocado';
+    const sl = slug(disc);
+    return `<div class="edisc"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><strong>📐 ${esc(disc)}</strong><small class="muted">👷 ${esc(resp)}</small></div>
+      ${dsc.itens.map(i => {
+        const atr = !i.entregue && i.prev && i.prev < h, k = `data-p="${esc(p.id)}" data-d="${esc(disc)}" data-i="${esc(i.id)}"`;
+        return `<div class="eitem"><div class="erow"><input type="checkbox" ${i.entregue ? 'checked' : ''} data-chg="itemToggle" ${k} aria-label="Entregue">
+          <span class="edesc ${i.entregue ? 'ok' : atr ? 'late' : ''}">${esc(i.desc || 'Novo item')}</span>
+          <input type="date" value="${esc(i.prev || '')}" data-chg="itemData" ${k} aria-label="Previsão">
+          ${i.entregue ? `<span class="small gn">✅ ${i.dataReal ? fmtData(i.dataReal) : 'Entregue'}</span>` : atr ? '<span class="small rd">⚠️ Atrasado</span>' : '<span class="small muted">⏳ Pendente</span>'}
+          <button class="btn bsm" data-act="itemObsToggle" title="Observações">💬</button><button class="btn bsm bdanger" data-act="itemDel" ${k} aria-label="Remover">🗑️</button></div>
+          <div class="eobs ${i.obs ? '' : 'hidden'}"><textarea rows="2" placeholder="Observações sobre este item..." data-chg="itemObs" ${k}>${esc(i.obs || '')}</textarea></div></div>`;
+      }).join('')}
+      <div class="eadd"><input type="text" class="n-desc" placeholder="Novo item para ${esc(disc)}..." id="ni-${esc(p.id)}-${sl}"><input type="date" class="n-data"><button class="btn bp bsm" data-act="itemAdd" data-p="${esc(p.id)}" data-d="${esc(disc)}">+ Adicionar</button></div></div>`;
+  }).join('');
+  out += `<div style="margin-top:16px;padding:12px;background:#fefce8;border-radius:8px;border:1px solid #facc15"><strong class="small">📝 Observações gerais do projeto</strong><textarea rows="2" style="margin-top:6px" data-chg="obsGeral" data-p="${esc(p.id)}">${esc(p.obsEntregas || '')}</textarea></div>`;
+  return out;
+}
+AC.itemToggle = (d, el) => { const { p, i } = entItem(d.p, d.d, d.i); if (!i) return; i.entregue = el.checked; i.dataReal = i.entregue ? hojeISO() : ''; aposMudarEntrega(p); salvarDB(); };
+AC.itemData = (d, el) => { const { i } = entItem(d.p, d.d, d.i); if (i) { i.prev = el.value; salvarDB(); } };
+AC.itemObs = (d, el) => { const { i } = entItem(d.p, d.d, d.i); if (i) { i.obs = el.value; salvarDB(); } };
+AC.obsGeral = (d, el) => { const p = projPorId(d.p); if (p) { p.obsEntregas = el.value; salvarDB(); } };
+AC.itemObsToggle = (d, el) => el.closest('.eitem').querySelector('.eobs').classList.toggle('hidden');
+AC.itemDel = d => { if (!confirm('Remover este item?')) return; const { p, dsc } = entItem(d.p, d.d, d.i); if (!dsc) return; dsc.itens = dsc.itens.filter(x => x.id !== d.i); aposMudarEntrega(p); salvarDB(); };
+AC.itemAdd = (d, el) => {
+  const box = el.closest('.eadd'), desc = box.querySelector('.n-desc').value.trim(), p = projPorId(d.p);
+  if (!desc) return toast('Digite a descrição do item.', 'warn');
+  (p.entregas[d.d] || (p.entregas[d.d] = { itens: [] })).itens.push({ id: uid('e'), desc, prev: box.querySelector('.n-data').value, entregue: false, dataReal: '', obs: '' });
+  aposMudarEntrega(p); salvarDB();
+};
+AC.relatorio = d => {
+  const p = projPorId(d.id); if (!p) return;
+  const t = totaisEntregas(p), L = '═'.repeat(35), prox = []; let r = `${L}\n   RELATÓRIO DE ACOMPANHAMENTO\n   TCL Dynamis Engenharia\n${L}\n\nPROJETO: ${p.nome || p.prop || '-'}\nCLIENTE: ${p.cliente || '-'}\nDATA: ${fmtData(hojeISO())}\nPROGRESSO: ${t.pct}% concluído (${t.ok}/${t.total} itens)\n\n${L}\n   ENTREGAS POR DISCIPLINA\n${L}\n\n`;
+  (p.disciplinas || Object.keys(p.entregas)).forEach(disc => {
+    const dsc = p.entregas[disc]; if (!dsc || !dsc.itens.length) return;
+    r += `📐 ${disc.toUpperCase()}\n`;
+    dsc.itens.forEach(i => { if (i.entregue) r += `✅ ${i.desc} - Entregue em ${fmtData(i.dataReal)}\n`; else { r += `⏳ ${i.desc} - Previsto para ${i.prev ? fmtData(i.prev) : 'Não definido'}\n`; if (i.prev) prox.push({ disc, desc: i.desc, prev: i.prev }); } });
+    r += '\n';
+  });
+  if (prox.length) { r += `${L}\n   PRÓXIMAS ENTREGAS\n${L}\n\n`; prox.sort((a, b) => a.prev.localeCompare(b.prev)).forEach(e => { r += `${fmtData(e.prev)} - ${e.desc} (${e.disc})\n`; }); r += '\n'; }
+  r += `${L}\nEmitido por: ${CFG.empresa.nome}\nContato: ${CFG.empresa.resp} | ${CFG.empresa.fone}\n${L}\n`;
+  copiarTexto(r).then(() => toast('Relatório copiado! Cole no e-mail ou WhatsApp do cliente.', 'ok')).catch(() => toast('Não foi possível copiar.', 'err'));
+};
+/* ============================ 8. CRM / ALERTAS / BACKUP ============================ */
+AC.noop = () => { };
+const mesmoNome = (a, b) => (a || '').trim().toLowerCase() === (b || '').trim().toLowerCase();
+
+function renderCRM() {
+  const h = hojeISO(), s = val('crm-search').toLowerCase(), fs = val('crm-status-filter'), fseg = val('crm-segmento-filter');
+  const atrasado = e => e.proximoFollowup && e.proximoFollowup < h && e.status !== 'Inativo';
+  $('crm-total').textContent = DB.crm.length;
+  $('crm-leads').textContent = DB.crm.filter(e => e.status === 'Lead').length;
+  $('crm-negociacao').textContent = DB.crm.filter(e => e.status === 'Em negociação').length;
+  $('crm-clientes').textContent = DB.crm.filter(e => e.status === 'Cliente').length;
+  $('crm-followups').textContent = DB.crm.filter(atrasado).length;
+  const ordem = { 'Cliente': 0, 'Em negociação': 1, 'Lead': 2, 'Inativo': 3 };
+  const L = DB.crm.filter(e => (!s || `${e.nome} ${e.contatoNome} ${e.contatoEmail} ${e.cidade}`.toLowerCase().includes(s)) && (!fs || e.status === fs) && (!fseg || e.segmento === fseg))
+    .sort((a, b) => (atrasado(b) ? 1 : 0) - (atrasado(a) ? 1 : 0) || (ordem[a.status] ?? 4) - (ordem[b.status] ?? 4) || (a.nome || '').localeCompare(b.nome || ''));
+  $('crm-container').innerHTML = L.map(e => {
+    const cor = COR_CRM[e.status] || '#94a3b8', props = DB.propostas.filter(p => mesmoNome(p.cliente, e.nome)), ult = (e.followups || []).map(f => f.data).sort().pop(), wa = linkWhats(e.contatoTelefone);
+    return `<div class="card" style="border-left:4px solid ${cor};cursor:pointer" data-act="abrirEmpresa" data-id="${esc(e.id)}"><div style="padding:14px 16px">
+      <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:8px"><div style="flex:1"><strong>🏢 ${esc(e.nome)}</strong> <span class="tag" style="background:${cor}20;color:${cor}">${esc(e.status)}</span> ${atrasado(e) ? '<span class="small rd b">⚠️ Follow-up atrasado</span>' : ''}<div class="small muted">📍 ${esc(e.cidade || '-')} | 🏭 ${esc(e.segmento || '-')}</div></div>
+      <div class="small muted">👤 ${esc(e.contatoNome || '-')}${e.contatoCargo ? '<br>💼 ' + esc(e.contatoCargo) : ''}</div></div>
+      <div class="small muted" style="margin-top:8px">${e.contatoEmail ? '📧 ' + esc(e.contatoEmail) : ''} ${e.contatoTelefone ? '📱 ' + esc(e.contatoTelefone) : ''} · ${ult ? '📅 Último contato: ' + fmtData(ult) : '📅 Sem contato registrado'}${e.proximoFollowup ? ' · ⏭️ Próximo: ' + fmtData(e.proximoFollowup) : ''}${props.length ? ` · 📝 ${props.length} proposta(s) (${moeda(soma(props, p => p.valor))})` : ''}</div>
+      <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap"><button class="btn bsm bp" data-act="criarPropostaCRM" data-id="${esc(e.id)}">📝 Proposta</button>${e.contatoEmail ? `<button class="btn bsm" data-act="abrirEmail" data-id="${esc(e.id)}">📧 E-mail</button>` : ''}${wa ? `<a class="btn bsm" href="${wa}" target="_blank" rel="noopener" data-act="noop">💬 WhatsApp</a>` : ''}<button class="btn bsm" data-act="followRapido" data-id="${esc(e.id)}">📅 Follow-up feito</button><button class="btn bsm bdanger" data-act="deletarEmpresa" data-id="${esc(e.id)}" aria-label="Excluir">🗑️</button></div></div></div>`;
+  }).join('') || '<div class="card tc muted" style="padding:40px">Nenhuma empresa encontrada. Clique em "Nova Empresa" para começar.</div>';
+}
+
+function renderFollowups() {
+  const L = MODAL.crm.followups.map((f, i) => ({ f, i })).sort((a, b) => b.f.data.localeCompare(a.f.data));
+  $('crm-followup-list').innerHTML = L.length ? L.map(({ f, i }) => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9"><span><strong>${fmtData(f.data)}</strong> - ${esc(f.nota || 'Sem nota')}</span><button class="btn bsm bdanger" style="padding:2px 6px" data-act="crmDelFollow" data-i="${i}" aria-label="Remover">✕</button></div>`).join('') : 'Nenhum follow-up registrado.';
+}
+function abrirEmpresa(id) {
+  const e = id ? DB.crm.find(x => x.id === id) : null;
+  MODAL.crm = { followups: clone(e ? e.followups || [] : []) };
+  setv('crm-id', e ? e.id : ''); setv('crm-nome', e ? e.nome : ''); setv('crm-cnpj', e ? e.cnpj : ''); setv('crm-cidade', e ? e.cidade : '');
+  setv('crm-segmento', e ? e.segmento || SEGMENTOS[0] : SEGMENTOS[0]); setv('crm-site', e ? e.site : ''); setv('crm-status', e ? e.status : 'Lead');
+  setv('crm-contato-nome', e ? e.contatoNome : ''); setv('crm-contato-cargo', e ? e.contatoCargo : ''); setv('crm-contato-email', e ? e.contatoEmail : '');
+  setv('crm-contato-telefone', e ? e.contatoTelefone : ''); setv('crm-contato-linkedin', e ? e.contatoLinkedin : ''); setv('crm-obs', e ? e.obs : '');
+  setv('crm-proximo', e ? e.proximoFollowup : ''); setv('crm-followup-data', hojeISO()); setv('crm-followup-nota', '');
+  renderFollowups(); abrirModal('mcrm');
+}
+AC.abrirEmpresa = d => abrirEmpresa(d.id);
+AC.novaEmpresa = () => abrirEmpresa();
+AC.crmAddFollow = () => {
+  const data = val('crm-followup-data'); if (!data) return toast('Selecione uma data.', 'warn');
+  MODAL.crm.followups.push({ data, nota: val('crm-followup-nota').trim() });
+  if (!val('crm-proximo') || val('crm-proximo') <= data) setv('crm-proximo', addDias(data, CFG.diasFollowupRapido));
+  setv('crm-followup-nota', ''); renderFollowups();
+};
+AC.crmDelFollow = d => { MODAL.crm.followups.splice(+d.i, 1); renderFollowups(); };
+AC.salvarEmpresa = () => {
+  const nome = val('crm-nome').trim(), cn = val('crm-contato-nome').trim(), ce = val('crm-contato-email').trim();
+  if (!nome) return toast('Nome da empresa é obrigatório.', 'warn');
+  if (!cn) return toast('Nome do contato é obrigatório.', 'warn');
+  if (!ce) return toast('E-mail do contato é obrigatório.', 'warn');
+  const id = val('crm-id') || uid('crm'), ex = DB.crm.find(e => e.id === id);
+  const e = Object.assign(ex || { dataCriacao: hojeISO() }, {
+    id, nome, cnpj: val('crm-cnpj'), cidade: val('crm-cidade'), segmento: val('crm-segmento'), site: val('crm-site'), status: val('crm-status'),
+    contatoNome: cn, contatoEmail: ce, contatoCargo: val('crm-contato-cargo'), contatoTelefone: val('crm-contato-telefone'), contatoLinkedin: val('crm-contato-linkedin'),
+    obs: val('crm-obs'), followups: MODAL.crm.followups, proximoFollowup: val('crm-proximo')
+  });
+  if (!e.dataCriacao) e.dataCriacao = hojeISO();
+  if (!ex) DB.crm.push(e);
+  fecharModal(); salvarDB();
+};
+AC.deletarEmpresa = d => { const e = DB.crm.find(x => x.id === d.id); if (e && confirm(`Excluir ${e.nome}?`)) { DB.crm = DB.crm.filter(x => x.id !== d.id); salvarDB(); } };
+AC.followRapido = d => {
+  const e = DB.crm.find(x => x.id === d.id); if (!e) return;
+  e.followups.push({ data: hojeISO(), nota: 'Contato realizado em ' + fmtData(hojeISO()) });
+  e.proximoFollowup = addDias(hojeISO(), CFG.diasFollowupRapido);
+  toast(`Follow-up registrado. Próximo em ${CFG.diasFollowupRapido} dias.`, 'ok'); salvarDB();
+};
+AC.criarPropostaCRM = d => { const e = DB.crm.find(x => x.id === d.id); if (!e) return; nav('propostas'); abrirProposta(); setv('prop-cliente', e.nome); setv('prop-cidade', e.cidade); };
+
+/* E-mail a partir de template */
+function aplicarVars(txt, e) {
+  const n = e.contatoNome || '';
+  return String(txt || '').replace(/\{empresa\}/g, e.nome || '').replace(/\{contato\}/g, n).replace(/\{primeiro_nome\}/g, n.split(/\s+/)[0] || '').replace(/\{cargo\}/g, e.contatoCargo || '').replace(/\{cidade\}/g, e.cidade || '');
+}
+function preencherEmail() {
+  const e = DB.crm.find(x => x.id === val('em-empresa')), t = DB.templates.find(x => x.id === val('em-template')) || DB.templates[0];
+  if (!e || !t) return; setv('em-assunto', aplicarVars(t.assunto, e)); setv('em-corpo', aplicarVars(t.corpo, e));
+}
+function abrirEmail(id) {
+  const e = DB.crm.find(x => x.id === id); if (!e) return;
+  if (!DB.templates.length) return toast('Cadastre um template primeiro.', 'warn');
+  setv('em-empresa', id); $('em-template').innerHTML = opts(DB.templates.map(t => [t.id, t.nome])); setv('em-para', e.contatoEmail); setv('em-dias', CFG.diasFollowupRapido); $('em-follow').checked = true;
+  preencherEmail(); abrirModal('memail');
+}
+AC.abrirEmail = d => abrirEmail(d.id);
+function registrarContatoEmail() {
+  if (!$('em-follow').checked) return;
+  const e = DB.crm.find(x => x.id === val('em-empresa')); if (!e) return;
+  e.followups.push({ data: hojeISO(), nota: 'E-mail: ' + val('em-assunto') });
+  e.proximoFollowup = addDias(hojeISO(), num(val('em-dias')) || CFG.diasFollowupRapido);
+}
+AC.emAbrir = () => {
+  const url = `mailto:${encodeURIComponent(val('em-para'))}?subject=${encodeURIComponent(val('em-assunto'))}&body=${encodeURIComponent(val('em-corpo'))}`;
+  registrarContatoEmail(); fecharModal(); salvarDB(); window.location.href = url;
+};
+AC.emCopiar = () => copiarTexto(`Assunto: ${val('em-assunto')}\n\n${val('em-corpo')}`).then(() => { toast('E-mail copiado.', 'ok'); registrarContatoEmail(); fecharModal(); salvarDB(); }).catch(() => toast('Não foi possível copiar.', 'err'));
+
+/* Templates */
+function renderTemplates() {
+  $('templates-container').innerHTML = DB.templates.map(t => `<div class="card"><div style="padding:14px 16px"><strong>📧 ${esc(t.nome)}</strong><div class="small muted" style="margin-top:4px">Assunto: ${esc(t.assunto)}</div><div class="small" style="margin-top:6px;white-space:pre-wrap;color:var(--tx2)">${esc((t.corpo || '').slice(0, 180))}${(t.corpo || '').length > 180 ? '…' : ''}</div>
+    <div style="display:flex;gap:6px;margin-top:10px"><button class="btn bsm bp" data-act="copiarTemplate" data-id="${esc(t.id)}">📋 Copiar</button><button class="btn bsm" data-act="editarTemplate" data-id="${esc(t.id)}">✏️ Editar</button><button class="btn bsm bdanger" data-act="deletarTemplate" data-id="${esc(t.id)}">🗑️</button></div></div></div>`).join('') || '<div class="card tc muted" style="padding:40px">Nenhum template cadastrado.</div>';
+}
+function abrirTemplate(t) { setv('template-id', t ? t.id : ''); setv('template-nome', t ? t.nome : ''); setv('template-assunto', t ? t.assunto : ''); setv('template-corpo', t ? t.corpo : ''); abrirModal('mtemplate'); }
+AC.novoTemplate = () => abrirTemplate();
+AC.editarTemplate = d => abrirTemplate(DB.templates.find(t => t.id === d.id));
+AC.copiarTemplate = d => { const t = DB.templates.find(x => x.id === d.id); if (t) copiarTexto(`Assunto: ${t.assunto}\n\n${t.corpo}`).then(() => toast('Template copiado.', 'ok')); };
+AC.salvarTemplate = () => {
+  const nome = val('template-nome').trim(), assunto = val('template-assunto').trim(), corpo = val('template-corpo').trim();
+  if (!nome || !assunto || !corpo) return toast('Preencha todos os campos.', 'warn');
+  const id = val('template-id') || uid('tpl'), i = DB.templates.findIndex(t => t.id === id), t = { id, nome, assunto, corpo };
+  i > -1 ? DB.templates[i] = t : DB.templates.push(t);
+  fecharModal(); salvarDB();
+};
+AC.deletarTemplate = d => { if (confirm('Excluir este template?')) { DB.templates = DB.templates.filter(t => t.id !== d.id); salvarDB(); } };
+
+/* Alertas */
+let alFiltro = 'todos';
+AC.alChip = (d, el) => { $$('#page-alertas .chip').forEach(c => c.classList.remove('on')); el.classList.add('on'); alFiltro = d.tipo; renderAlertas(); };
+function renderAlertas() {
+  const todos = gerarAlertas(), L = alFiltro === 'todos' ? todos : todos.filter(a => a.tipo === alFiltro);
+  const E = { atraso: ['⚠️', '#ef4444', '#fef2f2', '#fecaca'], prazo: ['⏰', '#f59e0b', '#fffbeb', '#fde68a'], pgto: ['💰', '#8b5cf6', '#f5f3ff', '#ddd6fe'], comercial: ['📞', '#0284c7', '#f0f9ff', '#bae6fd'] };
+  const urg = L.filter(a => a.prioridade === 'alta').length;
+  if (!L.length) { $('alertas-container').innerHTML = '<div class="card tc muted" style="padding:40px"><div style="font-size:40px">✅</div><strong>Tudo em dia!</strong><p class="small">Nenhum alerta para o filtro selecionado.</p></div>'; return; }
+  $('alertas-container').innerHTML = `<div class="small muted" style="margin-bottom:12px">${L.length} alerta(s) · ${urg ? `<span class="rd b">${urg} urgente(s)</span>` : 'nenhum urgente'}</div>` + L.map(a => {
+    const [ic, c, bg, bd] = E[a.tipo] || E.prazo;
+    return `<div style="background:${bg};border:1px solid ${bd};border-left:4px solid ${c};padding:12px 16px;border-radius:8px;margin-bottom:10px;cursor:pointer" data-act="alertaIr" data-page="${esc(a.destino.page)}" data-id="${esc(a.destino.id || '')}"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><strong style="font-size:13px">${ic} ${esc(a.titulo)}</strong><p class="small" style="margin-top:4px;color:#475569">${esc(a.mensagem)}</p></div><span class="small b" style="padding:4px 10px;border-radius:12px;background:${a.prioridade === 'alta' ? '#fee2e2' : '#fef3c7'};color:${a.prioridade === 'alta' ? '#991b1b' : '#92400e'}">${a.prioridade === 'alta' ? '🔴 Urgente' : '🟡 Atenção'}</span></div></div>`;
+  }).join('');
+}
+AC.alertaIr = d => {
+  nav(d.page);
+  if (d.page === 'entregas' && d.id) { entAbertas.add(d.id); renderEntregas(); }
+  else if (d.page === 'crm' && d.id) abrirEmpresa(d.id);
+  else if (d.page === 'propostas' && d.id) abrirProposta(d.id);
+};
+
+/* Backup */
+function renderBackup() {
+  const tam = JSON.stringify(DB).length, pct = Math.min(100, Math.round(tam / 50000));
+  $('bk-stats').innerHTML = `📁 ${DB.projetos.length} projetos · ${DB.propostas.length} propostas · ${DB.financeiro.length} lançamentos<br>👷 ${DB.terceirizados.length} terceirizados · 🏢 ${DB.crm.length} empresas · ✉️ ${DB.templates.length} templates<br>💾 ${(tam / 1024).toFixed(1)} KB de ~5.000 KB recomendados (${pct}%)<div class="mini"><i style="width:${pct}%;background:${pct > 80 ? '#ef4444' : 'var(--bl)'}"></i></div><small class="muted">Versão ${versaoLocal}${DB.meta.atualizadoEm ? ' · salvo em ' + new Date(DB.meta.atualizadoEm).toLocaleString('pt-BR') : ''}</small>`;
+  listarBackups();
+}
+async function listarBackups() {
+  const box = $('bk-lista');
+  if (modoClienteAtivo || !podeSalvar) { box.innerHTML = '<div class="muted" style="padding:14px">Indisponível no momento.</div>'; return; }
+  try {
+    const l = await listaBackups();
+    box.innerHTML = l.map(f => { const id = idBackup(f.name), rot = id.replace(/_\d{13}$/, '').replace(/^\d{4}-\d\d-\d\d$/, 'diario'); return `<div class="prow"><span><b>${esc(rot)}</b> · ${new Date(dataBackup(id)).toLocaleString('pt-BR')}<br><small class="muted">${(f.size / 1024).toFixed(0)} KB</small></span><button class="btn bsm" data-act="restaurarBackup" data-id="${esc(id)}">Restaurar</button></div>`; }).join('') || '<div class="muted" style="padding:14px">Nenhum backup ainda. O primeiro é criado automaticamente ao abrir o sistema.</div>';
+  } catch (e) { box.innerHTML = `<div class="banner err">Backups em nuvem indisponíveis (${esc(erroGH(e))}).</div>`; }
+}
+AC.backupAgora = async () => { try { await criarBackupNuvem(clone(DB), 'manual'); await podarBackups(); toast('Backup criado na nuvem.', 'ok'); } catch (e) { toast('Falha ao criar backup: ' + erroGH(e), 'err', 6000); } listarBackups(); };
+AC.restaurarBackup = async d => {
+  if (!confirm('Restaurar este backup? Os dados atuais serão substituídos (um backup dos dados atuais é criado antes).')) return;
+  try {
+    const r = await ghLer(CFG.github.pastaBackups + '/' + d.id + '.json'); if (!r) return;
+    await criarBackupNuvem(clone(DB), 'pre-restauracao');
+    DB = normalizarDB(JSON.parse(r.texto).dados); DB.meta.versao = versaoLocal;
+    await salvarDB(); toast('Backup restaurado.', 'ok');
+  } catch (e) { toast('Falha ao restaurar: ' + erroGH(e), 'err', 6000); }
+};
+AC.exportar = () => baixarArquivo(`backup-tcl-${hojeISO()}.json`, JSON.stringify(DB, null, 2), 'application/json');
+function importarBackup(ev) {
+  const f = ev.target.files[0]; if (!f) return; const msg = $('bk-msg');
+  const r = new FileReader();
+  r.onload = async () => {
+    try {
+      const d = JSON.parse(r.result);
+      if (!d || typeof d !== 'object' || !['projetos', 'financeiro', 'terceirizados', 'propostas', 'crm'].some(k => Array.isArray(d[k]))) throw new Error('estrutura');
+      if (!confirm(`Substituir TODOS os dados atuais pelo arquivo "${f.name}"?\n(${(d.projetos || []).length} projetos, ${(d.financeiro || []).length} lançamentos)\n\nUm backup na nuvem será criado antes.`)) return;
+      try { await criarBackupNuvem(clone(DB), 'pre-importacao'); } catch (e) { if (!confirm('Não foi possível criar o backup de segurança na nuvem. Continuar mesmo assim?')) return; }
+      DB = normalizarDB(d); DB.meta.versao = versaoLocal; await salvarDB(); msg.textContent = '✅ Importado com sucesso.';
+    } catch (e) { msg.textContent = '❌ Arquivo inválido.'; }
+    ev.target.value = '';
+  };
+  r.readAsText(f);
+}
+AC.csv = d => {
+  const c = v => '"' + String(v ?? '').replace(/"/g, '""') + '"', lin = (cab, linhas) => '﻿' + [cab.join(';'), ...linhas.map(l => l.map(c).join(';'))].join('\n');
+  const T = {
+    projetos: () => lin(['Código', 'Cliente', 'Objeto', 'Valor', 'Custo terceiros', 'Margem', 'Início', 'Entrega', 'Status', 'Pagamento'], DB.projetos.map(p => [p.prop, p.cliente, p.nome, num(p.valor), custoProjeto(p), num(p.valor) - custoProjeto(p), p.dataInicio, p.entrega, p.status, p.pgto])),
+    propostas: () => lin(['Código', 'Cliente', 'Objeto', 'Valor', 'Prazo (dias)', 'Status', 'Criação', 'Envio'], DB.propostas.map(p => [p.codigo, p.cliente, p.objeto, num(p.valor), p.prazo, p.status, p.dataCriacao, p.dataEnvio])),
+    financeiro: () => lin(['Data', 'Descrição', 'Tipo', 'Categoria', 'Projeto', 'Terceirizado', 'Valor'], DB.financeiro.map(f => { const p = projPorId(f.projeto); return [f.data, f.desc, f.tipo, f.cat, p ? p.prop : '', f.terc ? nomeTerc(f.terc, f.tercNome) : '', num(f.valor)]; })),
+    terceirizados: () => lin(['Nome', 'Disciplina', 'Telefone', 'E-mail', 'Avaliação'], DB.terceirizados.map(t => [t.nome, t.disc, t.fone, t.email, t.aval])),
+    crm: () => lin(['Empresa', 'CNPJ', 'Cidade', 'Segmento', 'Status', 'Contato', 'Cargo', 'E-mail', 'Telefone', 'Próximo follow-up'], DB.crm.map(e => [e.nome, e.cnpj, e.cidade, e.segmento, e.status, e.contatoNome, e.contatoCargo, e.contatoEmail, e.contatoTelefone, e.proximoFollowup]))
+  };
+  baixarArquivo(`${d.t}-${hojeISO()}.csv`, T[d.t](), 'text/csv;charset=utf-8');
+};
+AC.resetTotal = async () => {
+  if (prompt('Isto apaga TODOS os dados. Digite APAGAR para confirmar:') !== 'APAGAR') return;
+  try { await criarBackupNuvem(clone(DB), 'pre-reset'); } catch (e) { return toast('Não foi possível criar o backup de segurança — operação cancelada.', 'err', 6000); }
+  DB = normalizarDB({}); DB.meta.versao = versaoLocal; await salvarDB(); toast('Dados apagados. Backup criado na nuvem.', 'warn', 6000);
+};
+
+/* ============================ 9. MODO CLIENTE ============================ */
+let DB_REAL = null;
+function demoDB() {
+  const d = n => addDias(hojeISO(), n), it = (desc, prev, ok, obs) => ({ id: uid('de'), desc, prev: d(prev), entregue: !!ok, dataReal: ok ? d(prev - 1) : '', obs: obs || '' });
+  const pj = (n, prop, cliente, nome, status, pgto, ini, fim, discs, tercs, entregas, obs) => ({ id: 'demo_' + n, prop, proposta: prop, cliente, nome, valor: 0, entrega: d(fim), dataInicio: d(ini), dataEmissao: d(ini), status, pgto, custo: 0, disciplinas: discs, terceirizados_alocados: tercs.map((t, i) => ({ id: 'demo_t' + n + i, nome: t, custo: 0 })), entregas, obsEntregas: obs, parcelas: [] });
+  return {
+    projetos: [
+      pj(1, 'DEMO-2026-01', 'Cliente Industrial', 'Projeto Executivo - Galpão Logístico 2.000m²', 'Em andamento', 'Parcial', 0, 60, ['Civil', 'Estrutura metálica', 'Elétrica', 'Hidráulica'], ['Engenheiro Civil Sênior', 'Engenheiro Estrutural', 'Engenheiro Eletricista', 'Engenheiro Hidráulico'], {
+        'Civil': { itens: [it('Projeto de fundação', 15, true), it('Planta baixa estrutural', 25, true, 'Aprovado pelo cliente'), it('Memorial descritivo', 40, false, 'Em elaboração'), it('ART / RRT', 50, false)] },
+        'Estrutura metálica': { itens: [it('Cálculo estrutural', 20, true), it('Desenho de fabricação', 35, false, 'Aguardando aprovação do cálculo'), it('Lista de materiais', 45, false)] },
+        'Elétrica': { itens: [it('Diagrama unifilar', 30, false), it('Lista de cabos e disjuntores', 40, false)] },
+        'Hidráulica': { itens: [it('Projeto de água fria', 25, false), it('Projeto de esgoto', 35, false)] }
+      }, 'Projeto demonstrativo para apresentação a clientes.'),
+      pj(2, 'DEMO-2026-02', 'Mineração XYZ', 'Projeto de Adequação - NR-12 Máquinas', 'Em andamento', 'Pendente', -10, 45, ['Mecânica', 'Elétrica', 'Automação'], ['Engenheiro Mecânico Sênior', 'Engenheiro de Automação'], {
+        'Mecânica': { itens: [it('Laudo técnico NR-12', 5, true), it('ART de adequação', 20, false)] },
+        'Elétrica': { itens: [it('Painel de comando', 30, false)] }, 'Automação': { itens: [it('Programação CLP', 35, false)] }
+      }, 'Foco em adequação de máquinas industriais.'),
+      pj(3, 'DEMO-2026-03', 'Construtora ABC', 'Projeto Executivo - Prédio Administrativo 3 Pavimentos', 'Aguardando aprovação', 'Parcial', -30, 90, ['Arquitetura', 'Civil'], ['Arquiteto Projetista', 'Engenheiro Calculista'], {
+        'Arquitetura': { itens: [it('Layout pavimento térreo', -5, true, 'Aprovado'), it('Layout 2º pavimento', 10, true), it('Layout 3º pavimento', 20, false), it('Fachada e cortes', 40, false)] },
+        'Civil': { itens: [it('Cálculo estrutural', 50, false)] }
+      }, 'Obra comercial de médio porte.')
+    ]
+  };
+}
+function toggleModoCliente() {
+  const s = prompt(modoClienteAtivo ? 'Senha para SAIR do Modo Cliente:' : 'Senha para ATIVAR o Modo Cliente:');
+  if (s === null) return;
+  if (s !== CFG.senhaModoCliente) return toast('Senha incorreta.', 'err');
+  if (modoClienteAtivo) { modoClienteAtivo = false; DB = DB_REAL; DB_REAL = null; entAbertas.clear(); nav('dashboard'); }
+  else { DB_REAL = DB; DB = normalizarDB(demoDB()); modoClienteAtivo = true; entAbertas.clear(); entAbertas.add('demo_1'); nav('entregas'); toast('Modo Cliente: dados de demonstração. Nada é salvo.', 'ok'); }
+}
+
+/* ============================ 10. INICIALIZAÇÃO ============================ */
+function init() {
+  preencherSelects();
+  tentarSessaoSalva();
+  $('btn-login').addEventListener('click', verificarLogin);
+  ['login-repo', 'login-token'].forEach(id => $(id).addEventListener('keydown', e => { if (e.key === 'Enter') verificarLogin(); }));
+  document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (!el) return; const f = AC[el.dataset.act]; if (f) f(el.dataset, el, e); });
+  document.addEventListener('change', e => { const el = e.target.closest('[data-chg]'); if (!el) return; const f = AC[el.dataset.chg]; if (f) f(el.dataset, el, e); });
+  $('ov').addEventListener('click', e => { if (e.target === $('ov')) fecharModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modalAberto()) fecharModal();
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[role=button][data-act]')) { e.preventDefault(); e.target.click(); }
+  });
+  const re = debounce(() => renderAtual(), 150);
+  ['ksearch', 'propsearch', 'psearch', 'fsearch', 'search-terc', 'crm-search'].forEach(id => $(id).addEventListener('input', re));
+  ['kfterc', 'kfcli', 'kfpgto', 'propst', 'pfst', 'pfpg', 'pfcl', 'ffcat', 'ffmes', 'filtro_fin_proj', 'filtro_fin_terc', 'crm-status-filter', 'crm-segmento-filter'].forEach(id => $(id).addEventListener('change', () => renderAtual()));
+  ['calc-custo', 'calc-imposto', 'calc-adm', 'calc-lucro'].forEach(id => $(id).addEventListener('input', () => { calcularPrecoVenda(); atualizarSugestao(); }));
+  $('pvalor').addEventListener('input', atualizarMargemModal);
+  $('fterc_vinculo').addEventListener('change', () => { if (val('fterc_vinculo')) { setv('ftipo', 'saida'); setv('fcat', 'Pagamento terceirizado'); } });
+  $('em-template').addEventListener('change', preencherEmail);
+  $('bk-file').addEventListener('change', importarBackup);
+  iniciarKanbanDnD();
+  window.addEventListener('online', () => { if (podeSalvar && !_salvando) salvarDB(); });
+}
+init();
+</script>
+</body>
+</html>
